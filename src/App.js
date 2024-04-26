@@ -1,46 +1,39 @@
 import logo from "./logo.svg";
 import "./App.css";
-import { decrement, increment, selectCount } from "./redux";
+import { login, selectIsLoggedIn } from "./redux";
 import { useDispatch, useSelector } from "react-redux";
 import { useState } from "react";
+import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import Navbar from "./components/Navbar/Navbar";
+import Login from "./pages/Login";
+import Logout from "./pages/Logout";
 
 function App() {
-  const count = useSelector(selectCount);
-  const dispatch = useDispatch();
+  const loggedIn = useSelector(selectIsLoggedIn);
+  console.log(loggedIn);
   return (
-    <div className="App">
-      <button
-        className="bg"
-        aria-label="Increment value"
-        onClick={() => dispatch(increment())}
-      >
-        +
-      </button>
-
-      <span>{count}</span>
-
-      <button
-        className="text-red"
-        aria-label="Decrement value"
-        onClick={() => dispatch(decrement())}
-      >
-        -
-      </button>
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {loggedIn ? (
+        <div style={{ backgroundColor: "white", padding: "0" }}>
+          <Navbar>
+            <Routes>
+              {/* <Route path="/" element={<Dashboard />} /> */}
+              <Route path="/landingPage" element={<></>} />
+              <Route
+                path="/logout"
+                element={<Logout />}
+              />
+            </Routes>
+          </Navbar>
+        </div>
+      ) : (
+        <div style={{ background: "#f8f9fc", height: "100vh" }}>
+          <Routes>
+            <Route path="/" element={<Login loggedIn={loggedIn} />} />
+          </Routes>
+        </div>
+      )}
+    </BrowserRouter>
   );
 }
 
