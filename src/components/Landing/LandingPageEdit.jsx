@@ -1,10 +1,63 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
+import { Button } from "../Button";
+import { FaPlus, FaTrash } from "react-icons/fa";
 
 export default function LandingPageEdit() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
+
+  //   modal start
+
+  // Modal state
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [advantageInput, setAdvantageInput] = useState("");
+  const [comparisonInput, setComparisonInput] = useState("");
+
+  // Modal functions
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const addAdvantage = () => {
+    if (advantageInput.trim() !== "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        offshoreAdvantages: [...prevData.offshoreAdvantages, advantageInput],
+      }));
+      setAdvantageInput("");
+    }
+  };
+
+  const removeAdvantage = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      offshoreAdvantages: prevData.offshoreAdvantages.filter(
+        (_, i) => i !== index
+      ),
+    }));
+  };
+
+  const addComparison = () => {
+    if (comparisonInput.trim() !== "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        offshoreComparison: [...prevData.offshoreComparison, comparisonInput],
+      }));
+      setComparisonInput("");
+    }
+  };
+
+  const removeComparison = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      offshoreComparison: prevData.offshoreComparison.filter(
+        (_, i) => i !== index
+      ),
+    }));
+  };
+
+  // modal end
 
   //   preview img start
   const handleImageUpload = (e) => {
@@ -20,7 +73,7 @@ export default function LandingPageEdit() {
       reader.readAsDataURL(file);
     }
   };
-  
+
   const handleExpertiseImageUpload = (e) => {
     const file = e.target.files[0];
     if (file) {
@@ -34,7 +87,21 @@ export default function LandingPageEdit() {
       reader.readAsDataURL(file);
     }
   };
-    //   preview img end
+  //   preview img end
+
+  //handlechangeexperience start
+  const handleChangeExperience = (e, field) => {
+    const value = e.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      workExperience: {
+        ...prevState.workExperience,
+        [field]: value,
+      },
+    }));
+  };
+
+  //handlechangeexperience end
 
   const [formData, setFormData] = useState({
     heroDescription: "Leading provider of tech solutions.",
@@ -43,16 +110,28 @@ export default function LandingPageEdit() {
     phone: "+1234567890",
     address: "123 Tech Street, Silicon Valley, CA",
     socialLinks: "https://twitter.com/techsolutions",
-    workExperience:
-      "Countries: USA, Canada, Germany, Employees: 200+, Scrum Teams: 15, Full Stack Dev: 50+",
+    workExperience: {
+      countries: "USA, Canada, Germany",
+      expEmployees: "200+",
+      scrumTeams: "15",
+      fullStackDev: "50+",
+    },
     aboutDescription:
       "TechSolutions specializes in providing high-quality IT services and innovative solutions to global clients.",
     offshoreType: "Dedicated Development Center",
     offshoreDescription:
       "Offers flexible engagement models and full control over the process.",
-    offshoreAdvantages: "Cost Effective, Scalable Resources, Expert Teams",
-    offshoreComparison:
-      "Dedicated Team, Freelance, Better Collaboration, Consistency",
+    offshoreAdvantages: [
+      "Cost Effective",
+      "Scalable Resources",
+      "Expert Teams",
+    ],
+    offshoreComparison: [
+      "Dedicated Team",
+      "Freelance",
+      "Better Collaboration",
+      "Consistency",
+    ],
     testimonialFullName: "Jane Doe",
     testimonialDescription:
       "The team at TechSolutions went above and beyond to meet our needs.",
@@ -69,9 +148,9 @@ export default function LandingPageEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData)
+    console.log(formData);
     // dispatch(LandingPageEdit(formData));
-    
+
     // navigate("/landingPage");
   };
 
@@ -84,10 +163,12 @@ export default function LandingPageEdit() {
       >
         {/* introduction start */}
         <div>
-          <h1 className="text-[28px] text-custom-purple mb-4 mt-2  font-bold text-center ">
+          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center">
             Introduction
           </h1>
-          <label>Hero Description</label>
+          <label className="text-webDescrip font-semibold">
+            Hero Description
+          </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -97,7 +178,9 @@ export default function LandingPageEdit() {
             value={formData?.heroDescription}
             placeholder="Hero Description"
           />
-          <label>Footer Description</label>
+          <label className="text-webDescrip font-semibold">
+            Footer Description
+          </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -107,7 +190,7 @@ export default function LandingPageEdit() {
             value={formData?.footerDescription}
             placeholder="footerdescription"
           />
-          <label>E-Mail</label>
+          <label className="text-webDescrip font-semibold">E-Mail</label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -117,7 +200,7 @@ export default function LandingPageEdit() {
             value={formData?.email}
             placeholder="email"
           />
-          <label>Phone</label>
+          <label className="text-webDescrip font-semibold">Phone</label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -127,7 +210,7 @@ export default function LandingPageEdit() {
             value={formData?.phone}
             placeholder="Phone"
           />
-          <label>Address</label>
+          <label className="text-webDescrip font-semibold">Address</label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -137,7 +220,7 @@ export default function LandingPageEdit() {
             value={formData?.address}
             placeholder="address"
           />
-          <label>Social Links</label>
+          <label className="text-webDescrip font-semibold">Social Links</label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -147,16 +230,51 @@ export default function LandingPageEdit() {
             value={formData?.socialLinks}
             placeholder="Social Links"
           />
-          <label>Work Experience</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="workExperience"
-            id="workExperience"
-            onChange={handleChange}
-            value={formData?.workExperience}
-            placeholder="Work Experience"
-          />
+          <label className="text-webDescrip font-semibold">
+            Work Experience
+          </label>
+          <div>
+            <label>Countries</label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="countries"
+              id="countries"
+              onChange={(e) => handleChangeExperience(e, "countries")}
+              value={formData?.workExperience?.countries}
+              placeholder="Countries"
+            />
+            <label>Employees</label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="expEmployees"
+              id="expEmployees"
+              onChange={(e) => handleChangeExperience(e, "expEmployees")}
+              value={formData?.workExperience?.expEmployees}
+              placeholder="Employees"
+            />
+            <label>Scrum Teams</label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="scrumTeams"
+              id="scrumTeams"
+              onChange={(e) => handleChangeExperience(e, "scrumTeams")}
+              value={formData?.workExperience?.scrumTeams}
+              placeholder="Scrum Teams"
+            />
+            <label>Full Stack Developers</label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="fullStackDev"
+              id="fullStackDev"
+              onChange={(e) => handleChangeExperience(e, "fullStackDev")}
+              value={formData?.workExperience?.fullStackDev}
+              placeholder="Full Stack Developers"
+            />
+          </div>
         </div>
         {/* introduction End */}
 
@@ -165,7 +283,9 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             About
           </h1>
-          <label>About Description</label>
+          <label className="text-webDescrip font-semibold">
+            About Description
+          </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -183,7 +303,7 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Offshore
           </h1>
-          <label>Offshore Type</label>
+          <label className="text-webDescrip font-semibold">Offshore Type</label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -193,7 +313,9 @@ export default function LandingPageEdit() {
             value={formData?.offshoreType}
             placeholder="Offshore Type"
           />
-          <label>Offshore Description</label>
+          <label className="text-webDescrip font-semibold">
+            Offshore Description
+          </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -203,26 +325,140 @@ export default function LandingPageEdit() {
             value={formData?.offshoreDescription}
             placeholder="Offshore Description"
           />
-          <label>Offshore Advantages</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="offshoreAdvantages"
-            id="offshoreAdvantages"
-            onChange={handleChange}
-            value={formData?.offshoreAdvantages}
-            placeholder="Offshore Advantages"
-          />
-          <label>Offshore Comparison</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="offshoreComparison"
-            id="offshoreComparison"
-            onChange={handleChange}
-            value={formData?.offshoreComparison}
-            placeholder="Offshore Comparison"
-          />
+
+          <label className="text-webDescrip font-semibold">
+            Offshore Advantages
+          </label>
+          <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+            <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
+              {formData.offshoreAdvantages.map((advantage, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2"
+                >
+                  <p className="text-webDescrip">{advantage}</p>
+                  <button
+                    type="button"
+                    onClick={() => removeAdvantage(index)}
+                    className="btn btn-error  text-white  rounded-xl"
+                  >
+                    <FaTrash />
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="w-[100%] flex justify-center items-center ">
+              <Button
+                text={"Add Advantage"}
+                icon={<FaPlus />}
+                click={openModal}
+              />
+            </div>
+          </div>
+
+          {/* Remaining form fields */}
+
+          {/* Modal */}
+          {isModalOpen && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+              <div className="bg-white w-[40%] h-[18%] felx justify-center p-4 rounded-lg">
+                <h2 className="text-lg font-semibold mb-2">Add Advantage</h2>
+                <textarea
+                  type="text"
+                  value={advantageInput}
+                  onChange={(e) => setAdvantageInput(e.target.value)}
+                  className="bg-white border border-custom-purple text-webDescrip p-2 w-full mb-2 h-24"
+                  placeholder="Enter advantage"
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={addAdvantage}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                  >
+                    Close
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+          {/*  */}
+          <label className="text-webDescrip font-semibold">
+            Offshore Comparison
+          </label>
+          <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+            <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
+              {formData.offshoreComparison.map((Comaprison, index) => (
+                <div
+                  key={index}
+                  className="flex items-center justify-between p-2"
+                >
+                  <p className="text-webDescrip">{Comaprison}</p>
+                  <button
+                    type="button"
+                    onClick={() => removeComparison(index)}
+                    className="btn btn-error  text-white  rounded-xl"
+                  >
+                    <FaTrash />
+                    Remove
+                  </button>
+                </div>
+              ))}
+            </div>
+            <div className="w-[100%] flex justify-center items-center ">
+              <Button
+                text={"Add Comparison"}
+                icon={<FaPlus />}
+                click={openModal}
+              />
+            </div>
+          </div>
+
+          {/* Remaining form fields */}
+
+          {/* Modal */}
+          {isModalOpen && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+              <div className="bg-white w-[40%] h-[18%] felx justify-center p-4 rounded-lg">
+                <h2 className="text-lg font-semibold mb-2">Add Comparison</h2>
+                <textarea
+                  type="text"
+                  value={comparisonInput}
+                  onChange={(e) => setComparisonInput(e.target.value)}
+                  className="bg-white border border-custom-purple text-webDescrip p-2 w-full mb-2 h-24"
+                  placeholder="Enter comparison"
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={addComparison}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModal}
+                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
+
+          {/*  */}
+
+         
         </div>
         {/* offshore end */}
 
@@ -231,7 +467,9 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Testimonials
           </h1>
-          <label>Testimonial Image</label>
+          <label className="text-webDescrip font-semibold">
+            Testimonial Image
+          </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
@@ -243,7 +481,7 @@ export default function LandingPageEdit() {
 
           {formData.testimonialImage && (
             <div>
-              <h2>Preview:</h2>
+              <label className="text-webDescrip font-semibold">Preview:</label>
               <img
                 src={formData.testimonialImage}
                 alt="Testimonial Preview"
@@ -256,7 +494,9 @@ export default function LandingPageEdit() {
             </div>
           )}
 
-          <label>Testimonial FullName</label>
+          <label className="text-webDescrip font-semibold">
+            Testimonial FullName
+          </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -266,7 +506,9 @@ export default function LandingPageEdit() {
             value={formData?.testimonialFullName}
             placeholder="testimonialFullName"
           />
-          <label>Testimonial Description</label>
+          <label className="text-webDescrip font-semibold">
+            Testimonial Description
+          </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -276,7 +518,9 @@ export default function LandingPageEdit() {
             value={formData?.testimonialDescription}
             placeholder="Testimonial Description"
           />
-          <label>Testimonial Designation</label>
+          <label className="text-webDescrip font-semibold">
+            Testimonial Designation
+          </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -289,12 +533,14 @@ export default function LandingPageEdit() {
         </div>
         {/*  Testimonials end*/}
 
-         {/*  Experties start*/}
-         <div>
+        {/*  Experties start*/}
+        <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Experties
           </h1>
-          <label>Expertise Image</label>
+          <label className="text-webDescrip font-semibold">
+            Expertise Image
+          </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
@@ -306,7 +552,7 @@ export default function LandingPageEdit() {
 
           {formData.expertiseImage && (
             <div>
-              <h2>Preview:</h2>
+              <label className="text-webDescrip font-semibold">Preview:</label>
               <img
                 src={formData.expertiseImage}
                 alt="Testimonial Preview"
@@ -319,7 +565,9 @@ export default function LandingPageEdit() {
             </div>
           )}
 
-          <label>Expertise Name</label>
+          <label className="text-webDescrip font-semibold">
+            Expertise Name
+          </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -329,7 +577,9 @@ export default function LandingPageEdit() {
             value={formData?.expertiseName}
             placeholder="Expertise Name"
           />
-          <label>Expertise Description</label>
+          <label className="text-webDescrip font-semibold">
+            Expertise Description
+          </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -339,7 +589,6 @@ export default function LandingPageEdit() {
             value={formData?.expertiseDescription}
             placeholder="Expertise Description"
           />
-         
         </div>
         {/*  Experties end*/}
 

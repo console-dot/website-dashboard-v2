@@ -7,6 +7,8 @@ import Logout from "./pages/Logout";
 import { LandingPage } from "./components/Landing/LandingPage";
 import { selectIsLoggedIn } from "./redux";
 import LandingPageEdit from "./components/Landing/LandingPageEdit";
+import { OffshoringPage } from "./components/Offshoring/OffshoringPage";
+import OffshoringPageEdit from "./components/Offshoring/OffshoringPageEdit";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -19,6 +21,8 @@ function App() {
               {/* <Route path="/" element={<Dashboard />} /> */}
               <Route path="/landingPage" element={<LandingPage />} />
               <Route path="/LandingPage/edit/:id" element={<LandingPageEdit/>} />
+              <Route path="/offShoring" element={<OffshoringPage/>} />
+              <Route path="/OffshoringPage/edit/:id" element={<OffshoringPageEdit/>} />
               <Route
                 path="/logout"
                 element={<Logout />}
