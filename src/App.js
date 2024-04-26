@@ -5,6 +5,8 @@ import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
 import { LandingPage } from "./components/Landing/LandingPage";
+import { selectIsLoggedIn } from "./redux";
+import LandingPageEdit from "./components/Landing/LandingPageEdit";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -16,6 +18,7 @@ function App() {
             <Routes>
               {/* <Route path="/" element={<Dashboard />} /> */}
               <Route path="/landingPage" element={<LandingPage />} />
+              <Route path="/LandingPage/edit/:id" element={<LandingPageEdit/>} />
               <Route
                 path="/logout"
                 element={<Logout />}

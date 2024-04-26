@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../Button";
 
 export const LandingCard = ({ data, key, value }) => {
   const navigate = useNavigate();
@@ -192,9 +193,9 @@ export const LandingCard = ({ data, key, value }) => {
 
                 {/* End */}
               </div>
-
-              <div className="w-100 d-flex justify-content-between justify-items-center">
-                <button onClick={() => {}}>Edit Landing Page</button>{" "}
+              <div className="w-full flex flex-row justify-around ">
+              <Button text={'Edit'} click={()=>{navigate(`/LandingPage/edit/${123}`)}}/>
+              <Button text={'View'}/>
               </div>
             </div>
           </div>

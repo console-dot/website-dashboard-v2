@@ -23,11 +23,7 @@ export default function Login({ loggedIn }) {
     navigate("/landingPage");
   };
 
-  //   const handleLogin = async () => {
-  //     const user = { username: "JohnDoe", email: "john@example.com" };
-  //     dispatch(login(user));
-  //     navigate("/landingPage");
-  //   };
+  
 
   return (
     <div className="w-full">
