@@ -18,7 +18,7 @@
 }
 
 .App-header {
-  background-color: #282c34;
+  background-color: #f8f9fc;
   min-height: 100vh;
   display: flex;
   flex-direction: column;
@@ -39,4 +39,19 @@
   to {
     transform: rotate(360deg);
   }
+}
+
+.link {
+  display: flex;
+  color: black;
+  padding: 10px 15px;
+  gap: 20px;
+  transition: all 0.5s;
+  text-decoration: none;
+  margin-top: 20px;
+}
+
+.link:hover {
+  background: #0E77891A;
+  transition: all 0.5s;
 }
