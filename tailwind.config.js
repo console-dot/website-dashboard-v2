@@ -25,6 +25,7 @@ module.exports = {
         webdevHover: "#30B1C7",
         checks: "#25324B",
         backgroundColor: "#f8f9fc",
+        heading: "#0E7789",
       },
     },
   },
