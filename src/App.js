@@ -4,9 +4,7 @@ import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
-import { LandingPage ,Offshoring} from "./pages"; // Assuming LandingPage component exists
-
-import { selectIsLoggedIn } from "./redux";
+import { LandingPage } from "./components/Landing/LandingPage";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -16,8 +14,12 @@ function App() {
         <div style={{ backgroundColor: "white", padding: "0" }}>
           <Navbar>
             <Routes>
-              {/* <Route path="/OffShoring" element={<Offshoring />} /> */}
-              <Route path="/logout" element={<Logout />} />
+              {/* <Route path="/" element={<Dashboard />} /> */}
+              <Route path="/landingPage" element={<LandingPage />} />
+              <Route
+                path="/logout"
+                element={<Logout />}
+              />
             </Routes>
           </Navbar>
         </div>
