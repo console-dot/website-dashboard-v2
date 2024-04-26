@@ -7,6 +7,7 @@ import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import { LandingPage } from "./components/Landing/LandingPage";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -18,7 +19,7 @@ function App() {
           <Navbar>
             <Routes>
               {/* <Route path="/" element={<Dashboard />} /> */}
-              <Route path="/landingPage" element={<></>} />
+              <Route path="/landingPage" element={<LandingPage />} />
               <Route
                 path="/logout"
                 element={<Logout />}

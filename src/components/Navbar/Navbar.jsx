@@ -75,9 +75,11 @@ export default function Navbar({ children }) {
         </div>
       </div>
       <main
+      className="mt-[20px]"
         style={{
           minHeight: "100vh",
-          width: isOpen ? "calc(100%-250px)" : "calc(100%-50px)",
+          //   width: isOpen ? "calc(100%-250px)" : "calc(100%-50px)",
+          width: "100%",
         }}
       >
         {children}
