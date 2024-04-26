@@ -9,7 +9,10 @@ const data = [
     email: "contact@techsolutions.com",
     phone: "+1234567890",
     address: "123 Tech Street, Silicon Valley, CA",
-    socialLinks: "https://twitter.com/techsolutions",
+    socialLinks: [
+      { name: "facebook", link: "https://twitter.com/techsolutions" },
+      { name: "youtube", link: "https://youtube.com/techsolutions" },
+    ],
     workExperience: {
       countries: "USA, Canada, Germany",
       expEmployees: "200+",
@@ -53,24 +56,29 @@ export const LandingPage = () => {
   };
 
   return (
-    <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor">
+    <>
       <div
+        className="w-[90%] m-auto"
         style={{
           display: "flex",
           justifyContent: "space-between",
           alignItems: "center",
         }}
       >
-        <h2 className="text-Black">Landing Page</h2>
+        <h2 className="text-black text-2xl font-bold">Landing Page</h2>
       </div>
-      <div className="flex">
-        {data &&
-          data.map((item, index) => (
-            <div key={index} className="flex flex-col w-full">
-              <LandingCard data={item} onView={() => onView(index)} />
-            </div>
-          ))}
+
+      {/* Center */}
+      <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
+        <div className="flex">
+          {data &&
+            data.map((item, index) => (
+              <div key={index} className="flex flex-col w-full">
+                <LandingCard data={item} onView={() => onView(index)} />
+              </div>
+            ))}
+        </div>
       </div>
-    </div>
+    </>
   );
 };
