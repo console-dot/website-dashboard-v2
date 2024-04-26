@@ -2,16 +2,12 @@ import { useState } from "react";
 import {
   FaBars,
   FaUserAlt,
-  FaDiceD20,
-  FaBox,
-  FaDashcube,
+  
 } from "react-icons/fa";
-import { AiOutlineProject } from "react-icons/ai";
-import { GiNothingToSay } from "react-icons/gi";
+import { TbHelicopterLanding } from "react-icons/tb";
 import { NavLink } from "react-router-dom";
-import { MdLogout, MdSettings } from "react-icons/md";
-import { GiGraduateCap } from "react-icons/gi";
-import { IoNewspaperOutline } from "react-icons/io5";
+import { MdLogout} from "react-icons/md";
+
 
 export default function Navbar({ children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -19,8 +15,53 @@ export default function Navbar({ children }) {
 
   const menuItem = [
     {
-      path: "/landingPage",
+      path: "/LandingPage",
       name: "Landing Page",
+      icon: <TbHelicopterLanding />,
+    },
+    {
+      path: "/offShoring",
+      name: "Off Shoring",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/customSoftware",
+      name: "Custom Software",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/productResearch",
+      name: "Product Research",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/webDevelopment",
+      name: "Web Development",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/mobileApp",
+      name: "Mobile App development",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/blockchain",
+      name: "Mobile App development",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/ai ",
+      name: "Artificial Intelligence",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/arvr",
+      name: "Ar/Vr",
+      icon: <FaUserAlt />,
+    },
+    {
+      path: "/uiux",
+      name: "Ui/Ux",
       icon: <FaUserAlt />,
     },
     {

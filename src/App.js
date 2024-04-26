@@ -1,28 +1,23 @@
-import logo from "./logo.svg";
-import "./App.css";
-import { login, selectIsLoggedIn } from "./redux";
-import { useDispatch, useSelector } from "react-redux";
-import { useState } from "react";
-import { BrowserRouter, Route, Routes, useNavigate } from "react-router-dom";
+import React from "react";
+import { useSelector } from "react-redux";
+import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
 import Login from "./pages/Login";
 import Logout from "./pages/Logout";
+import { LandingPage ,Offshoring} from "./pages"; // Assuming LandingPage component exists
+
+import { selectIsLoggedIn } from "./redux";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
-  console.log(loggedIn);
   return (
     <BrowserRouter>
       {loggedIn ? (
         <div style={{ backgroundColor: "white", padding: "0" }}>
           <Navbar>
             <Routes>
-              {/* <Route path="/" element={<Dashboard />} /> */}
-              <Route path="/landingPage" element={<></>} />
-              <Route
-                path="/logout"
-                element={<Logout />}
-              />
+              {/* <Route path="/OffShoring" element={<Offshoring />} /> */}
+              <Route path="/logout" element={<Logout />} />
             </Routes>
           </Navbar>
         </div>
