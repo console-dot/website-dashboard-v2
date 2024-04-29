@@ -1,23 +1,27 @@
 import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
 import { Button } from "../Button";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
 export default function LandingPageEdit() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   //   modal start
 
   // Modal state
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenAdvantage, setIsModalOpenAdvantage] = useState(false);
+  const [isModalOpenComparison, setIsModalOpenComparison] = useState(false);
   const [advantageInput, setAdvantageInput] = useState("");
   const [comparisonInput, setComparisonInput] = useState("");
+  const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
+  const [socialLinks, setSocialLinks] = useState([]); // Define socialLinks state
+  const [socialLinkName, setSocialLinkName] = useState("");
+  const [socialLinkURL, setSocialLinkURL] = useState("");
 
   // Modal functions
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModalAdvantage = () => setIsModalOpenAdvantage(true);
+  const closeModalAdvantage = () => setIsModalOpenAdvantage(false);
+  const openModalComparison = () => setIsModalOpenComparison(true);
+  const closeModalComparison = () => setIsModalOpenComparison(false);
+  const openModalSocialLink = () => setIsModalOpenSocialLink(true);
+  const closeModalSocialLink = () => setIsModalOpenSocialLink(false);
 
   const addAdvantage = () => {
     if (advantageInput.trim() !== "") {
@@ -55,6 +59,30 @@ export default function LandingPageEdit() {
         (_, i) => i !== index
       ),
     }));
+  };
+
+
+
+  const addSocialLink = () => {
+    if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        socialLinks: [
+          ...prevData.socialLinks,
+          { name: socialLinkName, link: socialLinkURL },
+        ],
+      }));
+      closeModalSocialLink();
+      // Optionally clear input fields here
+      setSocialLinkName("");
+      setSocialLinkURL("");
+    }
+  };
+  
+
+  // Function to remove social link
+  const removeSocialLink = (index) => {
+    setSocialLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
   };
 
   // modal end
@@ -109,7 +137,10 @@ export default function LandingPageEdit() {
     email: "contact@techsolutions.com",
     phone: "+1234567890",
     address: "123 Tech Street, Silicon Valley, CA",
-    socialLinks: "https://twitter.com/techsolutions",
+    socialLinks: [
+      { name: "facebook", link: "https://twitter.com/techsolutions" },
+      { name: "youtube", link: "https://youtube.com/techsolutions" },
+    ],
     workExperience: {
       countries: "USA, Canada, Germany",
       expEmployees: "200+",
@@ -141,6 +172,10 @@ export default function LandingPageEdit() {
       "Expertise in building scalable cloud platforms tailored to client needs.",
   });
 
+  useEffect(() => {
+    setSocialLinks(formData.socialLinks);
+  }, [formData.socialLinks]);
+
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
@@ -148,10 +183,13 @@ export default function LandingPageEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
-    // dispatch(LandingPageEdit(formData));
-
-    // navigate("/landingPage");
+    if (
+      !isModalOpenAdvantage &&
+      !isModalOpenComparison &&
+      !isModalOpenSocialLink
+    ) {
+      console.log(formData);
+    }
   };
 
   return (
@@ -220,16 +258,86 @@ export default function LandingPageEdit() {
             value={formData?.address}
             placeholder="address"
           />
-          <label className="text-webDescrip font-semibold">Social Links</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="socialLinks"
-            id="socialLinks"
-            onChange={handleChange}
-            value={formData?.socialLinks}
-            placeholder="Social Links"
-          />
+          <div>
+            <label className="text-webDescrip font-semibold">
+              Social Links
+            </label>
+            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+              <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
+                {socialLinks &&
+                  socialLinks.length > 0 &&
+                  socialLinks.map((socialLink, index) => (
+                    <div
+                      key={index}
+                      className="flex items-center justify-between p-2"
+                    >
+                      <p className="">
+                        <span className="text-webDescrip">
+                          {socialLink.name}
+                        </span>{" "}
+                        :{" "}
+                        <a className="text-blue-900" href={socialLink.link}>
+                          {socialLink.link}
+                        </a>
+                      </p>
+                      <button
+                        type="button"
+                        onClick={() => removeSocialLink(index)}
+                        className="btn btn-error text-white rounded-xl"
+                      >
+                        <FaTrash />
+                        Remove
+                      </button>
+                    </div>
+                  ))}
+              </div>
+            </div>
+            <div className="w-[100%] flex justify-center items-center">
+              <Button
+                text={"Add Social Link"}
+                icon={<FaPlus />}
+                click={openModalSocialLink}
+              />
+            </div>
+          </div>
+          {/* Social link modal */}
+          {isModalOpenSocialLink && (
+            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+              <div className="bg-white w-[30%] h-[35%] flex flex-col justify-center p-4 rounded-lg">
+                <h2 className="text-lg font-semibold mb-2">Add Social Link</h2>
+                <input
+                  type="text"
+                  value={socialLinkName}
+                  onChange={(e) => setSocialLinkName(e.target.value)}
+                  className="bg-white border border-custom-purple text-webDescrip p-2 w-full mb-2"
+                  placeholder="Enter link name"
+                />
+                <input
+                  type="text"
+                  value={socialLinkURL}
+                  onChange={(e) => setSocialLinkURL(e.target.value)}
+                  className="bg-white border border-custom-purple text-webDescrip p-2 w-full mb-2"
+                  placeholder="Enter link URL"
+                />
+                <div className="flex justify-end">
+                  <button
+                    type="button"
+                    onClick={addSocialLink}
+                    className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
+                  >
+                    Add
+                  </button>
+                  <button
+                    type="button"
+                    onClick={closeModalSocialLink}
+                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                  >
+                    Cancel
+                  </button>
+                </div>
+              </div>
+            </div>
+          )}
           <label className="text-webDescrip font-semibold">
             Work Experience
           </label>
@@ -352,7 +460,7 @@ export default function LandingPageEdit() {
               <Button
                 text={"Add Advantage"}
                 icon={<FaPlus />}
-                click={openModal}
+                click={openModalAdvantage}
               />
             </div>
           </div>
@@ -360,9 +468,9 @@ export default function LandingPageEdit() {
           {/* Remaining form fields */}
 
           {/* Modal */}
-          {isModalOpen && (
+          {isModalOpenAdvantage && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[18%] felx justify-center p-4 rounded-lg">
+              <div className="bg-white w-[40%] h-[30%] felx justify-center p-4 rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Add Advantage</h2>
                 <textarea
                   type="text"
@@ -381,7 +489,7 @@ export default function LandingPageEdit() {
                   </button>
                   <button
                     type="button"
-                    onClick={closeModal}
+                    onClick={closeModalAdvantage}
                     className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
                   >
                     Close
@@ -417,7 +525,7 @@ export default function LandingPageEdit() {
               <Button
                 text={"Add Comparison"}
                 icon={<FaPlus />}
-                click={openModal}
+                click={openModalComparison}
               />
             </div>
           </div>
@@ -425,9 +533,9 @@ export default function LandingPageEdit() {
           {/* Remaining form fields */}
 
           {/* Modal */}
-          {isModalOpen && (
+          {isModalOpenComparison && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[18%] felx justify-center p-4 rounded-lg">
+              <div className="bg-white w-[40%] h-[30%] felx justify-center p-4 rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Add Comparison</h2>
                 <textarea
                   type="text"
@@ -446,7 +554,7 @@ export default function LandingPageEdit() {
                   </button>
                   <button
                     type="button"
-                    onClick={closeModal}
+                    onClick={closeModalComparison}
                     className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
                   >
                     Cancel
@@ -457,8 +565,6 @@ export default function LandingPageEdit() {
           )}
 
           {/*  */}
-
-         
         </div>
         {/* offshore end */}
 

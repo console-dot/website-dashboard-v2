@@ -1,23 +1,21 @@
-import { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useState } from "react";
 import { Button } from "../Button";
 import { FaPlus, FaTrash } from "react-icons/fa";
 
 export default function OffshoringPageEdit() {
-  const dispatch = useDispatch();
-  const navigate = useNavigate();
-
   //   modal start
 
   // Modal state
-  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isModalOpenAdvantage, setIsModalOpenAdvantage] = useState(false);
+  const [isModalOpenComparison, setIsModalOpenComparison] = useState(false);
   const [advantageInput, setAdvantageInput] = useState("");
   const [comparisonInput, setComparisonInput] = useState("");
 
   // Modal functions
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
+  const openModalAdvantage = () => setIsModalOpenAdvantage(true);
+  const closeModalAdvantage = () => setIsModalOpenAdvantage(false);
+  const openModalComparison = () => setIsModalOpenComparison(true);
+  const closeModalComparison = () => setIsModalOpenComparison(false);
 
   const addAdvantage = () => {
     if (advantageInput.trim() !== "") {
@@ -59,65 +57,7 @@ export default function OffshoringPageEdit() {
 
   // modal end
 
-  //   preview img start
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          testimonialImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleExpertiseImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          expertiseImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  //   preview img end
-
-  //handlechangeexperience start
-  const handleChangeExperience = (e, field) => {
-    const value = e.target.value;
-    setFormData((prevState) => ({
-      ...prevState,
-      workExperience: {
-        ...prevState.workExperience,
-        [field]: value,
-      },
-    }));
-  };
-
-  //handlechangeexperience end
-
   const [formData, setFormData] = useState({
-    heroDescription: "Leading provider of tech solutions.",
-    footerDescription: "Dedicated to innovation and excellence.",
-    email: "contact@techsolutions.com",
-    phone: "+1234567890",
-    address: "123 Tech Street, Silicon Valley, CA",
-    socialLinks: "https://twitter.com/techsolutions",
-    workExperience: {
-      countries: "USA, Canada, Germany",
-      expEmployees: "200+",
-      scrumTeams: "15",
-      fullStackDev: "50+",
-    },
-    aboutDescription:
-      "TechSolutions specializes in providing high-quality IT services and innovative solutions to global clients.",
     offshoreType: "Dedicated Development Center",
     offshoreDescription:
       "Offers flexible engagement models and full control over the process.",
@@ -132,13 +72,6 @@ export default function OffshoringPageEdit() {
       "Better Collaboration",
       "Consistency",
     ],
-    testimonialFullName: "Jane Doe",
-    testimonialDescription:
-      "The team at TechSolutions went above and beyond to meet our needs.",
-    testimonialDesignation: "CEO of Innovative Tech Co.",
-    expertiseName: "Cloud Solutions",
-    expertiseDescription:
-      "Expertise in building scalable cloud platforms tailored to client needs.",
   });
 
   const handleChange = (e) => {
@@ -148,7 +81,9 @@ export default function OffshoringPageEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    console.log(formData);
+    if (!isModalOpenAdvantage && !isModalOpenComparison) {
+      console.log(formData);
+    }
     // dispatch(LandingPageEdit(formData));
 
     // navigate("/landingPage");
@@ -215,17 +150,16 @@ export default function OffshoringPageEdit() {
               <Button
                 text={"Add Advantage"}
                 icon={<FaPlus />}
-                click={openModal}
+                click={openModalAdvantage}
               />
             </div>
           </div>
-
           {/* Remaining form fields */}
 
           {/* Modal */}
-          {isModalOpen && (
+          {isModalOpenAdvantage && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[18%] felx justify-center p-4 rounded-lg">
+              <div className="bg-white w-[40%] h-[30%] felx justify-center p-4 rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Add Advantage</h2>
                 <textarea
                   type="text"
@@ -244,7 +178,7 @@ export default function OffshoringPageEdit() {
                   </button>
                   <button
                     type="button"
-                    onClick={closeModal}
+                    onClick={closeModalAdvantage}
                     className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
                   >
                     Close
@@ -280,7 +214,7 @@ export default function OffshoringPageEdit() {
               <Button
                 text={"Add Comparison"}
                 icon={<FaPlus />}
-                click={openModal}
+                click={openModalComparison}
               />
             </div>
           </div>
@@ -288,9 +222,9 @@ export default function OffshoringPageEdit() {
           {/* Remaining form fields */}
 
           {/* Modal */}
-          {isModalOpen && (
+          {isModalOpenComparison && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[18%] felx justify-center p-4 rounded-lg">
+              <div className="bg-white w-[40%] h-[30%] felx justify-center p-4 rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Add Comparison</h2>
                 <textarea
                   type="text"
@@ -309,7 +243,7 @@ export default function OffshoringPageEdit() {
                   </button>
                   <button
                     type="button"
-                    onClick={closeModal}
+                    onClick={closeModalComparison}
                     className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
                   >
                     Cancel
@@ -318,8 +252,6 @@ export default function OffshoringPageEdit() {
               </div>
             </div>
           )}
-
-          {/*  */}
         </div>
         {/* offshore end */}
 
