@@ -15,6 +15,7 @@ import { ProductResearchPage } from "./components/ProductResearch/ProductResearc
 import ProductResearchPageEdit from "./components/ProductResearch/ProductResearchPageEdit";
 import { WebDevelopmentPage } from "./components/WebDevelopment/WebDevelopmentPage";
 import WebDevelopmentPageEdit from "./components/WebDevelopment/WebDevelopmentPageEdit";
+import { FaqPage } from "./components/Faq/FaqPage";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -35,6 +36,7 @@ function App() {
               <Route path="/ProductResearchPageEdit/edit/:id" element={<ProductResearchPageEdit/>}/>
               <Route path="/webDevelopment" element={<WebDevelopmentPage/>}/>
               <Route path="/WebDevelopmentPageEdit/edit/:id" element={<WebDevelopmentPageEdit/>}/>
+              <Route path="/faq" element={<FaqPage/>}/>
               <Route
                 path="/logout"
                 element={<Logout />}
