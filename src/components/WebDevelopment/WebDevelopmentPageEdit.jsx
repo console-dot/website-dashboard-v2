@@ -2,20 +2,26 @@ import React, { useState } from "react";
 import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
 // Assuming WhyChooseSection is in a separate file
 
-export default function CustomServicePageEdit() {
+export default function WebDevelopmentPageEdit() {
   const [formData, setFormData] = useState({
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
     Proposition:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-    whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-    whyChoose: ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"],
-    delivers: { actionDesc: "facebook", collabDesc: "youtube" },
+    whyChoose: [
+      "User-Centric Design",
+      "Cross-Platform Compatibility",
+      "Performance Optimization",
+    ],
+    techStack: [
+      { name: "React", type: "Frontend", img: "react.png" },
+      { name: "Node.js", type: "Backend", img: "nodejs.png" },
+    ],
   });
   const cardLabels = [
-    "ConsoleDot ERP",
-    "SaaS by ConsoleDot",
-    "ConsoleDot MVP"
+    "User-Centric Design",
+    "Cross-Platform Compatibility",
+    "Performance Optimization",
   ];
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
@@ -24,29 +30,22 @@ export default function CustomServicePageEdit() {
     });
   };
 
-  const handleChange = (e) => {
+  const handleChange = (e, index) => {
     const { name, value } = e.target;
-    if (name.includes("delivers.")) {
-      const [parent, child] = name.split(".");
-      setFormData({
-        ...formData,
-        delivers: {
-          ...formData.delivers,
-          [child]: value,
-         
-          
-        },
-        
-      });
-    } else {
-      setFormData({
-        ...formData,
-        [name]: value,
-      });
-    }
+    const updatedTechStack = [...formData.techStack];
+    updatedTechStack[index][name] = value;
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
+    });
   };
-  
 
+  const handleAddTechStack = () => {
+    setFormData({
+      ...formData,
+      techStack: [...formData.techStack, { name: "", type: "", img: "" }],
+    });
+  };
   const handleSubmit = (e) => {
     e.preventDefault();
     console.log(formData);
@@ -64,7 +63,7 @@ export default function CustomServicePageEdit() {
         {/* Custom Service Model */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Custom Service Model
+            Web Development Modal
           </h1>
           <label className="text-webDescrip font-semibold">Description</label>
           <input
@@ -85,18 +84,6 @@ export default function CustomServicePageEdit() {
             value={formData.Proposition}
             placeholder="Custom Service Proposition"
           />
-          <label className="text-webDescrip font-semibold">
-            Why Choose Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="whychooseDesc"
-            id="whychooseDesc"
-            onChange={handleChange}
-            value={formData.whychooseDesc}
-            placeholder="Custom Service Why Choose Description"
-          />
-
           <div className="border border-dashed border-custom-purple p-4 mt-6 ">
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
@@ -109,33 +96,62 @@ export default function CustomServicePageEdit() {
               cardLabels={cardLabels}
             />
           </div>
-          <div className="mt-6">
-            <label className="text-webDescrip text-[20px] font-bold">
-              Delivers
+
+          {/* Tech Stack */}
+          <div className="border border-dashed border-custom-purple p-4 mt-6">
+            <label className="text-webDescrip font-semibol text-[20px] mx-auto">
+              Tech Stack
             </label>
+            {formData.techStack.map((tech, index) => (
+              <div key={index} className="mb-4">
+                <label className="text-webDescrip font-semibold">
+                  Tech Name
+                </label>
+                <input
+                  type="text"
+                  name="name"
+                  value={tech.name}
+                  onChange={(e) => handleChange(e, index)}
+                  placeholder="Technology Name"
+                  className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+
+                <label className="text-webDescrip font-semibold">
+                  Tech Type
+                </label>
+                <input
+                  type="text"
+                  name="type"
+                  value={tech.type}
+                  onChange={(e) => handleChange(e, index)}
+                  placeholder="Technology Type"
+                  className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                />
+                <input
+                  type="file"
+                  name="img"
+                  placeholder="Add Tech Img"
+                  onChange={(e) => handleChange(e, index)}
+                />
+
+                {/* Image Preview */}
+                {tech.img && (
+                  <img
+                    src={tech.img}
+                    alt={tech.name}
+                    className="block mt-2 w-16 h-16 object-cover"
+                  />
+                )}
+              </div>
+            ))}
+            <button
+              type="button"
+              onClick={handleAddTechStack}
+              className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full focus:outline-none hover:bg-blue-600"
+            >
+              Add Tech Stack
+            </button>
           </div>
-          <label className="text-webDescrip font-semibold">
-            Expertise in Action
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="delivers.actionDesc"
-            id="actionDesc"
-            onChange={handleChange}
-            value={formData.delivers.actionDesc}
-            placeholder="Expertise in Action"
-          />
-          <label className="text-webDescrip font-semibold">
-            Collaborative Ingenuity
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="delivers.collabDesc"
-            id="collabDesc"
-            onChange={handleChange}
-            value={formData.delivers.collabDesc}
-            placeholder="Collaborative Ingenuity"
-          />
         </div>
 
         {/* Submit button */}

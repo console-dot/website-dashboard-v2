@@ -1,21 +1,23 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { CustomServiceCard } from "./CustomServiceCard";
+import { ProductResearchCard } from "./ProductResearchCard";
 
 const data = [
   {
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-    Proposition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-    whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-    whyChoose: ['a','b','c'],
-    delivers: 
-      { actionDesc: "facebook", collabDesc: "youtube"  },
-     
- },
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
+    keyComponents: [
+      { heading: "Market Analysis", points:["lorem42", "lorem20"]  },
+      { heading: "Client", points:["lorem42", "lorem20"]  },
+      { heading: "Feasibility", points:["lorem42", "lorem20"]  },
+      { heading: "Road Map", points:["lorem42", "lorem20"]  },
+    ],
+    whyChoose: ["a", "b", "c"],
+  },
 ];
 
-export const CustomServicePage = () => {
+export const ProductResearchPage = () => {
   //   const [data, setData] = useState();
   const navigate = useNavigate();
 
@@ -33,7 +35,9 @@ export const CustomServicePage = () => {
           alignItems: "center",
         }}
       >
-        <h2 className="text-black text-2xl font-bold">Custom Software Service</h2>
+        <h2 className="text-black text-2xl font-bold">
+          Custom Software Service
+        </h2>
       </div>
 
       {/* Center */}
@@ -42,7 +46,7 @@ export const CustomServicePage = () => {
           {data &&
             data.map((item, index) => (
               <div key={index} className="flex flex-col w-full">
-                <CustomServiceCard data={item} onView={() => onView(index)} />
+                <ProductResearchCard data={item} onView={() => onView(index)} />
               </div>
             ))}
         </div>

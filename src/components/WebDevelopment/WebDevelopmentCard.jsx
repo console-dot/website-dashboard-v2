@@ -3,8 +3,8 @@ import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaPen } from "react-icons/fa";
 
-export const CustomServiceCard = ({ data }) => {
-    const navigate = useNavigate();
+export const WebDevelopmentCard = ({ data }) => {
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -20,12 +20,9 @@ export const CustomServiceCard = ({ data }) => {
               }}
             >
               <div className="w-full flex flex-col justify-between mt-[10px]">
-                {/* Offshoring Services Model  */}
-
-                {/* Offshore */}
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Custom Service Service
+                    Web Development
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
@@ -43,19 +40,7 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.Proposition}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Why Choose Desc:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.whychooseDesc}
+                        {data?.proposition}
                       </span>
                     </div>
                   </div>
@@ -65,28 +50,29 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.whyChoose}
+                        {data?.whyChoose.join(" , ")}
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div className="flex mt-2" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Delivers : Action Desc </strong>
+                      <strong style={{ color: "grey" }}>Tech Stack: </strong>
                     </div>
                     <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.delivers.actionDesc}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Delivers : CollabDesc </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.delivers.collabDesc}
-                      </span>
+                      <div className="flex flex-wrap justify-center items-center">
+                        {data?.techStack.map((tech, index) => (
+                          <div key={index} className="mr-6 mb-2 ">
+                            <img
+                              src={tech.img}
+                              alt={tech.type}
+                              style={{ width: "50px", height: "50px" }}
+                            />
+                            <span className="text-webDescrip text-sm">{tech.type } : </span>
+                            <span className="text-webDescrip text-sm">{tech.name}</span>
+                            
+                          </div>
+                        ))}
+                      </div>
                     </div>
                   </div>
                 </div>
@@ -97,7 +83,7 @@ export const CustomServiceCard = ({ data }) => {
                     icon={<FaPen />}
                     text={"Edit"}
                     click={() => {
-                        navigate(`/CustomSoftwarePageEdit/edit/:id`);
+                      navigate(`/WebDevelopmentPageEdit/edit/:id`);
                     }}
                   />
                   <Button text={"View"} icon={<FaEye />} />

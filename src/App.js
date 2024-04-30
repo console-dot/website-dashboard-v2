@@ -11,6 +11,10 @@ import { OffshoringPage } from "./components/Offshoring/OffshoringPage";
 import OffshoringPageEdit from "./components/Offshoring/OffshoringPageEdit";
 import { CustomServicePage } from "./components/CustomService/CustomServicePage";
 import CustomServicePageEdit from "./components/CustomService/CustomServicePageEdit";
+import { ProductResearchPage } from "./components/ProductResearch/ProductResearchPage";
+import ProductResearchPageEdit from "./components/ProductResearch/ProductResearchPageEdit";
+import { WebDevelopmentPage } from "./components/WebDevelopment/WebDevelopmentPage";
+import WebDevelopmentPageEdit from "./components/WebDevelopment/WebDevelopmentPageEdit";
 
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
@@ -27,6 +31,10 @@ function App() {
               <Route path="/OffshoringPage/edit/:id" element={<OffshoringPageEdit/>} />
               <Route path="/customSoftware" element={<CustomServicePage/>}/>
               <Route path="/CustomSoftwarePageEdit/edit/:id" element={<CustomServicePageEdit/>}/>
+              <Route path="/productResearch" element={<ProductResearchPage/>}/>
+              <Route path="/ProductResearchPageEdit/edit/:id" element={<ProductResearchPageEdit/>}/>
+              <Route path="/webDevelopment" element={<WebDevelopmentPage/>}/>
+              <Route path="/WebDevelopmentPageEdit/edit/:id" element={<WebDevelopmentPageEdit/>}/>
               <Route
                 path="/logout"
                 element={<Logout />}

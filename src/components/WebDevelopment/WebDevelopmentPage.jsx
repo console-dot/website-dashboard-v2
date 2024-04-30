@@ -1,21 +1,24 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import { CustomServiceCard } from "./CustomServiceCard";
+import {WebDevelopmentCard} from "./WebDevelopmentCard";
 
 const data = [
-  {
-    description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-    Proposition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-    whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-    whyChoose: ['a','b','c'],
-    delivers: 
-      { actionDesc: "facebook", collabDesc: "youtube"  },
-     
- },
-];
+    {
+      description:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
+      proposition:
+        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
+      whyChoose: ["User-Centric Design", "Cross-Platform Compatibility", "Performance Optimization"],
+      techStack: [
+        { name: "React", type: "Frontend", img: "react.png" },
+        { name: "Node.js", type: "Backend", img: "nodejs.png" },
+        // Add more technologies as needed
+      ]
+    }
+  ];
 
-export const CustomServicePage = () => {
+export const WebDevelopmentPage = () => {
   //   const [data, setData] = useState();
   const navigate = useNavigate();
 
@@ -33,7 +36,9 @@ export const CustomServicePage = () => {
           alignItems: "center",
         }}
       >
-        <h2 className="text-black text-2xl font-bold">Custom Software Service</h2>
+        <h2 className="text-black text-2xl font-bold">
+          Web Development Service
+        </h2>
       </div>
 
       {/* Center */}
@@ -42,7 +47,7 @@ export const CustomServicePage = () => {
           {data &&
             data.map((item, index) => (
               <div key={index} className="flex flex-col w-full">
-                <CustomServiceCard data={item} onView={() => onView(index)} />
+                <WebDevelopmentCard data={item} onView={() => onView(index)} />
               </div>
             ))}
         </div>

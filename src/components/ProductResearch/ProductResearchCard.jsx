@@ -3,8 +3,8 @@ import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaPen } from "react-icons/fa";
 
-export const CustomServiceCard = ({ data }) => {
-    const navigate = useNavigate();
+export const ProductResearchCard = ({ data }) => {
+  const navigate = useNavigate();
 
   return (
     <div>
@@ -20,12 +20,11 @@ export const CustomServiceCard = ({ data }) => {
               }}
             >
               <div className="w-full flex flex-col justify-between mt-[10px]">
-                {/* Offshoring Services Model  */}
+                {/* ProductResearch Modal*/}
 
-                {/* Offshore */}
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Custom Service Service
+                    Product Research Service
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
@@ -39,26 +38,25 @@ export const CustomServiceCard = ({ data }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Proposition: </strong>
+                      <strong style={{ color: "grey" }}>Key Components: </strong>
                     </div>
                     <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.Proposition}
-                      </span>
+                      {/* Map over keyComponents to display each component and its points */}
+                      {data?.keyComponents?.map((component, index) => (
+                        <div key={index}>
+                          <p className="text-black text-sm font-bold">
+                            {component.heading}:
+                          </p>
+                          <ul>
+                            {component.points.map((point, pointIndex) => (
+                              <li className="text-black" key={pointIndex}>{point}</li>
+                            ))}
+                          </ul>
+                        </div>
+                      ))}
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Why Choose Desc:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.whychooseDesc}
-                      </span>
-                    </div>
-                  </div>
+
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Why Choose Us: </strong>
@@ -66,26 +64,6 @@ export const CustomServiceCard = ({ data }) => {
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
                         {data?.whyChoose}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Delivers : Action Desc </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.delivers.actionDesc}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Delivers : CollabDesc </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.delivers.collabDesc}
                       </span>
                     </div>
                   </div>
@@ -97,7 +75,7 @@ export const CustomServiceCard = ({ data }) => {
                     icon={<FaPen />}
                     text={"Edit"}
                     click={() => {
-                        navigate(`/CustomSoftwarePageEdit/edit/:id`);
+                      navigate(`/ProductResearchPageEdit/edit/:id`);
                     }}
                   />
                   <Button text={"View"} icon={<FaEye />} />
