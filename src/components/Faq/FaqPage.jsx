@@ -66,6 +66,7 @@ console.log(formData)
                 <div key={index} className="mb-6">
                   <div className="flex items-center gap-4 mb-2 text-lg font-medium text-black dark:text-white">
                     <FaQuestionCircle />
+                    
                     <div>{qa.question}</div>
                   </div>
                   <div className="text-gray-500 bg-white dark:text-gray-400">
