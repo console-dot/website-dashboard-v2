@@ -61,8 +61,6 @@ export default function LandingPageEdit() {
     }));
   };
 
-
-
   const addSocialLink = () => {
     if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
       setFormData((prevData) => ({
@@ -78,7 +76,6 @@ export default function LandingPageEdit() {
       setSocialLinkURL("");
     }
   };
-  
 
   // Function to remove social link
   const removeSocialLink = (index) => {
@@ -202,64 +199,82 @@ export default function LandingPageEdit() {
         {/* introduction start */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center">
+            Landing Page Edit
+          </h1>
+
+          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center">
             Introduction
           </h1>
-          <label className="text-webDescrip font-semibold">
-            Hero Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="heroDescription"
-            id="heroDescription"
-            onChange={handleChange}
-            value={formData?.heroDescription}
-            placeholder="Hero Description"
-          />
-          <label className="text-webDescrip font-semibold">
-            Footer Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="footerDescription"
-            id="footerDescription"
-            onChange={handleChange}
-            value={formData?.footerDescription}
-            placeholder="footerdescription"
-          />
-          <label className="text-webDescrip font-semibold">E-Mail</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="email"
-            id="email"
-            onChange={handleChange}
-            value={formData?.email}
-            placeholder="email"
-          />
-          <label className="text-webDescrip font-semibold">Phone</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="phone"
-            id="phone"
-            onChange={handleChange}
-            value={formData?.phone}
-            placeholder="Phone"
-          />
-          <label className="text-webDescrip font-semibold">Address</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="address"
-            id="address"
-            onChange={handleChange}
-            value={formData?.address}
-            placeholder="address"
-          />
-          <div>
-            <label className="text-webDescrip font-semibold">
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Hero Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="heroDescription"
+              id="heroDescription"
+              onChange={handleChange}
+              value={formData?.heroDescription}
+              placeholder="Hero Description"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Footer Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="footerDescription"
+              id="footerDescription"
+              onChange={handleChange}
+              value={formData?.footerDescription}
+              placeholder="footerdescription"
+            />
+          </div>
+
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">E-Mail</label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="email"
+              id="email"
+              onChange={handleChange}
+              value={formData?.email}
+              placeholder="email"
+            />
+          </div>
+
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">Phone</label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="phone"
+              id="phone"
+              onChange={handleChange}
+              value={formData?.phone}
+              placeholder="Phone"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Address
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="address"
+              id="address"
+              onChange={handleChange}
+              value={formData?.address}
+              placeholder="address"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
               Social Links
             </label>
             <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
@@ -338,50 +353,58 @@ export default function LandingPageEdit() {
               </div>
             </div>
           )}
-          <label className="text-webDescrip font-semibold">
+          <label className="text-webDescrip font-semibold mt-4">
             Work Experience
           </label>
           <div>
-            <label>Countries</label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="countries"
-              id="countries"
-              onChange={(e) => handleChangeExperience(e, "countries")}
-              value={formData?.workExperience?.countries}
-              placeholder="Countries"
-            />
-            <label>Employees</label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="expEmployees"
-              id="expEmployees"
-              onChange={(e) => handleChangeExperience(e, "expEmployees")}
-              value={formData?.workExperience?.expEmployees}
-              placeholder="Employees"
-            />
-            <label>Scrum Teams</label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="scrumTeams"
-              id="scrumTeams"
-              onChange={(e) => handleChangeExperience(e, "scrumTeams")}
-              value={formData?.workExperience?.scrumTeams}
-              placeholder="Scrum Teams"
-            />
-            <label>Full Stack Developers</label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="fullStackDev"
-              id="fullStackDev"
-              onChange={(e) => handleChangeExperience(e, "fullStackDev")}
-              value={formData?.workExperience?.fullStackDev}
-              placeholder="Full Stack Developers"
-            />
+            <div className="mt-4">
+              <label>Countries</label>
+              <input
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text"
+                name="countries"
+                id="countries"
+                onChange={(e) => handleChangeExperience(e, "countries")}
+                value={formData?.workExperience?.countries}
+                placeholder="Countries"
+              />
+            </div>
+            <div className="mt-4">
+              <label>Employees</label>
+              <input
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text"
+                name="expEmployees"
+                id="expEmployees"
+                onChange={(e) => handleChangeExperience(e, "expEmployees")}
+                value={formData?.workExperience?.expEmployees}
+                placeholder="Employees"
+              />
+            </div>
+            <div className="mt-4">
+              <label>Scrum Teams</label>
+              <input
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text"
+                name="scrumTeams"
+                id="scrumTeams"
+                onChange={(e) => handleChangeExperience(e, "scrumTeams")}
+                value={formData?.workExperience?.scrumTeams}
+                placeholder="Scrum Teams"
+              />
+            </div>
+            <div className="mt-4">
+              <label>Full Stack Developers</label>
+              <input
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text"
+                name="fullStackDev"
+                id="fullStackDev"
+                onChange={(e) => handleChangeExperience(e, "fullStackDev")}
+                value={formData?.workExperience?.fullStackDev}
+                placeholder="Full Stack Developers"
+              />
+            </div>
           </div>
         </div>
         {/* introduction End */}
@@ -391,7 +414,7 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             About
           </h1>
-          <label className="text-webDescrip font-semibold">
+          <label className="text-webDescrip font-semibold mt-4">
             About Description
           </label>
           <textarea
@@ -411,60 +434,66 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Offshore
           </h1>
-          <label className="text-webDescrip font-semibold">Offshore Type</label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="offshoreType"
-            id="offshoreType"
-            onChange={handleChange}
-            value={formData?.offshoreType}
-            placeholder="Offshore Type"
-          />
-          <label className="text-webDescrip font-semibold">
-            Offshore Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="offshoreDescription"
-            id="offshoreDescription"
-            onChange={handleChange}
-            value={formData?.offshoreDescription}
-            placeholder="Offshore Description"
-          />
-
-          <label className="text-webDescrip font-semibold">
-            Offshore Advantages
-          </label>
-          <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
-            <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
-              {formData.offshoreAdvantages.map((advantage, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2"
-                >
-                  <p className="text-webDescrip">{advantage}</p>
-                  <button
-                    type="button"
-                    onClick={() => removeAdvantage(index)}
-                    className="btn btn-error  text-white  rounded-xl"
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold ">
+              Offshore Type
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="offshoreType"
+              id="offshoreType"
+              onChange={handleChange}
+              value={formData?.offshoreType}
+              placeholder="Offshore Type"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Offshore Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="offshoreDescription"
+              id="offshoreDescription"
+              onChange={handleChange}
+              value={formData?.offshoreDescription}
+              placeholder="Offshore Description"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Offshore Advantages
+            </label>
+            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+              <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
+                {formData.offshoreAdvantages.map((advantage, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2"
                   >
-                    <FaTrash />
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-            <div className="w-[100%] flex justify-center items-center ">
-              <Button
-                text={"Add Advantage"}
-                icon={<FaPlus />}
-                click={openModalAdvantage}
-              />
+                    <p className="text-webDescrip">{advantage}</p>
+                    <button
+                      type="button"
+                      onClick={() => removeAdvantage(index)}
+                      className="btn btn-error  text-white  rounded-xl"
+                    >
+                      <FaTrash />
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="w-[100%] flex justify-center items-center ">
+                <Button
+                  text={"Add Advantage"}
+                  icon={<FaPlus />}
+                  click={openModalAdvantage}
+                />
+              </div>
             </div>
           </div>
-
           {/* Remaining form fields */}
 
           {/* Modal */}
@@ -499,34 +528,36 @@ export default function LandingPageEdit() {
             </div>
           )}
           {/*  */}
-          <label className="text-webDescrip font-semibold">
-            Offshore Comparison
-          </label>
-          <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
-            <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
-              {formData.offshoreComparison.map((Comaprison, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2"
-                >
-                  <p className="text-webDescrip">{Comaprison}</p>
-                  <button
-                    type="button"
-                    onClick={() => removeComparison(index)}
-                    className="btn btn-error  text-white  rounded-xl"
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Offshore Comparison
+            </label>
+            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+              <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
+                {formData.offshoreComparison.map((Comaprison, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2"
                   >
-                    <FaTrash />
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-            <div className="w-[100%] flex justify-center items-center ">
-              <Button
-                text={"Add Comparison"}
-                icon={<FaPlus />}
-                click={openModalComparison}
-              />
+                    <p className="text-webDescrip">{Comaprison}</p>
+                    <button
+                      type="button"
+                      onClick={() => removeComparison(index)}
+                      className="btn btn-error  text-white  rounded-xl"
+                    >
+                      <FaTrash />
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="w-[100%] flex justify-center items-center ">
+                <Button
+                  text={"Add Comparison"}
+                  icon={<FaPlus />}
+                  click={openModalComparison}
+                />
+              </div>
             </div>
           </div>
 
@@ -573,69 +604,79 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Testimonials
           </h1>
-          <label className="text-webDescrip font-semibold">
-            Testimonial Image
-          </label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="file"
-            name="testimonialImage"
-            id="testimonialImage"
-            onChange={handleImageUpload}
-            placeholder="Testimonial Image"
-          />
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Testimonial Image
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="file"
+              name="testimonialImage"
+              id="testimonialImage"
+              onChange={handleImageUpload}
+              placeholder="Testimonial Image"
+            />
 
-          {formData.testimonialImage && (
-            <div>
-              <label className="text-webDescrip font-semibold">Preview:</label>
-              <img
-                src={formData.testimonialImage}
-                alt="Testimonial Preview"
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "200px",
-                  marginTop: "10px",
-                }}
-              />
-            </div>
-          )}
+            {formData.testimonialImage && (
+              <div>
+                <label className="text-webDescrip font-semibold mt-4">
+                  Preview:
+                </label>
+                <img
+                  src={formData.testimonialImage}
+                  alt="Testimonial Preview"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    marginTop: "10px",
+                  }}
+                />
+              </div>
+            )}
+          </div>
 
-          <label className="text-webDescrip font-semibold">
-            Testimonial FullName
-          </label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="testimonialFullName"
-            id="testimonialFullName"
-            onChange={handleChange}
-            value={formData?.testimonialFullName}
-            placeholder="testimonialFullName"
-          />
-          <label className="text-webDescrip font-semibold">
-            Testimonial Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="testimonialDescription"
-            id="testimonialDescription"
-            onChange={handleChange}
-            value={formData?.testimonialDescription}
-            placeholder="Testimonial Description"
-          />
-          <label className="text-webDescrip font-semibold">
-            Testimonial Designation
-          </label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="testimonialDesignation"
-            id="testimonialDesignation"
-            onChange={handleChange}
-            value={formData?.testimonialDesignation}
-            placeholder="Testimonial Designation"
-          />
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Testimonial FullName
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="testimonialFullName"
+              id="testimonialFullName"
+              onChange={handleChange}
+              value={formData?.testimonialFullName}
+              placeholder="testimonialFullName"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Testimonial Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="testimonialDescription"
+              id="testimonialDescription"
+              onChange={handleChange}
+              value={formData?.testimonialDescription}
+              placeholder="Testimonial Description"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Testimonial Designation
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="testimonialDesignation"
+              id="testimonialDesignation"
+              onChange={handleChange}
+              value={formData?.testimonialDesignation}
+              placeholder="Testimonial Designation"
+            />
+          </div>
         </div>
         {/*  Testimonials end*/}
 
@@ -644,61 +685,68 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Experties
           </h1>
-          <label className="text-webDescrip font-semibold">
-            Expertise Image
-          </label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="file"
-            name="expertiseImage"
-            id="expertiseImage"
-            onChange={handleExpertiseImageUpload}
-            placeholder="expertise Image"
-          />
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Expertise Image
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="file"
+              name="expertiseImage"
+              id="expertiseImage"
+              onChange={handleExpertiseImageUpload}
+              placeholder="expertise Image"
+            />
 
-          {formData.expertiseImage && (
-            <div>
-              <label className="text-webDescrip font-semibold">Preview:</label>
-              <img
-                src={formData.expertiseImage}
-                alt="Testimonial Preview"
-                style={{
-                  maxWidth: "100%",
-                  maxHeight: "200px",
-                  marginTop: "10px",
-                }}
-              />
-            </div>
-          )}
-
-          <label className="text-webDescrip font-semibold">
-            Expertise Name
-          </label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="expertiseName"
-            id="expertiseName"
-            onChange={handleChange}
-            value={formData?.expertiseName}
-            placeholder="Expertise Name"
-          />
-          <label className="text-webDescrip font-semibold">
-            Expertise Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="expertiseDescription"
-            id="expertiseDescription"
-            onChange={handleChange}
-            value={formData?.expertiseDescription}
-            placeholder="Expertise Description"
-          />
+            {formData.expertiseImage && (
+              <div>
+                <label className="text-webDescrip font-semibold mt-4">
+                  Preview:
+                </label>
+                <img
+                  src={formData.expertiseImage}
+                  alt="Testimonial Preview"
+                  style={{
+                    maxWidth: "100%",
+                    maxHeight: "200px",
+                    marginTop: "10px",
+                  }}
+                />
+              </div>
+            )}
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Expertise Name
+            </label>
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="expertiseName"
+              id="expertiseName"
+              onChange={handleChange}
+              value={formData?.expertiseName}
+              placeholder="Expertise Name"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold mt-4">
+              Expertise Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="expertiseDescription"
+              id="expertiseDescription"
+              onChange={handleChange}
+              value={formData?.expertiseDescription}
+              placeholder="Expertise Description"
+            />
+          </div>
         </div>
         {/*  Experties end*/}
 
-        <div className="w-full flex justify-center items-center mt-4">
+        <div className="w-full flex justify-center items-center mt-4 mb-4">
           <button className="text-white text-[16px] w-[300px] px-5 py-2.5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full focus:outline-none active:bg-gradient-to-r active:from-custom-purple active:to-custom-blue">
             <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
               Submit

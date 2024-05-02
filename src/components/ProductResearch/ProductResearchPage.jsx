@@ -36,7 +36,7 @@ export const ProductResearchPage = () => {
         }}
       >
         <h2 className="text-black text-2xl font-bold">
-          Custom Software Service
+          Product Research Service Page
         </h2>
       </div>
 

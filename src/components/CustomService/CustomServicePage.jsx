@@ -33,7 +33,7 @@ export const CustomServicePage = () => {
           alignItems: "center",
         }}
       >
-        <h2 className="text-black text-2xl font-bold">Custom Software Service</h2>
+        <h2 className="text-black text-2xl font-bold">Custom Software Service Page</h2>
       </div>
 
       {/* Center */}

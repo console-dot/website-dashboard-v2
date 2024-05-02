@@ -1,16 +1,18 @@
-import React from "react";
-import { Button } from "../Button";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
+import { Button } from "../Button";
 import { FaEye, FaPen } from "react-icons/fa";
 
-export const CustomServiceCard = ({ data }) => {
-    const navigate = useNavigate();
-
+export const OpenPositionsCard = ({ data, key, value }) => {
+  const navigate = useNavigate();
   return (
     <div>
       <div className="d-flex justify-content-center">
         <div>
-          <div className="bg-dark rounded border-secondary text-white ">
+          <div
+            className="bg-dark rounded border-secondary text-white"
+            style={{ minHeight: "450px" }}
+          >
             <div
               style={{
                 display: "flex",
@@ -20,76 +22,104 @@ export const CustomServiceCard = ({ data }) => {
               }}
             >
               <div className="w-full flex flex-col justify-between mt-[10px]">
-                {/* Offshoring Services Model  */}
-
-                {/* Offshore */}
+                {/* Introduction */}
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Custom Service Model
+                    Open Position Model
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}> Description: </strong>
+                      <strong style={{ color: "grey" }}>Job Type: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.description}
+                        {data?.jobType}
                       </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Proposition: </strong>
+                      <strong style={{ color: "grey" }}>Experience: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.Proposition}
+                        {data?.experience}
                       </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>
-                        Why Choose Desc:{" "}
+                        No Of Positions:{" "}
                       </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.whychooseDesc}
+                        {data?.noOfPositions}
                       </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Why Choose Us: </strong>
+                      <strong style={{ color: "grey" }}>Qualification: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.whyChoose}
+                        {data?.qualifications}
                       </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Delivers : Action Desc </strong>
+                      <strong style={{ color: "grey" }}>
+                        Employment Type:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.delivers.actionDesc}
+                        {data?.employmentType}
                       </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Delivers : CollabDesc </strong>
+                      <strong style={{ color: "grey" }}>
+                      Designation:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.delivers.collabDesc}
+                        {data?.designation}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex" style={{ width: "70%" }}>
+                    <div className="w-[50%]">
+                      <strong style={{ color: "grey" }}>
+                      No Of Request:{" "}
+                      </strong>
+                    </div>
+                    <div className="w-[50%]">
+                      <span className="text-black text-sm">
+                        {data?.noOfRequest}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex" style={{ width: "70%" }}>
+                    <div className="w-[50%]">
+                      <strong style={{ color: "grey" }}>
+                      Capacity:{" "}
+                      </strong>
+                    </div>
+                    <div className="w-[50%]">
+                      <span className="text-black text-sm">
+                        {data?.capacity}
                       </span>
                     </div>
                   </div>
                 </div>
+
+                {/* End */}
               </div>
               <div className="w-full flex flex-row justify-center items-center">
                 <div className="w-[80%] flex justify-around">
@@ -97,7 +127,7 @@ export const CustomServiceCard = ({ data }) => {
                     icon={<FaPen />}
                     text={"Edit"}
                     click={() => {
-                        navigate(`/CustomSoftwarePageEdit/edit/:id`);
+                      navigate(`/OpenPositionsPageEdit/edit/${123}`);
                     }}
                   />
                   <Button text={"View"} icon={<FaEye />} />
