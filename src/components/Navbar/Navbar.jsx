@@ -15,7 +15,7 @@ import { CgWebsite } from "react-icons/cg";
 import { SiBlockchaindotcom } from "react-icons/si";
 import { NavLink } from "react-router-dom";
 import { MdLogout } from "react-icons/md";
-
+import { FaQuestion } from "react-icons/fa";
 export default function Navbar({ children }) {
   const [isOpen, setIsOpen] = useState(false);
   const toggle = () => setIsOpen(!isOpen);
@@ -63,9 +63,14 @@ export default function Navbar({ children }) {
       icon: <FaGlasses size={25} />,
     },
     {
-      path: "/uiux",
+      path: "/ui-ux",
       name: "Ui/Ux",
       icon: <FaFigma size={25} />,
+    },
+    {
+      path: "/faq",
+      name: "FAQ",
+      icon: <FaQuestion size={25} />,
     },
     {
       path: "/casestudies",
