@@ -22,7 +22,7 @@ export const WebDevelopmentCard = ({ data }) => {
               <div className="w-full flex flex-col justify-between mt-[10px]">
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Web Development
+                    Web Development Model
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
@@ -67,9 +67,12 @@ export const WebDevelopmentCard = ({ data }) => {
                               alt={tech.type}
                               style={{ width: "50px", height: "50px" }}
                             />
-                            <span className="text-webDescrip text-sm">{tech.type } : </span>
-                            <span className="text-webDescrip text-sm">{tech.name}</span>
-                            
+                            <span className="text-webDescrip text-sm">
+                              {tech.type} :{" "}
+                            </span>
+                            <span className="text-webDescrip text-sm">
+                              {tech.name}
+                            </span>
                           </div>
                         ))}
                       </div>

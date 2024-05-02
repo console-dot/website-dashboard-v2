@@ -99,7 +99,7 @@ export default function OffshoringPageEdit() {
         {/* offshore start */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Offshore
+            Offshore Edit
           </h1>
           <label className="text-webDescrip font-semibold">Offshore Type</label>
           <input
@@ -111,47 +111,50 @@ export default function OffshoringPageEdit() {
             value={formData?.offshoreType}
             placeholder="Offshore Type"
           />
-          <label className="text-webDescrip font-semibold">
-            Offshore Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="offshoreDescription"
-            id="offshoreDescription"
-            onChange={handleChange}
-            value={formData?.offshoreDescription}
-            placeholder="Offshore Description"
-          />
-
-          <label className="text-webDescrip font-semibold">
-            Offshore Advantages
-          </label>
-          <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
-            <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
-              {formData.offshoreAdvantages.map((advantage, index) => (
-                <div
-                  key={index}
-                  className="flex items-center justify-between p-2"
-                >
-                  <p className="text-webDescrip">{advantage}</p>
-                  <button
-                    type="button"
-                    onClick={() => removeAdvantage(index)}
-                    className="btn btn-error  text-white  rounded-xl"
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold">
+              Offshore Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="offshoreDescription"
+              id="offshoreDescription"
+              onChange={handleChange}
+              value={formData?.offshoreDescription}
+              placeholder="Offshore Description"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold">
+              Offshore Advantages
+            </label>
+            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+              <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
+                {formData.offshoreAdvantages.map((advantage, index) => (
+                  <div
+                    key={index}
+                    className="flex items-center justify-between p-2"
                   >
-                    <FaTrash />
-                    Remove
-                  </button>
-                </div>
-              ))}
-            </div>
-            <div className="w-[100%] flex justify-center items-center ">
-              <Button
-                text={"Add Advantage"}
-                icon={<FaPlus />}
-                click={openModalAdvantage}
-              />
+                    <p className="text-webDescrip">{advantage}</p>
+                    <button
+                      type="button"
+                      onClick={() => removeAdvantage(index)}
+                      className="btn btn-error  text-white  rounded-xl"
+                    >
+                      <FaTrash />
+                      Remove
+                    </button>
+                  </div>
+                ))}
+              </div>
+              <div className="w-[100%] flex justify-center items-center ">
+                <Button
+                  text={"Add Advantage"}
+                  icon={<FaPlus />}
+                  click={openModalAdvantage}
+                />
+              </div>
             </div>
           </div>
           {/* Remaining form fields */}
@@ -188,6 +191,7 @@ export default function OffshoringPageEdit() {
             </div>
           )}
           {/*  */}
+          <div className="mt-4">
           <label className="text-webDescrip font-semibold">
             Offshore Comparison
           </label>
@@ -253,9 +257,10 @@ export default function OffshoringPageEdit() {
             </div>
           )}
         </div>
+        </div>
         {/* offshore end */}
 
-        <div className="w-full flex justify-center items-center mt-4">
+        <div className="w-full flex justify-center items-center mt-4 mb-4">
           <button className="text-white text-[16px] w-[300px] px-5 py-2.5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full focus:outline-none active:bg-gradient-to-r active:from-custom-purple active:to-custom-blue">
             <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
               Submit
