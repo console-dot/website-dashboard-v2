@@ -37,6 +37,7 @@ function App() {
               <Route path="/webDevelopment" element={<WebDevelopmentPage/>}/>
               <Route path="/WebDevelopmentPageEdit/edit/:id" element={<WebDevelopmentPageEdit/>}/>
               <Route path="/faq" element={<FaqPage/>}/>
+            
               <Route
                 path="/logout"
                 element={<Logout />}

@@ -22,19 +22,16 @@ export const FaqPage = () => {
 
     if (question && answer) {
       if (editingIndex !== null) {
-        // If editing an existing item
         const updatedQuestions = [...formData];
         updatedQuestions[editingIndex] = { question, answer };
         setFormData(updatedQuestions);
         setEditingIndex(null);
       } else {
-        // If adding a new item
         const newQuestion = { question, answer };
         const newQuestions = [...formData, newQuestion];
         setFormData(newQuestions);
       }
 
-      // Reset the form fields
       questionInput.value = "";
       answerInput.value = "";
     }
@@ -66,7 +63,7 @@ console.log(formData)
                 <div key={index} className="mb-6">
                   <div className="flex items-center gap-4 mb-2 text-lg font-medium text-black dark:text-white">
                     <FaQuestionCircle />
-                    
+
                     <div>{qa.question}</div>
                   </div>
                   <div className="text-gray-500 bg-white dark:text-gray-400">

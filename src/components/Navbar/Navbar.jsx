@@ -63,7 +63,7 @@ export default function Navbar({ children }) {
       icon: <FaGlasses size={25} />,
     },
     {
-      path: "/uiux",
+      path: "/ui-ux",
       name: "Ui/Ux",
       icon: <FaFigma size={25} />,
     },
