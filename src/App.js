@@ -15,6 +15,7 @@ import { ProductResearchPage } from "./components/ProductResearch/ProductResearc
 import ProductResearchPageEdit from "./components/ProductResearch/ProductResearchPageEdit";
 import { WebDevelopmentPage } from "./components/WebDevelopment/WebDevelopmentPage";
 import WebDevelopmentPageEdit from "./components/WebDevelopment/WebDevelopmentPageEdit";
+import { FaqPage } from "./components/Faq/FaqPage";
 import { MobileAppPage } from "./components/MobileAppDev/MobileAppPage";
 import MobileAppPageEdit from "./components/MobileAppDev/MobileAppPageEdit";
 import { BlockChainPage } from "./components/BlockChain/BlockChainPage";
@@ -46,6 +47,8 @@ function App() {
               <Route path="/ProductResearchPageEdit/edit/:id" element={<ProductResearchPageEdit/>}/>
               <Route path="/webDevelopment" element={<WebDevelopmentPage/>}/>
               <Route path="/WebDevelopmentPageEdit/edit/:id" element={<WebDevelopmentPageEdit/>}/>
+              <Route path="/faq" element={<FaqPage/>}/>
+            
               <Route path="/mobileApp" element={<MobileAppPage/>}/>
               <Route path="/MobileAppPageEdit/edit/:id" element={<MobileAppPageEdit/>}/>
               <Route path="/blockchain" element={<BlockChainPage/>}/>
