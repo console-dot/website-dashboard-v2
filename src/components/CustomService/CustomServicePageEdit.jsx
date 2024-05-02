@@ -12,11 +12,7 @@ export default function CustomServicePageEdit() {
     whyChoose: ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"],
     delivers: { actionDesc: "facebook", collabDesc: "youtube" },
   });
-  const cardLabels = [
-    "ConsoleDot ERP",
-    "SaaS by ConsoleDot",
-    "ConsoleDot MVP"
-  ];
+  const cardLabels = ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"];
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
       ...formData,
@@ -33,10 +29,7 @@ export default function CustomServicePageEdit() {
         delivers: {
           ...formData.delivers,
           [child]: value,
-         
-          
         },
-        
       });
     } else {
       setFormData({
@@ -45,7 +38,6 @@ export default function CustomServicePageEdit() {
       });
     }
   };
-  
 
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -64,10 +56,10 @@ export default function CustomServicePageEdit() {
         {/* Custom Service Model */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Custom Service Model
+            Custom Service Edit
           </h1>
           <label className="text-webDescrip font-semibold">Description</label>
-          <input
+          <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             name="description"
@@ -76,27 +68,30 @@ export default function CustomServicePageEdit() {
             value={formData.description}
             placeholder="Custom Service Description"
           />
-          <label className="text-webDescrip font-semibold">Proposition</label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="Proposition"
-            id="Proposition"
-            onChange={handleChange}
-            value={formData.Proposition}
-            placeholder="Custom Service Proposition"
-          />
-          <label className="text-webDescrip font-semibold">
-            Why Choose Description
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="whychooseDesc"
-            id="whychooseDesc"
-            onChange={handleChange}
-            value={formData.whychooseDesc}
-            placeholder="Custom Service Why Choose Description"
-          />
-
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold">Proposition</label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              name="Proposition"
+              id="Proposition"
+              onChange={handleChange}
+              value={formData.Proposition}
+              placeholder="Custom Service Proposition"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold">
+              Why Choose Description
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              name="whychooseDesc"
+              id="whychooseDesc"
+              onChange={handleChange}
+              value={formData.whychooseDesc}
+              placeholder="Custom Service Why Choose Description"
+            />
+          </div>
           <div className="border border-dashed border-custom-purple p-4 mt-6 ">
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
@@ -114,28 +109,32 @@ export default function CustomServicePageEdit() {
               Delivers
             </label>
           </div>
-          <label className="text-webDescrip font-semibold">
-            Expertise in Action
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="delivers.actionDesc"
-            id="actionDesc"
-            onChange={handleChange}
-            value={formData.delivers.actionDesc}
-            placeholder="Expertise in Action"
-          />
-          <label className="text-webDescrip font-semibold">
-            Collaborative Ingenuity
-          </label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="delivers.collabDesc"
-            id="collabDesc"
-            onChange={handleChange}
-            value={formData.delivers.collabDesc}
-            placeholder="Collaborative Ingenuity"
-          />
+          <div className="">
+            <label className="text-webDescrip font-semibold">
+              Expertise in Action
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              name="delivers.actionDesc"
+              id="actionDesc"
+              onChange={handleChange}
+              value={formData.delivers.actionDesc}
+              placeholder="Expertise in Action"
+            />
+          </div>
+          <div className="mt-4">
+            <label className="text-webDescrip font-semibold">
+              Collaborative Ingenuity
+            </label>
+            <textarea
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              name="delivers.collabDesc"
+              id="collabDesc"
+              onChange={handleChange}
+              value={formData.delivers.collabDesc}
+              placeholder="Collaborative Ingenuity"
+            />
+          </div>
         </div>
 
         {/* Submit button */}

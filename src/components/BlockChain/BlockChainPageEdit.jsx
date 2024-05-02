@@ -3,16 +3,16 @@ import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
 import { TechStack } from "../TechStack/TechStack";
 // Assuming WhyChooseSection is in a separate file
 
-export default function WebDevelopmentPageEdit() {
+export default function BlockChainPageEdit() {
   const [formData, setFormData] = useState({
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-    Proposition:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
+
     whyChoose: [
-      "User-Centric Design",
-      "Cross-Platform Compatibility",
-      "Performance Optimization",
+      "Expertise",
+      "Innovative Solutions",
+      "Client Collaboration",
+      "Customization",
     ],
     techStack: [
       { name: "React", type: "Frontend", img: "react.png" },
@@ -20,9 +20,10 @@ export default function WebDevelopmentPageEdit() {
     ],
   });
   const cardLabels = [
-    "User-Centric Design",
-    "Cross-Platform Compatibility",
-    "Performance Optimization",
+    "Expertise",
+    "Innovative Solutions",
+    "Client Collaboration",
+    "Customization",
   ];
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
@@ -72,7 +73,7 @@ export default function WebDevelopmentPageEdit() {
         {/* Custom Service Model */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Web Development Edit
+            Block Chain Edit
           </h1>
           <label className="text-webDescrip font-semibold">Description</label>
           <textarea
@@ -84,17 +85,7 @@ export default function WebDevelopmentPageEdit() {
             value={formData.description}
             placeholder="Custom Service Description"
           />
-          <div className="mt-4">
-          <label className="text-webDescrip font-semibold">Proposition</label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="Proposition"
-            id="Proposition"
-            onChange={handleChange}
-            value={formData.Proposition}
-            placeholder="Custom Service Proposition"
-          />
-          </div>
+          
           <div className="border border-dashed border-custom-purple p-4 mt-6 ">
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
@@ -102,7 +93,7 @@ export default function WebDevelopmentPageEdit() {
             <WhyChooseSection
               descriptions={formData.whyChoose}
               minCards={3}
-              maxCards={3}
+              maxCards={4}
               onChange={handleWhyChooseChange}
               cardLabels={cardLabels}
             />

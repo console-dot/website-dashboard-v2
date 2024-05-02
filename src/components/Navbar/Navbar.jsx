@@ -68,10 +68,26 @@ export default function Navbar({ children }) {
       icon: <FaFigma size={25} />,
     },
     {
+      path: "/casestudies",
+      name: "Case-Studies",
+      icon: <FaFigma size={25} />,
+    },
+    {
+      path: "/jobcategories",
+      name: "Job-Categories",
+      icon: <FaFigma size={25} />,
+    },
+    {
+      path: "/openpositions",
+      name: "Open-Positions",
+      icon: <FaFigma size={25} />,
+    },
+    {
       path: "/logout",
       name: "Logout",
       icon: <MdLogout size={25} />,
     },
+    
   ];
 
   return (

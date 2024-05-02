@@ -24,7 +24,7 @@ function WhyChooseSection({ descriptions = [], minCards = 3, maxCards = 4, onCha
   return (
     <div>
       {descriptions.map((description, index) => (
-        <div key={index} className="mb-2">
+        <div key={index} className="mt-4">
           <label className="text-webDescrip font-semibold">{cardLabels[index] || ''}</label>
           <textarea
             type="text"

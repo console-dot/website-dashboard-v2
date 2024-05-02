@@ -1,24 +1,28 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React from "react";
 import { useNavigate } from "react-router-dom";
-import {WebDevelopmentCard} from "./WebDevelopmentCard";
+import { BlockChainCard } from "./BlockChainCard";
 
 const data = [
-    {
-      description:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-      proposition:
-        "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-      whyChoose: ["User-Centric Design", "Cross-Platform Compatibility", "Performance Optimization"],
-      techStack: [
-        { name: "React", type: "Frontend", img: "react.png" },
-        { name: "Node.js", type: "Backend", img: "nodejs.png" },
-        // Add more technologies as needed
-      ]
-    }
-  ];
+  {
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
 
-export const WebDevelopmentPage = () => {
+    whyChoose: [
+      "Expertise",
+      "Innovative Solutions",
+      "Client Collaboration",
+      "Customization",
+    ],
+    techStack: [
+      { name: "React", type: "Frontend", img: "react.png" },
+      { name: "Node.js", type: "Backend", img: "nodejs.png" },
+      // Add more technologies as needed
+    ],
+  },
+];
+
+export const BlockChainPage = () => {
   //   const [data, setData] = useState();
   const navigate = useNavigate();
 
@@ -37,7 +41,7 @@ export const WebDevelopmentPage = () => {
         }}
       >
         <h2 className="text-black text-2xl font-bold">
-          Web Development Service Page
+          Block Chain Service Page
         </h2>
       </div>
 
@@ -47,7 +51,7 @@ export const WebDevelopmentPage = () => {
           {data &&
             data.map((item, index) => (
               <div key={index} className="flex flex-col w-full">
-                <WebDevelopmentCard data={item} onView={() => onView(index)} />
+                <BlockChainCard data={item} onView={() => onView(index)} />
               </div>
             ))}
         </div>

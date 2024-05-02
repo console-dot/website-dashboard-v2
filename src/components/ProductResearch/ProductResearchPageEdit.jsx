@@ -72,11 +72,11 @@ export default function ProductResearchPageEdit() {
         {/* Custom Service Model */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Custom Service Model
+            Product Research Edit
           </h1>
           {/* Description */}
           <label className="text-webDescrip font-semibold">Description</label>
-          <input
+          <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             name="description"
@@ -91,6 +91,7 @@ export default function ProductResearchPageEdit() {
             </label>
           {formData.keyComponents.map((component, index) => (
               <div key={index} >
+                <div className="mt-4">
               <label className="text-webDescrip font-semibold">
                 {component.heading}
               </label>
@@ -114,6 +115,7 @@ export default function ProductResearchPageEdit() {
                   disabled
                 />
               </div>
+              </div>
               <div className="flex justify-between ">
                 <button className="text-sm bg-green-700  py-1 px-[20px]  text-white" onClick={() => openModal(index, 0)}>Edit </button>
                 <button className="text-sm bg-green-700  py-1 px-[20px]  text-white" onClick={() => openModal(index, 1)}>Edit </button>
@@ -122,7 +124,7 @@ export default function ProductResearchPageEdit() {
           ))}
           </div>
           {/* Why Choose Section */}
-          <div className="border border-dashed border-custom-purple p-4 mt-6 ">
+          <div className="border border-dashed border-custom-purple p-4 ">
             <label className="text-webDescrip font-semibold text-[20px] mx-auto">
               Why Choose Us
             </label>
