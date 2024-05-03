@@ -1,10 +1,8 @@
-import React, { useState } from "react";
-import { useNavigate } from "react-router-dom";
+import React from "react";
 import { Button } from "../Button";
-import { FaEye, FaPen } from "react-icons/fa";
+import { FaPen, FaTrash } from "react-icons/fa";
 
-export const OpenPositionsCard = ({ data, key, value }) => {
-  const navigate = useNavigate();
+export const OpenPositionsCard = ({ data, onDelete,onEdit }) => {
   return (
     <div>
       <div className="d-flex justify-content-center">
@@ -25,7 +23,7 @@ export const OpenPositionsCard = ({ data, key, value }) => {
                 {/* Introduction */}
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Open Position Model
+                    Open Position
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
@@ -83,9 +81,7 @@ export const OpenPositionsCard = ({ data, key, value }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                      Designation:{" "}
-                      </strong>
+                      <strong style={{ color: "grey" }}>Designation: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -95,9 +91,7 @@ export const OpenPositionsCard = ({ data, key, value }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                      No Of Request:{" "}
-                      </strong>
+                      <strong style={{ color: "grey" }}>No Of Request: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -107,9 +101,7 @@ export const OpenPositionsCard = ({ data, key, value }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                      Capacity:{" "}
-                      </strong>
+                      <strong style={{ color: "grey" }}>Capacity: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -126,11 +118,14 @@ export const OpenPositionsCard = ({ data, key, value }) => {
                   <Button
                     icon={<FaPen />}
                     text={"Edit"}
-                    click={() => {
-                      navigate(`/OpenPositionsPageEdit/edit/${123}`);
-                    }}
+                    click={() => onEdit(data.id)}
                   />
-                  <Button text={"View"} icon={<FaEye />} />
+
+                  <Button
+                    text={"Delete"}
+                    icon={<FaTrash />}
+                    click={() => onDelete(data.id)} // Assuming there's an ID in data
+                  />
                 </div>
               </div>
             </div>

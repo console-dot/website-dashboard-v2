@@ -27,7 +27,6 @@ import ArVrPageEdit from "./components/ArVr/ArVrPageEdit";
 import { UiUxPage } from "./components/UiUx/UiUxPage";
 import UiUxPageEdit from "./components/UiUx/UiUxPageEdit";
 import { OpenPositionsPage } from "./components/OpenPositions/OpenPositionsPage";
-import OpenPositionsPageEdit from "./components/OpenPositions/OpenPositionsPageEdit";
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
   return (
@@ -64,7 +63,6 @@ function App() {
               <Route path="/jobcategories" element={<UiUxPage/>}/>
               <Route path="/jobcategoriesEdit/edit/:id" element={<UiUxPageEdit/>}/> */}
               <Route path="/openpositions" element={<OpenPositionsPage/>}/>
-              <Route path="/OpenPositionsPageEdit/edit/:id" element={<OpenPositionsPageEdit/>}/>
               <Route
                 path="/logout"
                 element={<Logout />}
