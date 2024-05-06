@@ -60,9 +60,9 @@ export const MobileAppCard = ({ data }) => {
                       <strong style={{ color: "grey" }}>Tech Stack: </strong>
                     </div>
                     <div className="w-[50%]">
-                      <div className="flex flex-wrap justify-center items-center">
+                      <div className="flex flex-wrap justify-start gap-2 items-center">
                         {data?.techStack.map((tech, index) => (
-                          <div key={index} className="mr-6 mb-2 ">
+                          <div key={index} className=" mb-2 ">
                             <img
                               src={tech.img}
                               alt={tech.type}

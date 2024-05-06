@@ -30,10 +30,39 @@ const data = [
       "Expert Teams",
     ],
     offshoreComparison: [
-      "Dedicated Team",
-      "Freelance",
-      "Better Collaboration",
-      "Consistency",
+      {
+        type: "Hourly",
+        comparisons: [
+          "Cost-effective",
+          "Flexible resource allocation",
+          "Pay-as-you-go model",
+          "No long-term commitment",
+          "Good for short-term projects",
+          "Quick project start",
+        ],
+      },
+      {
+        type: "Fixed",
+        comparisons: [
+          "Predictable cost",
+          "Strict project timeline",
+          "Defined scope of work",
+          "Less client involvement",
+          "Reduced risk for the client",
+          "Good for well-defined projects",
+        ],
+      },
+      {
+        type: "Bot",
+        comparisons: [
+          "Automated processes",
+          "24/7 availability",
+          "Scalable solution",
+          "Improved efficiency",
+          "Cost-effective in the long run",
+          "Reduces human error",
+        ],
+      },
     ],
     testimonialImage: "62bc76f7b3dc2f001f6b8b3b", // Example ObjectId from MongoDB
     testimonialFullName: "Jane Doe",

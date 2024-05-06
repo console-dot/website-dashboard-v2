@@ -1,5 +1,8 @@
 import React, { useState } from "react";
 import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
+import { ToastContainer, toast } from "react-toastify";
+import { RiLoader3Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
 // Assuming WhyChooseSection is in a separate file
 
 export default function CustomServicePageEdit() {
@@ -13,6 +16,8 @@ export default function CustomServicePageEdit() {
     delivers: { actionDesc: "facebook", collabDesc: "youtube" },
   });
   const cardLabels = ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"];
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
       ...formData,
@@ -41,6 +46,15 @@ export default function CustomServicePageEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success("Form submitted", {
+        autoClose: 1500, // close after 1.5 seconds
+        onClose: () => navigate("/customSoftware"), // navigate after closing
+      });
+    }, 1500);
+
     console.log(formData);
     // dispatch(LandingPageEdit(formData));
     // navigate("/landingPage");
@@ -138,15 +152,25 @@ export default function CustomServicePageEdit() {
         </div>
 
         {/* Submit button */}
-        <div className="w-full flex justify-center items-center mt-4">
+        <div className="w-full flex justify-center items-center mt-4 mb-4">
           <button
             type="submit"
-            className="text-white text-[16px] w-[300px] px-5 py-2.5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full focus:outline-none active:bg-gradient-to-r active:from-custom-purple active:to-custom-blue"
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
           >
-            <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
-              Submit
-            </p>
+            {isLoading ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <RiLoader3Line className="animate-spin h-5 w-5 mr-3" />
+                <span>Submitting</span>
+              </div>
+            ) : (
+              <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
+                Submit
+              </p>
+            )}
           </button>
+          <ToastContainer />
         </div>
       </form>
     </div>

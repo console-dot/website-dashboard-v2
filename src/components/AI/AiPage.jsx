@@ -17,7 +17,7 @@ const data = [
     techStack: [
       { name: "React", type: "Frontend", img: "react.png" },
       { name: "Node.js", type: "Backend", img: "nodejs.png" },
-      // Add more technologies as needed
+      
     ],
   },
 ];

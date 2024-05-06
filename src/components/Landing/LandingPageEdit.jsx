@@ -1,133 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
-import { FaPlus, FaTrash } from "react-icons/fa";
+import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { RiLoader3Line } from "react-icons/ri";
+import { useNavigate } from "react-router-dom";
+import { ToastContainer, toast } from "react-toastify";
+import "react-toastify/dist/ReactToastify.css";
 
 export default function LandingPageEdit() {
-  //   modal start
-
-  // Modal state
-  const [isModalOpenAdvantage, setIsModalOpenAdvantage] = useState(false);
-  const [isModalOpenComparison, setIsModalOpenComparison] = useState(false);
-  const [advantageInput, setAdvantageInput] = useState("");
-  const [comparisonInput, setComparisonInput] = useState("");
-  const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
-  const [socialLinks, setSocialLinks] = useState([]); // Define socialLinks state
-  const [socialLinkName, setSocialLinkName] = useState("");
-  const [socialLinkURL, setSocialLinkURL] = useState("");
-
-  // Modal functions
-  const openModalAdvantage = () => setIsModalOpenAdvantage(true);
-  const closeModalAdvantage = () => setIsModalOpenAdvantage(false);
-  const openModalComparison = () => setIsModalOpenComparison(true);
-  const closeModalComparison = () => setIsModalOpenComparison(false);
-  const openModalSocialLink = () => setIsModalOpenSocialLink(true);
-  const closeModalSocialLink = () => setIsModalOpenSocialLink(false);
-
-  const addAdvantage = () => {
-    if (advantageInput.trim() !== "") {
-      setFormData((prevData) => ({
-        ...prevData,
-        offshoreAdvantages: [...prevData.offshoreAdvantages, advantageInput],
-      }));
-      setAdvantageInput("");
-    }
-  };
-
-  const removeAdvantage = (index) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      offshoreAdvantages: prevData.offshoreAdvantages.filter(
-        (_, i) => i !== index
-      ),
-    }));
-  };
-
-  const addComparison = () => {
-    if (comparisonInput.trim() !== "") {
-      setFormData((prevData) => ({
-        ...prevData,
-        offshoreComparison: [...prevData.offshoreComparison, comparisonInput],
-      }));
-      setComparisonInput("");
-    }
-  };
-
-  const removeComparison = (index) => {
-    setFormData((prevData) => ({
-      ...prevData,
-      offshoreComparison: prevData.offshoreComparison.filter(
-        (_, i) => i !== index
-      ),
-    }));
-  };
-
-  const addSocialLink = () => {
-    if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
-      setFormData((prevData) => ({
-        ...prevData,
-        socialLinks: [
-          ...prevData.socialLinks,
-          { name: socialLinkName, link: socialLinkURL },
-        ],
-      }));
-      closeModalSocialLink();
-      // Optionally clear input fields here
-      setSocialLinkName("");
-      setSocialLinkURL("");
-    }
-  };
-
-  // Function to remove social link
-  const removeSocialLink = (index) => {
-    setSocialLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
-  };
-
-  // modal end
-
-  //   preview img start
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          testimonialImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  const handleExpertiseImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          expertiseImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  //   preview img end
-
-  //handlechangeexperience start
-  const handleChangeExperience = (e, field) => {
-    const value = e.target.value;
-    setFormData((prevState) => ({
-      ...prevState,
-      workExperience: {
-        ...prevState.workExperience,
-        [field]: value,
-      },
-    }));
-  };
-
-  //handlechangeexperience end
-
   const [formData, setFormData] = useState({
     heroDescription: "Leading provider of tech solutions.",
     footerDescription: "Dedicated to innovation and excellence.",
@@ -155,10 +34,39 @@ export default function LandingPageEdit() {
       "Expert Teams",
     ],
     offshoreComparison: [
-      "Dedicated Team",
-      "Freelance",
-      "Better Collaboration",
-      "Consistency",
+      {
+        type: "Hourly",
+        comparisons: [
+          "Cost-effective",
+          "Flexible resource allocation",
+          "Pay-as-you-go model",
+          "No long-term commitment",
+          "Good for short-term projects",
+          "Quick project start",
+        ],
+      },
+      {
+        type: "Fixed",
+        comparisons: [
+          "Predictable cost",
+          "Strict project timeline",
+          "Defined scope of work",
+          "Less client involvement",
+          "Reduced risk for the client",
+          "Good for well-defined projects",
+        ],
+      },
+      {
+        type: "Bot",
+        comparisons: [
+          "Automated processes",
+          "24/7 availability",
+          "Scalable solution",
+          "Improved efficiency",
+          "Cost-effective in the long run",
+          "Reduces human error",
+        ],
+      },
     ],
     testimonialFullName: "Jane Doe",
     testimonialDescription:
@@ -167,27 +75,165 @@ export default function LandingPageEdit() {
     expertiseName: "Cloud Solutions",
     expertiseDescription:
       "Expertise in building scalable cloud platforms tailored to client needs.",
-  });
-
-  useEffect(() => {
-    setSocialLinks(formData.socialLinks);
-  }, [formData.socialLinks]);
-
+  });// State declarations
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const [isModalOpenComparison, setIsModalOpenComparison] = useState(null);
+  const [comparisonInput, setComparisonInput] = useState("");
+  const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
+  const [socialLinks, setSocialLinks] = useState([]);
+  const [socialLinkName, setSocialLinkName] = useState("");
+  const [socialLinkURL, setSocialLinkURL] = useState("");
+  
+  // Modal functions
+  const openModalSocialLink = () => setIsModalOpenSocialLink(true);
+  const closeModalSocialLink = () => setIsModalOpenSocialLink(false);
+  const openModalComparison = (comparisonIndex, advantageIndex) => {
+    setIsModalOpenComparison({ comparisonIndex, advantageIndex });
+    const comparison = formData.offshoreComparison[comparisonIndex];
+    const advantage = comparison.comparisons[advantageIndex];
+    setComparisonInput(advantage);
+  };
+  const closeModalComparison = () => setIsModalOpenComparison(null);
+  
+  // Comparison functions
+  const addComparison = () => {
+    if (comparisonInput.trim() !== "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        offshoreComparison: [...prevData.offshoreComparison, comparisonInput],
+      }));
+      setComparisonInput("");
+    }
+  };
+  const removeComparison = (comparisonIndex, advantageIndex) => {
+    setFormData((prevData) => {
+      const updatedComparison = [...prevData.offshoreComparison];
+      updatedComparison[comparisonIndex].comparisons.splice(advantageIndex, 1);
+      return {
+        ...prevData,
+        offshoreComparison: updatedComparison,
+      };
+    });
+  };
+  const updateComparison = (index) => {
+    if (comparisonInput.trim() !== "") {
+      const { comparisonIndex, advantageIndex } = isModalOpenComparison;
+      const updatedComparison = [...formData.offshoreComparison];
+      updatedComparison[comparisonIndex].comparisons[advantageIndex] = comparisonInput;
+      setFormData((prevData) => ({
+        ...prevData,
+        offshoreComparison: updatedComparison,
+      }));
+      closeModalComparison();
+    }
+  };
+  const editComparisonType = (index) => {
+    const newType = prompt("Enter the new type:");
+    if (newType && newType.trim() !== "") {
+      setFormData((prevData) => {
+        const updatedComparison = [...prevData.offshoreComparison];
+        updatedComparison[index].type = newType;
+        return {
+          ...prevData,
+          offshoreComparison: updatedComparison,
+        };
+      });
+    }
+  };
+  const deleteComparisonType = (index) => {
+    setFormData((prevData) => {
+      const updatedComparison = [...prevData.offshoreComparison];
+      updatedComparison.splice(index, 1);
+      return {
+        ...prevData,
+        offshoreComparison: updatedComparison,
+      };
+    });
+  };
+  
+  // Social link functions
+  const addSocialLink = () => {
+    if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        socialLinks: [
+          ...prevData.socialLinks,
+          { name: socialLinkName, link: socialLinkURL },
+        ],
+      }));
+      closeModalSocialLink();
+      setSocialLinkName("");
+      setSocialLinkURL("");
+    }
+  };
+  const removeSocialLink = (index) => {
+    setSocialLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
+  };
+  
+  // Image upload functions
+  const handleImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevData) => ({
+          ...prevData,
+          testimonialImage: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  const handleExpertiseImageUpload = (e) => {
+    const file = e.target.files[0];
+    if (file) {
+      const reader = new FileReader();
+      reader.onloadend = () => {
+        setFormData((prevData) => ({
+          ...prevData,
+          expertiseImage: reader.result,
+        }));
+      };
+      reader.readAsDataURL(file);
+    }
+  };
+  
+  // Form handling functions
+  const handleChangeExperience = (e, field) => {
+    const value = e.target.value;
+    setFormData((prevState) => ({
+      ...prevState,
+      workExperience: {
+        ...prevState.workExperience,
+        [field]: value,
+      },
+    }));
+  };
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
-
   const handleSubmit = (e) => {
     e.preventDefault();
-    if (
-      !isModalOpenAdvantage &&
-      !isModalOpenComparison &&
-      !isModalOpenSocialLink
-    ) {
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success("Form submitted", {
+        autoClose: 1500,
+        onClose: () => navigate("/LandingPage"),
+      });
+    }, 1500);
+    if (!isModalOpenComparison && !isModalOpenSocialLink) {
       console.log(formData);
     }
   };
+  
+  // Effect
+  useEffect(() => {
+    setSocialLinks(formData.socialLinks);
+  }, [formData.socialLinks]);
+  
 
   return (
     <div className="w-full">
@@ -448,126 +494,76 @@ export default function LandingPageEdit() {
               placeholder="Offshore Type"
             />
           </div>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Offshore Description
-            </label>
-            <textarea
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="offshoreDescription"
-              id="offshoreDescription"
-              onChange={handleChange}
-              value={formData?.offshoreDescription}
-              placeholder="Offshore Description"
-            />
-          </div>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Offshore Advantages
-            </label>
-            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
-              <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
-                {formData.offshoreAdvantages.map((advantage, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-2"
-                  >
-                    <p className="text-webDescrip">{advantage}</p>
-                    <button
-                      type="button"
-                      onClick={() => removeAdvantage(index)}
-                      className="btn btn-error  text-white  rounded-xl"
-                    >
-                      <FaTrash />
-                      Remove
-                    </button>
-                  </div>
-                ))}
-              </div>
-              <div className="w-[100%] flex justify-center items-center ">
-                <Button
-                  text={"Add Advantage"}
-                  icon={<FaPlus />}
-                  click={openModalAdvantage}
-                />
-              </div>
-            </div>
-          </div>
-          {/* Remaining form fields */}
 
-          {/* Modal */}
-          {isModalOpenAdvantage && (
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[30%] felx justify-center p-4 rounded-lg">
-                <h2 className="text-lg font-semibold mb-2">Add Advantage</h2>
-                <textarea
-                  type="text"
-                  value={advantageInput}
-                  onChange={(e) => setAdvantageInput(e.target.value)}
-                  className="bg-white border border-custom-purple text-webDescrip p-2 w-full mb-2 h-24"
-                  placeholder="Enter advantage"
-                />
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={addAdvantage}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
-                  >
-                    Add
-                  </button>
-                  <button
-                    type="button"
-                    onClick={closeModalAdvantage}
-                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
-                  >
-                    Close
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
           {/*  */}
           <div className="mt-4">
             <label className="text-webDescrip font-semibold mt-4">
               Offshore Comparison
             </label>
             <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
-              <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
-                {formData.offshoreComparison.map((Comaprison, index) => (
-                  <div
-                    key={index}
-                    className="flex items-center justify-between p-2"
-                  >
-                    <p className="text-webDescrip">{Comaprison}</p>
-                    <button
-                      type="button"
-                      onClick={() => removeComparison(index)}
-                      className="btn btn-error  text-white  rounded-xl"
-                    >
-                      <FaTrash />
-                      Remove
-                    </button>
+              {formData.offshoreComparison.map((comparison, index) => (
+                <div key={index} className="w-full flex flex-col gap-4 mb-4">
+                  <div className="flex justify-between items-center">
+                    {/* Render type with edit and delete buttons */}
+                    <h3 className="text-lg font-semibold">{comparison.type}</h3>
+                    <div className="flex items-center gap-2">
+                      {/* Button to edit the type */}
+                      <button
+                        type="button"
+                        onClick={() => editComparisonType(index)}
+                        className="btn btn-success text-white rounded-xl"
+                      >
+                        Edit
+                      </button>
+                      {/* Button to delete the type */}
+                      <button
+                        type="button"
+                        onClick={() => deleteComparisonType(index)}
+                        className="btn btn-error text-white rounded-xl"
+                      >
+                        Delete
+                      </button>
+                    </div>
                   </div>
-                ))}
-              </div>
-              <div className="w-[100%] flex justify-center items-center ">
-                <Button
-                  text={"Add Comparison"}
-                  icon={<FaPlus />}
-                  click={openModalComparison}
-                />
-              </div>
+                  <div>
+                    {comparison.comparisons.map((advantage, idx) => (
+                      <div key={idx} className="flex items-center">
+                        <p className="text-webDescrip">{advantage}</p>
+                        <div className="ml-auto flex gap-2">
+                          <button
+                            type="button"
+                            onClick={() => openModalComparison(index, idx)}
+                            className="text-success"
+                          >
+                            <FaEdit />
+                          </button>
+                          <button
+                            type="button"
+                            onClick={() => removeComparison(index, idx)}
+                            className="text-error"
+                          >
+                            <FaTrash />
+                          </button>
+                        </div>
+                      </div>
+                    ))}
+                  </div>
+                </div>
+              ))}
             </div>
           </div>
 
           {/* Remaining form fields */}
 
           {/* Modal */}
-          {isModalOpenComparison && (
+          {isModalOpenComparison !== null && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[30%] felx justify-center p-4 rounded-lg">
-                <h2 className="text-lg font-semibold mb-2">Add Comparison</h2>
+              <div className="bg-white w-[40%] h-[50%] flex flex-col justify-center p-4 rounded-lg">
+                <h2 className="text-lg font-semibold mb-2">
+                  {isModalOpenComparison === "add"
+                    ? "Add Comparison"
+                    : "Edit Comparison"}
+                </h2>
                 <textarea
                   type="text"
                   value={comparisonInput}
@@ -578,10 +574,10 @@ export default function LandingPageEdit() {
                 <div className="flex justify-end">
                   <button
                     type="button"
-                    onClick={addComparison}
+                    onClick={() => updateComparison(isModalOpenComparison)}
                     className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
                   >
-                    Add
+                    {isModalOpenComparison === "add" ? "Add" : "Save"}
                   </button>
                   <button
                     type="button"
@@ -747,11 +743,24 @@ export default function LandingPageEdit() {
         {/*  Experties end*/}
 
         <div className="w-full flex justify-center items-center mt-4 mb-4">
-          <button className="text-white text-[16px] w-[300px] px-5 py-2.5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full focus:outline-none active:bg-gradient-to-r active:from-custom-purple active:to-custom-blue">
-            <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
-              Submit
-            </p>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
+          >
+            {isLoading ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <RiLoader3Line className="animate-spin h-5 w-5 mr-3" />
+                <span>Submitting</span>
+              </div>
+            ) : (
+              <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
+                Submit
+              </p>
+            )}
           </button>
+          <ToastContainer />
         </div>
       </form>
     </div>

@@ -1,9 +1,13 @@
 import { useState } from "react";
 import { Button } from "../Button";
 import { FaPlus, FaTrash } from "react-icons/fa";
+import { RiLoader3Line } from "react-icons/ri";
+import { ToastContainer, toast } from "react-toastify";
+import { useNavigate } from "react-router-dom";
 
 export default function OffshoringPageEdit() {
-  //   modal start
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   // Modal state
   const [isModalOpenAdvantage, setIsModalOpenAdvantage] = useState(false);
@@ -81,6 +85,15 @@ export default function OffshoringPageEdit() {
 
   const handleSubmit = (e) => {
     e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success("Form submitted", {
+        autoClose: 1500, // close after 1.5 seconds
+        onClose: () => navigate("/offShoring"), // navigate after closing
+      });
+    }, 1500);
+
     if (!isModalOpenAdvantage && !isModalOpenComparison) {
       console.log(formData);
     }
@@ -261,11 +274,24 @@ export default function OffshoringPageEdit() {
         {/* offshore end */}
 
         <div className="w-full flex justify-center items-center mt-4 mb-4">
-          <button className="text-white text-[16px] w-[300px] px-5 py-2.5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full focus:outline-none active:bg-gradient-to-r active:from-custom-purple active:to-custom-blue">
-            <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
-              Submit
-            </p>
+          <button
+            type="submit"
+            onClick={handleSubmit}
+            disabled={isLoading}
+            className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
+          >
+            {isLoading ? (
+              <div className="absolute inset-0 flex items-center justify-center">
+                <RiLoader3Line className="animate-spin h-5 w-5 mr-3" />
+                <span>Submitting</span>
+              </div>
+            ) : (
+              <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
+                Submit
+              </p>
+            )}
           </button>
+          <ToastContainer />
         </div>
       </form>
     </div>

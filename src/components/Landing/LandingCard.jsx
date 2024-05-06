@@ -85,8 +85,10 @@ export const LandingCard = ({ data, key, value }) => {
                       {data?.socialLinks &&
                         data.socialLinks.map((link, index) => (
                           <span className="text-black text-sm" key={index}>
-                            <span className="text-heading">{link.name}</span>:{" "}
-                            <a href={link.link}>{link.link}</a>
+                            <span className="text-heading font-semibold mr-2">
+                              {link.name}
+                            </span>
+                            : <a href={link.link}>{link.link}</a>
                             {index !== data.socialLinks.length - 1 && ", "}
                           </span>
                         ))}
@@ -100,14 +102,38 @@ export const LandingCard = ({ data, key, value }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        <span className="text-heading">Countries:</span>{" "}
-                        {data.workExperience.countries},{" "}
-                        <span className="text-heading">Employees: </span>
-                        {data.workExperience.expEmployees},{" "}
-                        <span className="text-heading">Scrum Teams: </span>
-                        {data.workExperience.scrumTeams},{" "}
-                        <span className="text-heading">Full Stack Dev: </span>
-                        {data.workExperience.fullStackDev}
+                        <div className="flex flex-row">
+                          <span className="text-heading font-semibold mr-2">
+                            Countries:
+                          </span>
+                          <span className="block">
+                            {data.workExperience.countries},
+                          </span>
+                        </div>
+                        <div className="flex flex-row">
+                          <span className="text-heading font-semibold mr-2">
+                            Employees:{" "}
+                          </span>
+                          <span className="block">
+                            {data.workExperience.expEmployees},
+                          </span>
+                        </div>
+                        <div className="flex flex-row">
+                          <span className="text-heading font-semibold mr-2">
+                            Scrum Teams:{" "}
+                          </span>
+                          <span className="block">
+                            {data.workExperience.scrumTeams},
+                          </span>
+                        </div>
+                        <div className="flex flex-row">
+                          <span className="text-heading font-semibold mr-2">
+                            Full Stack Dev:{" "}
+                          </span>
+                          <span className="block">
+                            {data.workExperience.fullStackDev}
+                          </span>
+                        </div>
                       </span>
                     </div>
                   </div>
@@ -119,7 +145,7 @@ export const LandingCard = ({ data, key, value }) => {
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>
-                        About Description:{" "}
+                        About Description:
                       </strong>
                     </div>
                     <div className="w-[50%]">
@@ -130,69 +156,72 @@ export const LandingCard = ({ data, key, value }) => {
                   </div>
                 </div>
 
+                {/* Expertise */}
+                <div className="w-full flex flex-col gap-2 mt-4">
+                  <h1 className="text-heading text-xl font-bold">Expertise</h1>
+                  <div className="flex" style={{ width: "70%" }}>
+                    <div className="w-[50%]">
+                      <strong style={{ color: "grey" }}>
+                        Expertise Image:{" "}
+                      </strong>
+                    </div>
+                    <div className="w-[50%]">
+                      <span className="text-black text-sm">
+                        {data?.expertiseImage}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex" style={{ width: "70%" }}>
+                    <div className="w-[50%]">
+                      <strong style={{ color: "grey" }}>
+                        Expertise Name:{" "}
+                      </strong>
+                    </div>
+                    <div className="w-[50%]">
+                      <span className="text-black text-sm">
+                        {data?.expertiseName}
+                      </span>
+                    </div>
+                  </div>
+                  <div className="flex" style={{ width: "70%" }}>
+                    <div className="w-[50%]">
+                      <strong style={{ color: "grey" }}>
+                        Expertise Description:{" "}
+                      </strong>
+                    </div>
+                    <div className="w-[50%]">
+                      <span className="text-black text-sm">
+                        {data?.expertiseDescription}
+                      </span>
+                    </div>
+                  </div>
+                </div>
                 {/* Offshore */}
                 <div className="w-full flex flex-col gap-2 mt-4">
-                  <h1 className="text-heading text-xl font-bold">Offshore</h1>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Offshore Type: </strong>
+                  <h1 className="text-heading text-xl font-bold">
+                    Offshore Models
+                  </h1>
+
+                  {data.offshoreComparison.map((model) => (
+                    <div
+                      key={model.type}
+                      className="flex"
+                      style={{ width: "70%" }}
+                    >
+                      <div className="w-[50%]">
+                        <strong style={{ color: "grey" }}>{model.type}:</strong>
+                      </div>
+                      <div className="w-[50%]">
+                        <span className="text-black text-sm">
+                          <ul style={{ listStyle: "unset" }}>
+                            {model.comparisons.map((advantage, index) => (
+                              <li key={index}>{advantage}</li>
+                            ))}
+                          </ul>
+                        </span>
+                      </div>
                     </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.offshoreType}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Offshore Description:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.offshoreDescription}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Offshore Advantages:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.offshoreAdvantages &&
-                          data.offshoreAdvantages.map((advantage, index) => (
-                            <span key={index}>
-                              {advantage}
-                              {index !== data.offshoreAdvantages.length - 1 &&
-                                ", "}
-                            </span>
-                          ))}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Offshore Comparison:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.offshoreComparison &&
-                          data.offshoreComparison.map((advantage, index) => (
-                            <span key={index}>
-                              {advantage}
-                              {index !== data.offshoreComparison.length - 1 &&
-                                ", "}
-                            </span>
-                          ))}
-                      </span>
-                    </div>
-                  </div>
+                  ))}
                 </div>
 
                 {/* Testimonials */}
@@ -245,47 +274,6 @@ export const LandingCard = ({ data, key, value }) => {
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
                         {data?.testimonialDesignation}
-                      </span>
-                    </div>
-                  </div>
-                </div>
-
-                {/* Expertise */}
-                <div className="w-full flex flex-col gap-2 mt-4">
-                  <h1 className="text-heading text-xl font-bold">Expertise</h1>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Expertise Image:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.expertiseImage}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Expertise Name:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.expertiseName}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Expertise Description:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.expertiseDescription}
                       </span>
                     </div>
                   </div>

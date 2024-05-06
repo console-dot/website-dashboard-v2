@@ -6,8 +6,8 @@ export const FaqPage = () => {
     {
       question: 'What do you mean by "Figma assets"?',
       answer:
-        "You will have access to download the full Figma project including all of the pages, the components, responsive pages, and also the icons, illustrations, and images included in the screens."
-    }
+        "You will have access to download the full Figma project including all of the pages, the components, responsive pages, and also the icons, illustrations, and images included in the screens.",
+    },
   ]);
 
   const [editingIndex, setEditingIndex] = useState(null);
@@ -49,23 +49,24 @@ export const FaqPage = () => {
     form.querySelector('[name="answer"]').value = question.answer;
     setEditingIndex(index);
   };
-console.log(formData)
+  console.log(formData);
   return (
     <div className="w-full">
-      <section className="bg-white dark:bg-gray-900 w-full">
-        <div className="py-8 px-4 mx-auto max-w-screen-xl sm:py-16 lg:px-6 w-full">
-          <h2 className="text-2xl font-bold tracking-tight mb-4 text-black  dark:text-white">
-            Frequently asked questions
-          </h2>
+      <section className="bg-custom-white w-full">
+        <div className="p-6 mx-auto max-w-screen-xl  w-full">
+          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
+            Frequantly Asked Questions
+          </h1>
           <div className="grid pt-8 text-left w-full border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-1">
             <div className="flex flex-col gap-8 w-full">
               {formData.map((qa, index) => (
                 <div key={index} className="mb-6">
-                  <div className="flex items-center gap-4 mb-2 text-lg font-medium text-black dark:text-white">
-                    <FaQuestionCircle />
-
-                    <div>{qa.question}</div>
-                  </div>
+                  <label className="text-webDescrip font-semibol text-[20px] ">
+                    <div className="flex flex-row justify-start gap-2">
+                      <FaQuestionCircle />
+                      {qa.question}
+                    </div>
+                  </label>
                   <div className="text-gray-500 bg-white dark:text-gray-400">
                     {qa.answer}
                   </div>
@@ -87,17 +88,22 @@ console.log(formData)
               ))}
               <form id="faqForm" onSubmit={handleSubmit}>
                 <div className="mb-6 flex flex-col gap-4 w-full">
-                  <div className="flex items-center gap-4 mb-2 text-lg font-medium text-black dark:text-white">
-                    <FaQuestionCircle />
+                  <div className="flex flex-row gap-2 justify-start">
+                    <label className="text-webDescrip font-semibol text-[20px] ">
+                      <div className="flex flex-row justify-start gap-2">
+                        <FaQuestionCircle />
+                      </div>
+                    </label>
                     <input
                       type="text"
-                      className="bg-white w-full"
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full  dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                       name="question"
                       placeholder="Enter the question"
                     />
                   </div>
+
                   <textarea
-                    className="text-gray-500 bg-white dark:text-gray-400"
+                    className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                     name="answer"
                     placeholder="Enter the answer"
                   />

@@ -3,9 +3,13 @@ import { useNavigate } from "react-router-dom";
 import { OpenPositionsCard } from "./OpenPositionsCard";
 import { Button } from "../Button";
 import { FaPlus, FaTrash, FaPen } from "react-icons/fa";
+import { ToastContainer, toast } from "react-toastify";
+import { RiLoader3Line } from "react-icons/ri";
 
 export const OpenPositionsPage = () => {
   const navigate = useNavigate();
+  const [isLoading, setIsLoading] = useState(false);
+  
 
   const [positions, setPositions] = useState([
     {
@@ -73,7 +77,17 @@ export const OpenPositionsPage = () => {
   };
 
   const handleModalSubmit = () => {
+    setIsLoading(true);
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500, // close after 1.5 seconds
+          onClose: () => navigate("/LandingPage"), // navigate after closing
+        });
+      }, 1500);
     if (editingId !== null) {
+      
+  
       // Editing existing position
       const updatedPositions = positions.map((pos) =>
         pos.id === editingId ? { ...pos, ...formData } : pos
@@ -129,7 +143,10 @@ export const OpenPositionsPage = () => {
       {/* Modal */}
       {isModalOpen && (
         <div className="fixed inset-0 z-50 flex items-center justify-center overflow-x-hidden overflow-y-auto outline-none focus:outline-none">
-          <div className="relative w-[90%] my-6 mx-auto max-w-sm"  ref={modalRef}> 
+          <div
+            className="relative w-[90%] my-6 mx-auto max-w-sm"
+            ref={modalRef}
+          >
             <div className="border-1 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-200 border-dashed border-emerald-500 outline-none focus:outline-none">
               <div className="relative p-6 flex-auto">
                 <form
@@ -183,7 +200,7 @@ export const OpenPositionsPage = () => {
                       </div>
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                        Qualifications
+                          Qualifications
                         </label>
                         <input
                           className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -209,7 +226,7 @@ export const OpenPositionsPage = () => {
                       </div>
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                        Designation
+                          Designation
                         </label>
                         <input
                           className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -222,7 +239,7 @@ export const OpenPositionsPage = () => {
                       </div>
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                        No Of Request
+                          No Of Request
                         </label>
                         <input
                           className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -235,7 +252,7 @@ export const OpenPositionsPage = () => {
                       </div>
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                        Capacity
+                          Capacity
                         </label>
                         <input
                           className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -251,11 +268,25 @@ export const OpenPositionsPage = () => {
                     {/* introduction End */}
 
                     <div className="w-full flex justify-center items-center mt-4 mb-4">
-                      <button className="text-white text-[16px] w-[300px] px-5 py-2.5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full focus:outline-none active:bg-gradient-to-r active:from-custom-purple active:to-custom-blue">
-                        <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
-                          Submit
-                        </p>
+                      <button
+                        type="submit"
+                        onClick={handleModalSubmit}
+                        disabled={isLoading}
+                        className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
+                      >
+                        {isLoading ? (
+                          <div className="absolute inset-0 flex items-center justify-center">
+                            <RiLoader3Line className="animate-spin h-5 w-5 mr-3" />
+
+                            <span>Submitting</span>
+                          </div>
+                        ) : (
+                          <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
+                            Submit
+                          </p>
+                        )}
                       </button>
+                      <ToastContainer />
                     </div>
                   </div>
                 </form>

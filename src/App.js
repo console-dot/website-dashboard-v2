@@ -37,36 +37,57 @@ function App() {
             <Routes>
               {/* <Route path="/" element={<Dashboard />} /> */}
               <Route path="/landingPage" element={<LandingPage />} />
-              <Route path="/LandingPage/edit/:id" element={<LandingPageEdit/>} />
-              <Route path="/offShoring" element={<OffshoringPage/>} />
-              <Route path="/OffshoringPage/edit/:id" element={<OffshoringPageEdit/>} />
-              <Route path="/customSoftware" element={<CustomServicePage/>}/>
-              <Route path="/CustomSoftwarePageEdit/edit/:id" element={<CustomServicePageEdit/>}/>
-              <Route path="/productResearch" element={<ProductResearchPage/>}/>
-              <Route path="/ProductResearchPageEdit/edit/:id" element={<ProductResearchPageEdit/>}/>
-              <Route path="/webDevelopment" element={<WebDevelopmentPage/>}/>
-              <Route path="/WebDevelopmentPageEdit/edit/:id" element={<WebDevelopmentPageEdit/>}/>
-              <Route path="/faq" element={<FaqPage/>}/>
-            
-              <Route path="/mobileApp" element={<MobileAppPage/>}/>
-              <Route path="/MobileAppPageEdit/edit/:id" element={<MobileAppPageEdit/>}/>
-              <Route path="/blockchain" element={<BlockChainPage/>}/>
-              <Route path="/BlockChainPageEdit/edit/:id" element={<BlockChainPageEdit/>}/>
-              <Route path="/ai" element={<AiPage/>}/>
-              <Route path="/AiPageEdit/edit/:id" element={<AiPageEdit/>}/>
-              <Route path="/arvr" element={<ArVrPage/>}/>
-              <Route path="/ArVrPageEdit/edit/:id" element={<ArVrPageEdit/>}/>
-              <Route path="/uiux" element={<UiUxPage/>}/>
-              <Route path="/UiUxPageEdit/edit/:id" element={<UiUxPageEdit/>}/>
+              <Route
+                path="/LandingPage/edit/:id"
+                element={<LandingPageEdit />}
+              />
+              <Route path="/offShoring" element={<OffshoringPage />} />
+              <Route
+                path="/OffshoringPage/edit/:id"
+                element={<OffshoringPageEdit />}
+              />
+              <Route path="/customSoftware" element={<CustomServicePage />} />
+              <Route
+                path="/CustomSoftwarePageEdit/edit/:id"
+                element={<CustomServicePageEdit />}
+              />
+              <Route
+                path="/productResearch"
+                element={<ProductResearchPage />}
+              />
+              <Route
+                path="/ProductResearchPageEdit/edit/:id"
+                element={<ProductResearchPageEdit />}
+              />
+              <Route path="/webDevelopment" element={<WebDevelopmentPage />} />
+              <Route
+                path="/WebDevelopmentPageEdit/edit/:id"
+                element={<WebDevelopmentPageEdit />}
+              />
+              <Route path="/faq" element={<FaqPage />} />
+
+              <Route path="/mobileApp" element={<MobileAppPage />} />
+              <Route
+                path="/MobileAppPageEdit/edit/:id"
+                element={<MobileAppPageEdit />}
+              />
+              <Route path="/blockchain" element={<BlockChainPage />} />
+              <Route
+                path="/BlockChainPageEdit/edit/:id"
+                element={<BlockChainPageEdit />}
+              />
+              <Route path="/ai" element={<AiPage />} />
+              <Route path="/AiPageEdit/edit/:id" element={<AiPageEdit />} />
+              <Route path="/arvr" element={<ArVrPage />} />
+              <Route path="/ArVrPageEdit/edit/:id" element={<ArVrPageEdit />} />
+              <Route path="/uiux" element={<UiUxPage />} />
+              <Route path="/UiUxPageEdit/edit/:id" element={<UiUxPageEdit />} />
               {/* <Route path="/casestudies" element={<UiUxPage/>}/>
               <Route path="/casestudiesEdit/edit/:id" element={<UiUxPageEdit/>}/>
               <Route path="/jobcategories" element={<UiUxPage/>}/>
               <Route path="/jobcategoriesEdit/edit/:id" element={<UiUxPageEdit/>}/> */}
-              <Route path="/openpositions" element={<OpenPositionsPage/>}/>
-              <Route
-                path="/logout"
-                element={<Logout />}
-              />
+              <Route path="/openpositions" element={<OpenPositionsPage />} />
+              <Route path="/logout" element={<Logout />} />
             </Routes>
           </Navbar>
         </div>
