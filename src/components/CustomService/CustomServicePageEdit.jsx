@@ -3,21 +3,40 @@ import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-// Assuming WhyChooseSection is in a separate file
 
 export default function CustomServicePageEdit() {
-  const [formData, setFormData] = useState({
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-    Proposition:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-    whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-    whyChoose: ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"],
-    delivers: { actionDesc: "facebook", collabDesc: "youtube" },
-  });
+  const data = [
+    {
+      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
+      Proposition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
+      whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
+      whyChoose: [
+        {
+          name: "ConsoleDot ERP",
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+          image: "console_erp_image.jpg"
+        },
+        {
+          name: "SaaS by ConsoleDot",
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+          image: "SaaSbyonsoleDot.jpg"
+        },
+        {
+          name: "ConsoleDot MVP",
+          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+          image: "console_mvp_image.jpg"
+        }
+       
+      ],
+      delivers: { actionDesc: "facebook", collabDesc: "youtube" }
+    }
+  ];
+
+  const [formData, setFormData] = useState(data[0]);
   const cardLabels = ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"];
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
+
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
       ...formData,

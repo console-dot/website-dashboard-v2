@@ -8,12 +8,28 @@ const data = [
     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
     Proposition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
     whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-    whyChoose: ['a','b','c'],
-    delivers: 
-      { actionDesc: "facebook", collabDesc: "youtube"  },
-     
- },
+    whyChoose: [
+      {
+        name: "ConsoleDot ERP",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_erp_image.jpg"
+      },
+      {
+        name: "SaaS by ConsoleDot",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "SaaSbyonsoleDot.jpg"
+      },
+      {
+        name: "ConsoleDot MVP",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_mvp_image.jpg"
+      },
+      
+    ],
+    delivers: { actionDesc: "facebook", collabDesc: "youtube" }
+  }
 ];
+
 
 export const CustomServicePage = () => {
   //   const [data, setData] = useState();
