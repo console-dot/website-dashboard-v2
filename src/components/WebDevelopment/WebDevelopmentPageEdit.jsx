@@ -9,7 +9,15 @@ import { useNavigate } from "react-router-dom";
 export default function WebDevelopmentPageEdit() {
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  // State to manage the index of the tech stack item being edited
+  const [editIndex, setEditIndex] = useState(null);
+  // State to hold the data of the tech stack item being edited
+  const [editItem, setEditItem] = useState(null);
+  // State to manage the modal visibility
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  // Navigate
   const navigate = useNavigate();
+  // Use Form State
   const [formData, setFormData] = useState({
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
@@ -33,11 +41,13 @@ export default function WebDevelopmentPageEdit() {
       img: null, // Assuming img is initially null
     },
   });
+
   const cardLabels = [
     "User-Centric Design",
     "Cross-Platform Compatibility",
     "Performance Optimization",
   ];
+  
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
       ...formData,
@@ -75,6 +85,53 @@ export default function WebDevelopmentPageEdit() {
         img: file,
       },
     }));
+  };
+
+  // Function to open the edit modal
+  const handleOpenEditModal = (index) => {
+    setEditIndex(index);
+    setEditItem(formData.techStack[index]);
+    setIsEditModalOpen(true);
+  };
+
+  // Function to close the edit modal
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditIndex(null);
+    setEditItem(null);
+  };
+
+  // Function to handle editing of the tech stack item
+  const handleEditTechStack = () => {
+    // Implement logic to update the tech stack item with the edited data
+    // For example, you can update the item directly in the tech stack array
+    const updatedTechStack = [...formData.techStack];
+    updatedTechStack[editIndex] = editItem;
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
+    });
+    // Close the edit modal
+    handleCloseEditModal();
+  };
+
+  // Function to handle changes in the edit modal input fields
+  const handleEditInputChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "img") {
+      // If the change is in the image input field
+      const file = files[0];
+      setEditItem((prevItem) => ({
+        ...prevItem,
+        img: file,
+      }));
+    } else {
+      // If the change is in other input fields
+      setEditItem((prevItem) => ({
+        ...prevItem,
+        [name]: value,
+      }));
+    }
   };
 
   // const handleImageChange = (e, index) => {
@@ -194,13 +251,15 @@ export default function WebDevelopmentPageEdit() {
             </div>
             {console.log("formData", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">Frontend</div>
-            {formData?.techStack?.map((item) =>
+            {formData?.techStack?.map((item, index) =>
               item?.type === "Frontend" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
                     <div>
-                      <span>Edit</span>
+                      <span onClick={() => handleOpenEditModal(index)}>
+                        Edit
+                      </span>
                       <span>Delete</span>
                     </div>
                   </div>
@@ -372,6 +431,48 @@ export default function WebDevelopmentPageEdit() {
                 className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
               >
                 Cancel
+              </button>
+            </div>
+          </div>
+        </div>
+      )}
+
+      {isEditModalOpen && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <div className="bg-white border border-dashed flex flex-col border-custom-purple p-4 mt-6">
+            <label className="text-webDescrip font-semibol text-[20px] ">
+              Tech Stack
+            </label>
+            <div className="mb-4">
+              <label className="text-webDescrip font-semibold">Tech Name</label>
+              <input
+                type="text"
+                name="name"
+                value={editItem.name}
+                onChange={handleEditInputChange}
+                placeholder="Tech Name"
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+
+            <div className="mt-4">
+              <label className="text-webDescrip font-semibold mt-2 block">
+                Upload Image
+              </label>
+              <input
+                type="file"
+                name="img"
+                onChange={handleEditInputChange}
+                accept="image/*"
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              />
+            </div>
+            <div className="mt-4">
+              <button
+                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+                onClick={handleEditTechStack}
+              >
+                Update
               </button>
             </div>
           </div>
