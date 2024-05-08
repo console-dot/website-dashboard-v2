@@ -422,10 +422,10 @@ export default function LandingPageEdit() {
             <label className="text-webDescrip font-semibold mt-4">
               Offshore Comparison
             </label>
-            <div className="w-full flex flex-row justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+            <div className="w-full flex flex-row justify-start  border border-dashed border-custom-purple rounded-lg p-4">
               {formData.offshoreComparison.map((comparison, index) => (
                 <div key={index} className="w-full flex flex-col gap-6 mb-4 ">
-                  <div className="flex justify-between items-center">
+                  <div className="flex justify-between items-center ml-1">
                     {/* Render type with edit and delete buttons */}
                     <h3 className="text-lg font-semibold">{comparison.type}</h3>
                     <div className="flex items-center gap-2">
@@ -434,8 +434,8 @@ export default function LandingPageEdit() {
                   </div>
                   <div>
                     {comparison.comparisons.map((advantage, idx) => (
-                      <div key={idx} className="flex items-center ">
-                        <p className="text-webDescrip flex  items-center gap-2"><FaDotCircle size={5}/>{advantage}</p>
+                      <div key={idx} className="flex justify-start ml-6  ">
+                        <ul className="text-webDescrip flex   gap-2" style={{ listStyle: "unset" }} ><li> {advantage}</li> </ul>
                       </div>
                     ))}
                   </div>
