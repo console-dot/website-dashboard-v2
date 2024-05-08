@@ -1,10 +1,12 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
-import { FaDotCircle,  FaPlus, FaTrash } from "react-icons/fa";
+import { FaDotCircle, FaPlus, FaTrash } from "react-icons/fa";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
+import Testimonials from "./Testimonils/Testimonials";
+import CreateModal from "./Testimonils/CreateModal";
 
 export default function LandingPageEdit() {
   const [formData, setFormData] = useState({
@@ -68,6 +70,20 @@ export default function LandingPageEdit() {
         ],
       },
     ],
+    testimonials: [
+      {
+        name: "test1",
+        description: "description",
+        designation: "designation",
+        img: "dummy.png",
+      },
+      {
+        name: "test1",
+        description: "description",
+        designation: "designation",
+        img: "dummy.png",
+      },
+    ],
     testimonialFullName: "Jane Doe",
     testimonialDescription:
       "The team at TechSolutions went above and beyond to meet our needs.",
@@ -75,18 +91,22 @@ export default function LandingPageEdit() {
     expertiseName: "Cloud Solutions",
     expertiseDescription:
       "Expertise in building scalable cloud platforms tailored to client needs.",
-  });// State declarations
+  }); // State declarations
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [testimonialData, setTestimonialData] = useState({});
   const navigate = useNavigate();
-    const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
+  const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
   const [socialLinks, setSocialLinks] = useState([]);
   const [socialLinkName, setSocialLinkName] = useState("");
   const [socialLinkURL, setSocialLinkURL] = useState("");
-  
+
   // Modal functions
   const openModalSocialLink = () => setIsModalOpenSocialLink(true);
   const closeModalSocialLink = () => setIsModalOpenSocialLink(false);
-   
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
   // Social link functions
   const addSocialLink = () => {
     if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
@@ -105,7 +125,7 @@ export default function LandingPageEdit() {
   const removeSocialLink = (index) => {
     setSocialLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
   };
-  
+
   // Image upload functions
   const handleImageUpload = (e) => {
     const file = e.target.files[0];
@@ -133,7 +153,7 @@ export default function LandingPageEdit() {
       reader.readAsDataURL(file);
     }
   };
-  
+
   // Form handling functions
   const handleChangeExperience = (e, field) => {
     const value = e.target.value;
@@ -145,10 +165,39 @@ export default function LandingPageEdit() {
       },
     }));
   };
+
+  // Handle change
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  // Testimonials
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setTestimonialData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  const handleAddTestimonial = () => {
+    // Create new object
+    const newItem = {
+      name: testimonialData?.testimonialFullName,
+      description: testimonialData?.testimonialDescription,
+      designation: testimonialData?.testimonialDesignation,
+      img: testimonialData?.img,
+    };
+    // Add the new object to the testimonials array
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      testimonials: [...prevFormData.testimonials, newItem],
+    }));
+    // Close Modal
+    closeModal();
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -163,12 +212,11 @@ export default function LandingPageEdit() {
       console.log(formData);
     }
   };
-  
+
   // Effect
   useEffect(() => {
     setSocialLinks(formData.socialLinks);
   }, [formData.socialLinks]);
-  
 
   return (
     <div className="w-full">
@@ -415,7 +463,6 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Offshore
           </h1>
-         
 
           {/*  */}
           <div className="mt-4">
@@ -428,12 +475,11 @@ export default function LandingPageEdit() {
                   <div className="flex justify-between items-center ml-1">
                     {/* Render type with edit and delete buttons */}
                     <h3 className="text-lg font-semibold">{comparison.type}</h3>
-                    <div className="flex items-center gap-2">
-                     
-                    </div>
+                    <div className="flex items-center gap-2"></div>
                   </div>
                   <div>
                     {comparison.comparisons.map((advantage, idx) => (
+
                       <div key={idx} className="flex justify-start ml-6  ">
                         <ul className="text-webDescrip flex   gap-2" style={{ listStyle: "unset" }} ><li> {advantage}</li> </ul>
                       </div>
@@ -447,7 +493,6 @@ export default function LandingPageEdit() {
           {/* Remaining form fields */}
 
           {/* Modal */}
-          
 
           {/*  */}
         </div>
@@ -458,7 +503,16 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Testimonials
           </h1>
-          <div className="mt-4">
+          <div className="w-full flex justify-end">
+            <button
+              type="button"
+              onClick={openModal}
+              className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+            >
+              Add Testimonial
+            </button>
+          </div>
+          {/* <div className="mt-4">
             <label className="text-webDescrip font-semibold mt-4">
               Testimonial Image
             </label>
@@ -530,9 +584,25 @@ export default function LandingPageEdit() {
               value={formData?.testimonialDesignation}
               placeholder="Testimonial Designation"
             />
-          </div>
+          </div> */}
+
+          {/*  */}
+          {isModalOpen ? (
+            <CreateModal
+              handleImageUpload={handleImageUpload}
+              handleChange={handleInputChange}
+              closeModal={closeModal}
+              handleAddTestimonial={handleAddTestimonial}
+              formData={formData}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         {/*  Testimonials end*/}
+
+        {/* Table */}
+        <Testimonials data={formData?.testimonials} />
 
         {/*  Experties start*/}
         <div>
