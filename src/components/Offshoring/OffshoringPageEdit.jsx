@@ -263,9 +263,9 @@ export default function OffshoringPageEdit() {
                 <div className="mt-4">
                 <div className="flex flex-row justify-between items-center mb-2">
                     <label className="text-webDescrip font-semibold">
-                      Comparison
+                      Advantage
                     </label>
-                    <div className="flex flex-row  items-center">
+                    {/* <div className="flex flex-row  items-center">
                       <button
                         type="button"
                         className="text-white btn btn-success flex items-center space-x-1"
@@ -273,7 +273,7 @@ export default function OffshoringPageEdit() {
                         <FaPlus className="w-4 h-4" />
                         Add
                       </button>
-                    </div>
+                    </div> */}
                   </div>
                   <div className="w-full flex flex-col justify-start border border-dashed border-custom-purple rounded-lg p-4">
                     {type.advantages.map((advantage, idx) => (
@@ -308,15 +308,8 @@ export default function OffshoringPageEdit() {
                     <label className="text-webDescrip font-semibold">
                       Comparison
                     </label>
-                    <div className="flex flex-row  items-center">
-                      <button
-                        type="button"
-                        className="text-white btn btn-success flex items-center space-x-1"
-                      >
-                        <FaPlus className="w-4 h-4" />
-                        Add
-                      </button>
-                    </div>
+                    {/* 
+                     */}
                   </div>
 
                   <div className="w-full flex flex-col justify-start  border border-dashed border-custom-purple rounded-lg p-4">
@@ -376,7 +369,7 @@ export default function OffshoringPageEdit() {
       // For Advantage Modal
       {isModalOpenAdvantage && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-          <div className="bg-white w-[40%] h-[20%] flex flex-col justify-center p-4 rounded-lg">
+          <div className="bg-white w-[40%] h-[100%] flex flex-col justify-center p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-2">Edit Advantage</h2>
             <input
               type="text"
@@ -407,7 +400,7 @@ export default function OffshoringPageEdit() {
       // For Comparison Modal
       {isModalOpenComparison !== null && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-          <div className="bg-white w-[40%] h-[20%] flex flex-col justify-center p-4 rounded-lg">
+          <div className="bg-white w-[40%] h-[100%] flex flex-col justify-center p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-2">
               {isModalOpenComparison === "add"
                 ? "Add Comparison"
