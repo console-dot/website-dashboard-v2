@@ -1,6 +1,6 @@
 import { useEffect, useState } from "react";
 import { Button } from "../Button";
-import { FaEdit, FaPlus, FaTrash } from "react-icons/fa";
+import { FaDotCircle,  FaPlus, FaTrash } from "react-icons/fa";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { ToastContainer, toast } from "react-toastify";
@@ -78,9 +78,7 @@ export default function LandingPageEdit() {
   });// State declarations
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
-  const [isModalOpenComparison, setIsModalOpenComparison] = useState(null);
-  const [comparisonInput, setComparisonInput] = useState("");
-  const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
+    const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
   const [socialLinks, setSocialLinks] = useState([]);
   const [socialLinkName, setSocialLinkName] = useState("");
   const [socialLinkURL, setSocialLinkURL] = useState("");
@@ -88,70 +86,7 @@ export default function LandingPageEdit() {
   // Modal functions
   const openModalSocialLink = () => setIsModalOpenSocialLink(true);
   const closeModalSocialLink = () => setIsModalOpenSocialLink(false);
-  const openModalComparison = (comparisonIndex, advantageIndex) => {
-    setIsModalOpenComparison({ comparisonIndex, advantageIndex });
-    const comparison = formData.offshoreComparison[comparisonIndex];
-    const advantage = comparison.comparisons[advantageIndex];
-    setComparisonInput(advantage);
-  };
-  const closeModalComparison = () => setIsModalOpenComparison(null);
-  
-  // Comparison functions
-  const addComparison = () => {
-    if (comparisonInput.trim() !== "") {
-      setFormData((prevData) => ({
-        ...prevData,
-        offshoreComparison: [...prevData.offshoreComparison, comparisonInput],
-      }));
-      setComparisonInput("");
-    }
-  };
-  const removeComparison = (comparisonIndex, advantageIndex) => {
-    setFormData((prevData) => {
-      const updatedComparison = [...prevData.offshoreComparison];
-      updatedComparison[comparisonIndex].comparisons.splice(advantageIndex, 1);
-      return {
-        ...prevData,
-        offshoreComparison: updatedComparison,
-      };
-    });
-  };
-  const updateComparison = (index) => {
-    if (comparisonInput.trim() !== "") {
-      const { comparisonIndex, advantageIndex } = isModalOpenComparison;
-      const updatedComparison = [...formData.offshoreComparison];
-      updatedComparison[comparisonIndex].comparisons[advantageIndex] = comparisonInput;
-      setFormData((prevData) => ({
-        ...prevData,
-        offshoreComparison: updatedComparison,
-      }));
-      closeModalComparison();
-    }
-  };
-  const editComparisonType = (index) => {
-    const newType = prompt("Enter the new type:");
-    if (newType && newType.trim() !== "") {
-      setFormData((prevData) => {
-        const updatedComparison = [...prevData.offshoreComparison];
-        updatedComparison[index].type = newType;
-        return {
-          ...prevData,
-          offshoreComparison: updatedComparison,
-        };
-      });
-    }
-  };
-  const deleteComparisonType = (index) => {
-    setFormData((prevData) => {
-      const updatedComparison = [...prevData.offshoreComparison];
-      updatedComparison.splice(index, 1);
-      return {
-        ...prevData,
-        offshoreComparison: updatedComparison,
-      };
-    });
-  };
-  
+   
   // Social link functions
   const addSocialLink = () => {
     if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
@@ -224,7 +159,7 @@ export default function LandingPageEdit() {
         onClose: () => navigate("/LandingPage"),
       });
     }, 1500);
-    if (!isModalOpenComparison && !isModalOpenSocialLink) {
+    if (!isModalOpenSocialLink) {
       console.log(formData);
     }
   };
@@ -480,71 +415,27 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Offshore
           </h1>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold ">
-              Offshore Type
-            </label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="offshoreType"
-              id="offshoreType"
-              onChange={handleChange}
-              value={formData?.offshoreType}
-              placeholder="Offshore Type"
-            />
-          </div>
+         
 
           {/*  */}
           <div className="mt-4">
             <label className="text-webDescrip font-semibold mt-4">
               Offshore Comparison
             </label>
-            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+            <div className="w-full flex flex-row justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
               {formData.offshoreComparison.map((comparison, index) => (
-                <div key={index} className="w-full flex flex-col gap-4 mb-4">
+                <div key={index} className="w-full flex flex-col gap-6 mb-4 ">
                   <div className="flex justify-between items-center">
                     {/* Render type with edit and delete buttons */}
                     <h3 className="text-lg font-semibold">{comparison.type}</h3>
                     <div className="flex items-center gap-2">
-                      {/* Button to edit the type */}
-                      <button
-                        type="button"
-                        onClick={() => editComparisonType(index)}
-                        className="btn btn-success text-white rounded-xl"
-                      >
-                        Edit
-                      </button>
-                      {/* Button to delete the type */}
-                      <button
-                        type="button"
-                        onClick={() => deleteComparisonType(index)}
-                        className="btn btn-error text-white rounded-xl"
-                      >
-                        Delete
-                      </button>
+                     
                     </div>
                   </div>
                   <div>
                     {comparison.comparisons.map((advantage, idx) => (
-                      <div key={idx} className="flex items-center">
-                        <p className="text-webDescrip">{advantage}</p>
-                        <div className="ml-auto flex gap-2">
-                          <button
-                            type="button"
-                            onClick={() => openModalComparison(index, idx)}
-                            className="text-success"
-                          >
-                            <FaEdit />
-                          </button>
-                          <button
-                            type="button"
-                            onClick={() => removeComparison(index, idx)}
-                            className="text-error"
-                          >
-                            <FaTrash />
-                          </button>
-                        </div>
+                      <div key={idx} className="flex items-center ">
+                        <p className="text-webDescrip flex  items-center gap-2"><FaDotCircle size={5}/>{advantage}</p>
                       </div>
                     ))}
                   </div>
@@ -556,40 +447,7 @@ export default function LandingPageEdit() {
           {/* Remaining form fields */}
 
           {/* Modal */}
-          {isModalOpenComparison !== null && (
-            <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-              <div className="bg-white w-[40%] h-[50%] flex flex-col justify-center p-4 rounded-lg">
-                <h2 className="text-lg font-semibold mb-2">
-                  {isModalOpenComparison === "add"
-                    ? "Add Comparison"
-                    : "Edit Comparison"}
-                </h2>
-                <textarea
-                  type="text"
-                  value={comparisonInput}
-                  onChange={(e) => setComparisonInput(e.target.value)}
-                  className="bg-white border border-custom-purple text-webDescrip p-2 w-full mb-2 h-24"
-                  placeholder="Enter comparison"
-                />
-                <div className="flex justify-end">
-                  <button
-                    type="button"
-                    onClick={() => updateComparison(isModalOpenComparison)}
-                    className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
-                  >
-                    {isModalOpenComparison === "add" ? "Add" : "Save"}
-                  </button>
-                  <button
-                    type="button"
-                    onClick={closeModalComparison}
-                    className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
-                  >
-                    Cancel
-                  </button>
-                </div>
-              </div>
-            </div>
-          )}
+          
 
           {/*  */}
         </div>
