@@ -180,7 +180,7 @@ export default function OffshoringPageEdit() {
         offShoreType: updatedOffShoreType,
       }));
       setComparisonInput("");
-      setIsModalOpenComparison(false); // Close modal after editing
+      setIsModalOpenComparison(null); // Close modal after editing
     }
   };
 
@@ -265,15 +265,6 @@ export default function OffshoringPageEdit() {
                     <label className="text-webDescrip font-semibold">
                       Advantage
                     </label>
-                    {/* <div className="flex flex-row  items-center">
-                      <button
-                        type="button"
-                        className="text-white btn btn-success flex items-center space-x-1"
-                      >
-                        <FaPlus className="w-4 h-4" />
-                        Add
-                      </button>
-                    </div> */}
                   </div>
                   <div className="w-full flex flex-col justify-start border border-dashed border-custom-purple rounded-lg p-4">
                     {type.advantages.map((advantage, idx) => (
@@ -290,13 +281,13 @@ export default function OffshoringPageEdit() {
                           >
                             <FaPen />
                           </button>
-                          <button
+                          {/* <button
                             type="button"
                             onClick={() => removeAdvantage(index, idx)}
                             className="text-error"
                           >
                             <FaTrash />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     ))}
@@ -327,13 +318,13 @@ export default function OffshoringPageEdit() {
                           >
                             <FaPen />
                           </button>
-                          <button
+                          {/* <button
                             type="button"
                             onClick={() => removeComparison(index, idx)}
                             className="text-error"
                           >
                             <FaTrash />
-                          </button>
+                          </button> */}
                         </div>
                       </div>
                     ))}
@@ -369,7 +360,7 @@ export default function OffshoringPageEdit() {
       // For Advantage Modal
       {isModalOpenAdvantage && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-          <div className="bg-white w-[40%] h-[100%] flex flex-col justify-center p-4 rounded-lg">
+          <div className="bg-white w-[40%] h-[20%] flex flex-col justify-center p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-2">Edit Advantage</h2>
             <input
               type="text"
@@ -400,7 +391,7 @@ export default function OffshoringPageEdit() {
       // For Comparison Modal
       {isModalOpenComparison !== null && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
-          <div className="bg-white w-[40%] h-[100%] flex flex-col justify-center p-4 rounded-lg">
+          <div className="bg-white w-[40%] h-[20%] flex flex-col justify-center p-4 rounded-lg">
             <h2 className="text-lg font-semibold mb-2">
               {isModalOpenComparison === "add"
                 ? "Add Comparison"

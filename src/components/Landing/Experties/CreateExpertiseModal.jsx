@@ -1,10 +1,10 @@
 import React from "react";
 
-export default function CreateModal({
+export default function CreateExpertiseModal({
   handleImageUpload,
   handleChange,
   closeModal,
-  handleAddTestimonial,
+  handleAddExpertise,
   formData,
 }) {
   return (
@@ -12,25 +12,24 @@ export default function CreateModal({
       <div className="bg-white border border-dashed flex flex-col border-custom-purple p-4 mt-6">
         <div className="mt-4">
           <label className="text-webDescrip font-semibold mt-4">
-            Testimonial Image
+            Expertise Image
           </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
-            name="testimonialImage"
-            id="testimonialImage"
+            name="expertiseImage"
+            id="expertiseImage"
             onChange={handleImageUpload}
-            placeholder="Testimonial Image"
+            placeholder="Expertise Image"
           />
-          {/*  */}
-          {formData.testimonialImage && (
+          {formData.expertiseImage && (
             <div>
               <label className="text-webDescrip font-semibold mt-4">
                 Preview:
               </label>
               <img
-                src={formData.testimonialImage}
-                alt="Testimonial Preview"
+                src={formData.expertiseImage}
+                alt="Expertise Preview"
                 style={{
                   maxWidth: "100%",
                   maxHeight: "200px",
@@ -40,58 +39,42 @@ export default function CreateModal({
             </div>
           )}
         </div>
-        {/*  */}
         <div className="mt-4">
           <label className="text-webDescrip font-semibold mt-4">
-            Testimonial FullName
+            Expertise Name
           </label>
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="testimonialFullName"
-            id="testimonialFullName"
+            name="expertiseName"
+            id="expertiseName"
             onChange={handleChange}
-            value={formData?.testimonials?.name}
-            placeholder="testimonialFullName"
+            value={formData?.expertiseName}
+            placeholder="Expertise Name"
           />
         </div>
         <div className="mt-4">
           <label className="text-webDescrip font-semibold mt-4">
-            Testimonial Description
+            Expertise Description
           </label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="testimonialDescription"
-            id="testimonialDescription"
+            name="expertiseDescription"
+            id="expertiseDescription"
             onChange={handleChange}
-            value={formData?.testimonials?.description}
-            placeholder="Testimonial Description"
+            value={formData?.expertiseDescription}
+            placeholder="Expertise Description"
           />
         </div>
-        <div className="mt-4">
-          <label className="text-webDescrip font-semibold mt-4">
-            Testimonial Designation
-          </label>
-          <input
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="testimonialDesignation"
-            id="testimonialDesignation"
-            onChange={handleChange}
-            value={formData?.testimonials?.designation}
-            placeholder="Testimonial Designation"
-          />
-        </div>
-        <div className=" flex flex-row justify-end gap-2 mt-4">
+        <div>
           <button
             type="button"
-            onClick={handleAddTestimonial}
+            onClick={handleAddExpertise}
             className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
           >
             Save
           </button>
-
           <button
             type="button"
             onClick={closeModal}

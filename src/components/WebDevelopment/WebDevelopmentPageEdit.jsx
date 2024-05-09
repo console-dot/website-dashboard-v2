@@ -4,7 +4,41 @@ import { TechStack } from "../TechStack/TechStack";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
 // Assuming WhyChooseSection is in a separate file
+const data = [
+  {
+    description:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
+    proposition:
+      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
+    whyChoose: [
+      {
+        name: "User-Centric Design",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_erp_image.jpg",
+      },
+      {
+        name: "Cross-Platform ",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "SaaSbyonsoleDot.jpg",
+      },
+      {
+        name: "Performance Optimization",
+        description:
+          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_mvp_image.jpg",
+      },
+    ],
+    techStack: [
+      { name: "React", type: "Frontend", img: "react.png" },
+      { name: "Node.js", type: "Backend", img: "nodejs.png" },
+      // Add more technologies as needed
+    ],
+  },
+];
 
 export default function WebDevelopmentPageEdit() {
   const [isLoading, setIsLoading] = useState(false);
@@ -18,21 +52,7 @@ export default function WebDevelopmentPageEdit() {
   // Navigate
   const navigate = useNavigate();
   // Use Form State
-  const [formData, setFormData] = useState({
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-    Proposition:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-    whyChoose: [
-      "User-Centric Design",
-      "Cross-Platform Compatibility",
-      "Performance Optimization",
-    ],
-    techStack: [
-      { name: "React", type: "Frontend", img: "react.png" },
-      { name: "Node.js", type: "Backend", img: "nodejs.png" },
-    ],
-  });
+  const [formData, setFormData] = useState(data[0]);
 
   const [techData, setTechData] = useState({
     techStack: {
@@ -47,7 +67,7 @@ export default function WebDevelopmentPageEdit() {
     "Cross-Platform Compatibility",
     "Performance Optimization",
   ];
-  
+
   const handleWhyChooseChange = (descriptions) => {
     setFormData({
       ...formData,
@@ -155,6 +175,7 @@ export default function WebDevelopmentPageEdit() {
       type: techData.techStack.type,
       img: techData.techStack.img,
     };
+    
 
     // Add the new object to the techStack array
     setFormData((prevFormData) => ({
@@ -162,6 +183,13 @@ export default function WebDevelopmentPageEdit() {
       techStack: [...prevFormData.techStack, newTechStackItem],
     }));
     closeModal();
+  };
+  const handleDeleteTechStack = (index) => {
+    const updatedTechStack = formData.techStack.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
+    });
   };
   const handleSubmit = (e) => {
     e.preventDefault();
@@ -228,27 +256,22 @@ export default function WebDevelopmentPageEdit() {
             />
           </div>
 
-          {/* Tech Stack */}
-          {/* <TechStack
-            techStack={formData.techStack}
-            onChange={handleChange}
-            onImageChange={handleImageChange}
-            onAddTechStack={handleAddTechStack}
-          /> */}
-
           <div className="border border-dashed flex flex-col border-custom-purple p-4 mt-6">
-            <label className="text-webDescrip font-semibol text-[20px] ">
-              Tech Stack
-            </label>
-            <div className="w-full flex justify-end">
+            <div className="flex flex-row  justify-between items-center">
+              <label className="text-webDescrip font-semibol text-[20px] ">
+                Tech Stack
+              </label>
+
               <button
                 type="button"
                 onClick={openModal}
-                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+                className="text-white btn btn-success"
               >
-                Add Tech Stack
+                <FaPlus />
+                Add
               </button>
             </div>
+
             {console.log("formData", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">Frontend</div>
             {formData?.techStack?.map((item, index) =>
@@ -256,11 +279,21 @@ export default function WebDevelopmentPageEdit() {
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
-                    <div>
-                      <span onClick={() => handleOpenEditModal(index)}>
-                        Edit
-                      </span>
-                      <span>Delete</span>
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(index)}
+                        className="text-success mr-2"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTechStack(index)}
+                        className="text-error"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -268,14 +301,26 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* Backend */}
             <div className="w-full text-webDescrip font-semibold">Backend</div>
-            {formData?.techStack?.map((item) =>
+            {formData?.techStack?.map((item,index) =>
               item?.type === "Backend" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
-                    <div>
-                      <span>Edit</span>
-                      <span>Delete</span>
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(index)}
+                        className="text-success mr-2"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTechStack(index)}
+                        className="text-error"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -283,14 +328,26 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* Database */}
             <div className="w-full text-webDescrip font-semibold">Database</div>
-            {formData?.techStack?.map((item) =>
+            {formData?.techStack?.map((item,index) =>
               item?.type === "Database" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
-                    <div>
-                      <span>Edit</span>
-                      <span>Delete</span>
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(index)}
+                        className="text-success mr-2"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTechStack(index)}
+                        className="text-error"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -298,14 +355,26 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* CI/CD */}
             <div className="w-full text-webDescrip font-semibold">CI/CD</div>
-            {formData?.techStack?.map((item) =>
+            {formData?.techStack?.map((item,index) =>
               item?.type === "CI/CD" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
-                    <div>
-                      <span>Edit</span>
-                      <span>Delete</span>
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(index)}
+                        className="text-success mr-2"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTechStack(index)}
+                        className="text-error"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -313,14 +382,26 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* VCS */}
             <div className="w-full text-webDescrip font-semibold">VCS</div>
-            {formData?.techStack?.map((item) =>
+            {formData?.techStack?.map((item,index) =>
               item?.type === "VCS" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
-                    <div>
-                      <span>Edit</span>
-                      <span>Delete</span>
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(index)}
+                        className="text-success mr-2"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTechStack(index)}
+                        className="text-error"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                 </div>
@@ -328,14 +409,26 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* Testing */}
             <div className="w-full text-webDescrip font-semibold">Testing</div>
-            {formData?.techStack?.map((item) =>
+            {formData?.techStack?.map((item,index) =>
               item?.type === "Testing" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
-                    <div>
-                      <span>Edit</span>
-                      <span>Delete</span>
+                    <div className="flex items-center">
+                      <button
+                        type="button"
+                        onClick={() => handleOpenEditModal(index)}
+                        className="text-success mr-2"
+                      >
+                        <FaPen />
+                      </button>
+                      <button
+                        type="button"
+                        onClick={() => handleDeleteTechStack(index)}
+                        className="text-error"
+                      >
+                        <FaTrash />
+                      </button>
                     </div>
                   </div>
                 </div>

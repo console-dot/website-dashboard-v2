@@ -1,6 +1,13 @@
 import React from "react";
+import { FaEdit, FaTrash } from "react-icons/fa";
 
-export default function Testimonials({ data }) {
+export default function Testimonials({
+  data,
+  open,
+  close,
+  deleteTestimonial,
+  handleOpenEditModal,
+}) {
   return (
     <div class="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table class="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -33,11 +40,22 @@ export default function Testimonials({ data }) {
                 >
                   {item?.name}
                 </th>
-                <td class="px-6 py-4">{item?.description}</td>
-                <td class="px-6 py-4">{item?.designation}</td>
-                <td class="px-6 py-4">
-                  <button type="button" onClick={() => console.log("clicked")}>
-                    Edit
+                <td className="px-6  py-4">{item?.description}</td>
+                <td className="px-6 py-4">{item?.designation}</td>
+                <td className="flex flex-row justify-start items-center px-6 py-4  ">
+                  <button
+                    type="button"
+                    onClick={() => handleOpenEditModal(index)}
+                    className="flex flex-row justify-center items-center text-success  "
+                  >
+                    <FaEdit />
+                  </button>
+                  <button
+                    type="button"
+                    onClick={()=>deleteTestimonial(index)}
+                    className="flex flex-row justify-center items-center text-error ml-2  "
+                  >
+                    <FaTrash />
                   </button>
                 </td>
               </tr>

@@ -64,11 +64,32 @@ const data = [
         ],
       },
     ],
-    testimonialImage: "62bc76f7b3dc2f001f6b8b3b", // Example ObjectId from MongoDB
-    testimonialFullName: "Jane Doe",
-    testimonialDescription:
-      "The team at TechSolutions went above and beyond to meet our needs.",
-    testimonialDesignation: "CEO of Innovative Tech Co.",
+    testimonials: [
+      {
+        name: "test1",
+        description: "description",
+        designation: "designation",
+        img: "dummy.png",
+      },
+      {
+        name: "test1",
+        description: "description",
+        designation: "designation",
+        img: "dummy.png",
+      },
+    ],
+    expertises: [
+      {
+        expertisename: "test",
+        expertisesdescription: "description",
+        expertisesimg: "expertises_dummy.png",
+      },
+      {
+        expertisename: "name1",
+        expertisesdescription: "description1",
+        expertisesimg: "expertises_dummy.png1",
+      },
+    ],
     expertiseImage: "62bc76f7b3dc2f001f6b8b3c", // Example ObjectId from MongoDB
     expertiseName: "Cloud Solutions",
     expertiseDescription:

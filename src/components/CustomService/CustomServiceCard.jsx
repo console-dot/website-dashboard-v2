@@ -56,29 +56,28 @@ export const CustomServiceCard = ({ data }) => {
                       </span>
                     </div>
                   </div>
-                  
-                    <strong style={{ color: "grey" }} >
-                      Why Choose Us:
-                    </strong>
-                    <div className="bg-white shadow-md rounded flex flex-row justify-between p-4 mb-4">
+
+                  <strong style={{ color: "grey" }}>Why Choose Us:</strong>
+                  <div className="w-full flex flex-row flex-wrap justify-between">
                     {data?.whyChoose.map((option, index) => (
-                      <div key={index} className="option flex flex-col justify-between  ml-2 mr-2 items-center mt-2">
-                        <div className="option-content border border-dashed border-custom-purple p-2 ">
-                          <h3 className="option-title text-gray-500 text-lg font-semibold">
-                            {option.name}
-                            {" :"}
-                          </h3>
-                          <p className="option-description text-gray-500">
-                            {" "}
-                            {option.description}
-                          </p>
+                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <h3 className="option-title text-gray-500 text-lg font-semibold">
+                          {option.name}
+                          {" :"}
+                        </h3>
+                        <p className="option-description text-gray-500">
+                          {" "}
+                          {option.description}
+                        </p>
+                        <div className="w-full flex justify-center items-center mt-2">
                           <img
-                          src={option.image}
-                          alt={option.name}
-                          className="option-image w-8 h-8 ml-4"
-                        />
+                            src={
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
+                            }
+                            alt={option.name}
+                            className="option-image w-8 h-8"
+                          />
                         </div>
-                       
                       </div>
                     ))}
                   </div>
