@@ -155,47 +155,101 @@ export const LandingCard = ({ data, key, value }) => {
                     </div>
                   </div>
                 </div>
-
-                {/* Expertise */}
-                <div className="w-full flex flex-col gap-2 mt-4">
-                  <h1 className="text-heading text-xl font-bold">Expertise</h1>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Expertise Image:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.expertiseImage}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Expertise Name:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.expertiseName}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Expertise Description:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.expertiseDescription}
-                      </span>
-                    </div>
+                {/* Testimonials */}
+                <div className="w-full flex flex-row gap-2 mt-4">
+                  <h1 className="text-heading text-xl font-bold">
+                    Testimonials
+                  </h1>
+                  <div className="overflow-x-auto shadow-md sm:rounded-lg mx-auto">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-row-group">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                          <th className="px-6 py-3 w-8 text-left text-webDescrip">
+                            Name
+                          </th>
+                          <th className="px-6 py-3 text-left text-webDescrip">
+                            Designation
+                          </th>
+                          <th className="px-6 py-3 text-left text-webDescrip">
+                            Description
+                          </th>
+                          <th className="px-6 py-3 text-left text-webDescrip">
+                            Image
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data?.testimonials.map((testimonial, index) => (
+                          <tr
+                            key={index}
+                            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                          >
+                            <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              {testimonial.name}
+                            </td>
+                            <td className="px-6 py-1">
+                              {testimonial.designation}
+                            </td>
+                            <td className="px-6 py-1">
+                              {testimonial.description}
+                            </td>
+                            <td className="px-6 py-1">
+                              <img
+                                src={testimonial.img}
+                                alt={testimonial.name}
+                                className="h-12 w-12"
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
                   </div>
                 </div>
+                {/* Expertise */}
+                <div className="w-full flex flex-row gap-2 mt-4">
+                  <h1 className="text-heading text-xl font-bold">Expertise</h1>
+                  <div className="overflow-x-auto shadow-md sm:rounded-lg mx-auto">
+                    <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-row-group">
+                      <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
+                        <tr>
+                          <th className="px-6 py-3 text-left text-webDescrip">
+                            Name
+                          </th>
+                          <th className="px-6 py-3 text-left text-webDescrip">
+                            Description
+                          </th>
+                          <th className="px-6 py-3 text-left text-webDescrip">
+                            Image
+                          </th>
+                        </tr>
+                      </thead>
+                      <tbody>
+                        {data?.expertises.map((expertise, index) => (
+                          <tr
+                            key={index}
+                            className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
+                          >
+                            <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
+                              {expertise.expertisename}
+                            </td>
+                            <td className="px-6 py-1">
+                              {expertise.expertisesdescription}
+                            </td>
+                            <td className="px-6 py-1">
+                              <img
+                                src={expertise.expertisesimg}
+                                alt={expertise.name}
+                                className="h-12 w-12"
+                              />
+                            </td>
+                          </tr>
+                        ))}
+                      </tbody>
+                    </table>
+                  </div>
+                </div>
+
                 {/* Offshore */}
                 <div className="w-full flex flex-col gap-2 mt-4">
                   <h1 className="text-heading text-xl font-bold">
@@ -222,61 +276,6 @@ export const LandingCard = ({ data, key, value }) => {
                       </div>
                     </div>
                   ))}
-                </div>
-
-                {/* Testimonials */}
-                <div className="w-full flex flex-col gap-2 mt-4">
-                  <h1 className="text-heading text-xl font-bold">
-                    Testimonials
-                  </h1>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Testimonial Image:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.testimonialImage}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Testimonial FullName:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.testimonialFullName}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Testimonial Description:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.testimonialDescription}
-                      </span>
-                    </div>
-                  </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Testimonial Designation:{" "}
-                      </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.testimonialDesignation}
-                      </span>
-                    </div>
-                  </div>
                 </div>
 
                 {/* End */}

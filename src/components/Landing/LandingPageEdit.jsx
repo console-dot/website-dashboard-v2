@@ -7,6 +7,10 @@ import { ToastContainer, toast } from "react-toastify";
 import "react-toastify/dist/ReactToastify.css";
 import Testimonials from "./Testimonils/Testimonials";
 import CreateModal from "./Testimonils/CreateModal";
+import EditTestModal from "./Testimonils/EditTestModal";
+import Expertises from "./Experties/Experties";
+import CreateExpertiseModal from "./Experties/CreateExpertiseModal";
+import EditExpertiseModal from "./Experties/EditExpertiseModal";
 
 export default function LandingPageEdit() {
   const [formData, setFormData] = useState({
@@ -84,28 +88,58 @@ export default function LandingPageEdit() {
         img: "dummy.png",
       },
     ],
+    expertises: [
+      {
+        expertiseName: "test",
+        expertiseDescription: "description",
+        expertiseImg: "dummy.png",
+      },
+      {
+        expertiseName: "test",
+        expertiseDescription: "description1",
+        expertiseImg: "dummy.png1",
+      },
+    ],
     testimonialFullName: "Jane Doe",
     testimonialDescription:
       "The team at TechSolutions went above and beyond to meet our needs.",
     testimonialDesignation: "CEO of Innovative Tech Co.",
-    expertiseName: "Cloud Solutions",
-    expertiseDescription:
-      "Expertise in building scalable cloud platforms tailored to client needs.",
-  }); // State declarations
+  });
+  // State declarations
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
+  //
   const [testimonialData, setTestimonialData] = useState({});
-  const navigate = useNavigate();
+  const [editTestimonialModal, setEditTestimonialModal] = useState(false);
+  // State to hold the data of the testimonial item being edited
+  const [editTestimonial, setEditTestimonial] = useState(null);
+  // State to manage the index of the tech stack item being edited
+  const [editIndex, setEditIndex] = useState(null);
+  //
   const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
   const [socialLinks, setSocialLinks] = useState([]);
   const [socialLinkName, setSocialLinkName] = useState("");
   const [socialLinkURL, setSocialLinkURL] = useState("");
+  //
+  const [expertiseData, setExpertiseData] = useState({});
+  const [editExpertise, setEditExpertise] = useState(null);
+  const [isExpertiseModalOpen, setIsExpertiseModalOpen] = useState(false);
+  const [editExpertiseModal, setEditExpertiseModal] = useState(false);
+  //
+  const navigate = useNavigate();
 
   // Modal functions
   const openModalSocialLink = () => setIsModalOpenSocialLink(true);
   const closeModalSocialLink = () => setIsModalOpenSocialLink(false);
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
+  const openEditExpertiseModal = () => setEditExpertiseModal(true);
+  const closeEditExpertiseModal = () => setEditExpertiseModal(false);
+
+  const openEditTestModal = () => setEditTestimonialModal(true);
+  const closeEditTestModal = () => setEditTestimonialModal(false);
+  const openExpertiseModal = () => setIsExpertiseModalOpen(true); // Added
+  const closeExpertiseModal = () => setIsExpertiseModalOpen(false); // Added
 
   // Social link functions
   const addSocialLink = () => {
@@ -181,6 +215,15 @@ export default function LandingPageEdit() {
     }));
   };
 
+  // Testimonials
+  const handleExpChange = (e) => {
+    const { name, value } = e.target;
+    setExpertiseData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
   const handleAddTestimonial = () => {
     // Create new object
     const newItem = {
@@ -198,6 +241,61 @@ export default function LandingPageEdit() {
     closeModal();
   };
 
+  const handleEditInputChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "img") {
+      // If the change is in the image input field
+      const file = files[0];
+      setEditTestimonial((prevItem) => ({
+        ...prevItem,
+        img: file,
+      }));
+    } else {
+      // If the change is in other input fields
+      setEditTestimonial((prevItem) => ({
+        ...prevItem,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleEditTestimonial = () => {
+    const updatedTestimonial = [...formData.testimonials];
+    updatedTestimonial[editIndex] = editTestimonial;
+    setFormData({
+      ...formData,
+      testimonials: updatedTestimonial,
+    });
+
+    handleCloseEditModal();
+  };
+
+  // Function to open the edit modal
+  const handleOpenEditModal = (index) => {
+    console.log(index);
+    setEditIndex(index);
+    console.log("d", formData.testimonials[index]);
+    setEditTestimonial(formData.testimonials[index]);
+    setEditTestimonialModal(true);
+  };
+
+  // Function to close the edit modal
+  const handleCloseEditModal = () => {
+    setEditTestimonialModal(false);
+    setEditIndex(null);
+    setEditTestimonial(null);
+  };
+  //delete testimonial
+  const deleteTestimonial = (index) => {
+    const updatedTestimonials = formData.testimonials.filter(
+      (_, i) => i !== index
+    );
+    setFormData((prevData) => ({
+      ...prevData,
+      testimonials: updatedTestimonials,
+    }));
+  };
+
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -212,6 +310,75 @@ export default function LandingPageEdit() {
       console.log(formData);
     }
   };
+  // expertise modal
+
+  //---------------------------------------------------------------
+
+  // Modal functions
+
+  // Expertise functions
+  const handleAddExpertise = () => {
+    const newItem = {
+      expertiseName: expertiseData?.expertiseName,
+      expertiseDescription: expertiseData?.expertiseDescription, // Corrected property name
+      expertiseImg: expertiseData?.expertiseImage,
+    };
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      expertises: [...prevFormData.expertises, newItem],
+    }));
+    closeExpertiseModal();
+  };
+
+  const handleEditExpChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "img") {
+      // If the change is in the image input field
+      const file = files[0];
+      setEditExpertise((prevItem) => ({
+        ...prevItem,
+        img: file,
+      }));
+    } else {
+      // If the change is in other input fields
+      setEditExpertise((prevItem) => ({
+        ...prevItem,
+        [name]: value,
+      }));
+    }
+  };
+
+  const handleEditExpertise = () => {
+    const updatedExpertises = [...formData.expertises];
+    updatedExpertises[editIndex] = editExpertise;
+    setFormData({
+      ...formData,
+      expertises: updatedExpertises,
+    });
+    closeEditExpertiseModal();
+  };
+
+  const handleOpenEditExpertiseModal = (index) => {
+    setEditIndex(index);
+    setEditExpertise(formData.expertises[index]);
+    setEditExpertiseModal(true);
+  };
+
+  const handleCloseEditExpertiseModal = () => {
+    setEditExpertiseModal(false);
+    setEditIndex(null);
+    setEditExpertise(null);
+  };
+  //delete expertise
+  const deleteExpertise = (index) => {
+    const updatedExpertises = formData.expertises.filter((_, i) => i !== index);
+    setFormData((prevData) => ({
+      ...prevData,
+      expertises: updatedExpertises,
+    }));
+  };
+
+  //---------------------------------------------------------------
 
   // Effect
   useEffect(() => {
@@ -463,8 +630,6 @@ export default function LandingPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Offshore
           </h1>
-
-          {/*  */}
           <div className="mt-4">
             <label className="text-webDescrip font-semibold mt-4">
               Offshore Comparison
@@ -479,9 +644,13 @@ export default function LandingPageEdit() {
                   </div>
                   <div>
                     {comparison.comparisons.map((advantage, idx) => (
-
                       <div key={idx} className="flex justify-start ml-6  ">
-                        <ul className="text-webDescrip flex   gap-2" style={{ listStyle: "unset" }} ><li> {advantage}</li> </ul>
+                        <ul
+                          className="text-webDescrip flex   gap-2"
+                          style={{ listStyle: "unset" }}
+                        >
+                          <li> {advantage}</li>{" "}
+                        </ul>
                       </div>
                     ))}
                   </div>
@@ -500,92 +669,28 @@ export default function LandingPageEdit() {
 
         {/*  Testimonials start*/}
         <div>
-          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Testimonials
-          </h1>
-          <div className="w-full flex justify-end">
+          <div className="w-full flex justify-between items-center mt-4">
+            <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
+              Testimonials
+            </h1>
             <button
               type="button"
               onClick={openModal}
-              className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+              className="text-white btn btn-success"
             >
-              Add Testimonial
+              <FaPlus />
+              Add
             </button>
           </div>
-          {/* <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Testimonial Image
-            </label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="file"
-              name="testimonialImage"
-              id="testimonialImage"
-              onChange={handleImageUpload}
-              placeholder="Testimonial Image"
-            />
 
-            {formData.testimonialImage && (
-              <div>
-                <label className="text-webDescrip font-semibold mt-4">
-                  Preview:
-                </label>
-                <img
-                  src={formData.testimonialImage}
-                  alt="Testimonial Preview"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "200px",
-                    marginTop: "10px",
-                  }}
-                />
-              </div>
-            )}
-          </div>
-
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Testimonial FullName
-            </label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="testimonialFullName"
-              id="testimonialFullName"
-              onChange={handleChange}
-              value={formData?.testimonialFullName}
-              placeholder="testimonialFullName"
-            />
-          </div>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Testimonial Description
-            </label>
-            <textarea
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="testimonialDescription"
-              id="testimonialDescription"
-              onChange={handleChange}
-              value={formData?.testimonialDescription}
-              placeholder="Testimonial Description"
-            />
-          </div>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Testimonial Designation
-            </label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="testimonialDesignation"
-              id="testimonialDesignation"
-              onChange={handleChange}
-              value={formData?.testimonialDesignation}
-              placeholder="Testimonial Designation"
-            />
-          </div> */}
-
+          {/* Table */}
+          <Testimonials
+            data={formData?.testimonials}
+            open={openEditTestModal}
+            close={closeEditTestModal}
+            deleteTestimonial={deleteTestimonial}
+            handleOpenEditModal={handleOpenEditModal}
+          />
           {/*  */}
           {isModalOpen ? (
             <CreateModal
@@ -598,75 +703,64 @@ export default function LandingPageEdit() {
           ) : (
             <></>
           )}
+
+          {editTestimonialModal ? (
+            <EditTestModal
+              handleImageUpload={handleImageUpload}
+              handleChange={handleEditInputChange}
+              closeModal={closeEditTestModal}
+              handleEditTestimonial={handleEditTestimonial}
+              deleteTestimonial={deleteTestimonial}
+              data={editTestimonial}
+            />
+          ) : (
+            <></>
+          )}
         </div>
         {/*  Testimonials end*/}
-
-        {/* Table */}
-        <Testimonials data={formData?.testimonials} />
-
         {/*  Experties start*/}
         <div>
-          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Experties
-          </h1>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Expertise Image
-            </label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="file"
-              name="expertiseImage"
-              id="expertiseImage"
-              onChange={handleExpertiseImageUpload}
-              placeholder="expertise Image"
-            />
-
-            {formData.expertiseImage && (
-              <div>
-                <label className="text-webDescrip font-semibold mt-4">
-                  Preview:
-                </label>
-                <img
-                  src={formData.expertiseImage}
-                  alt="Testimonial Preview"
-                  style={{
-                    maxWidth: "100%",
-                    maxHeight: "200px",
-                    marginTop: "10px",
-                  }}
-                />
-              </div>
-            )}
+          <div className="w-full flex justify-between items-center mt-4">
+            <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
+              Expertise
+            </h1>
+            <button
+              type="button"
+              onClick={openExpertiseModal}
+              className="text-white btn btn-success"
+            >
+              <FaPlus /> Add
+            </button>
           </div>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Expertise Name
-            </label>
-            <input
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="expertiseName"
-              id="expertiseName"
-              onChange={handleChange}
-              value={formData?.expertiseName}
-              placeholder="Expertise Name"
+          <Expertises
+            data={formData?.expertises}
+            open={openEditExpertiseModal}
+            close={closeEditExpertiseModal}
+            deleteExpertise={deleteExpertise}
+            handleOpenEditModal={handleOpenEditExpertiseModal}
+          />
+          {isExpertiseModalOpen ? (
+            <CreateExpertiseModal
+              handleImageUpload={handleExpertiseImageUpload}
+              handleChange={handleExpChange}
+              closeModal={closeExpertiseModal}
+              handleAddExpertise={handleAddExpertise}
+              formData={formData}
             />
-          </div>
-          <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Expertise Description
-            </label>
-            <textarea
-              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              type="text"
-              name="expertiseDescription"
-              id="expertiseDescription"
-              onChange={handleChange}
-              value={formData?.expertiseDescription}
-              placeholder="Expertise Description"
+          ) : (
+            <></>
+          )}
+          {editExpertiseModal ? (
+            <EditExpertiseModal
+              handleImageUpload={handleExpertiseImageUpload}
+              handleChange={handleEditExpChange}
+              closeModal={closeEditExpertiseModal}
+              handleEditExpertise={handleEditExpertise}
+              data={editExpertise}
             />
-          </div>
+          ) : (
+            <></>
+          )}
         </div>
         {/*  Experties end*/}
 

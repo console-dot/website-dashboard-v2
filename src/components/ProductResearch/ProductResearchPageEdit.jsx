@@ -16,24 +16,44 @@ const customModalStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
-const cardLabels = [
-    "Holistic Approach",
-    "Proven Success",
-    "Strategic Partnership"
-  ];
-
-export default function ProductResearchPageEdit() {
-  const [formData, setFormData] = useState({
+const data = [
+  {
     description:
       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
     keyComponents: [
-      { heading: "Market Analysis", points: ["", ""] },
-      { heading: "Client", points: ["", ""] },
-      { heading: "Feasibility", points: ["", ""] },
-      { heading: "Road Map", points: ["", ""] },
+      { heading: "Market Analysis", points:["lorem42", "lorem20"]  },
+      { heading: "Client", points:["lorem42", "lorem20"]  },
+      { heading: "Feasibility", points:["lorem42", "lorem20"]  },
+      { heading: "Road Map", points:["lorem42", "lorem20"]  },
     ],
-    whyChoose: ["Holistic Approach", "Proven Success", "Strategic Partnership"],
-  });
+    whyChoose: [
+      {
+        name: "Holistic",
+        description: " sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_erp_image.jpg"
+      },
+      {
+        name: "SaaS by ConsoleDot",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "SaaSbyonsoleDot.jpg"
+      },
+      {
+        name: "ConsoleDot MVP",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_mvp_image.jpg"
+      },
+      
+    ],
+  },
+];
+const cardLabels = [
+  "Holistic Approach",
+  "Proven Success",
+  "Strategic Partnership",
+];
+
+export default function ProductResearchPageEdit() {
+  const [formData, setFormData] = useState(data[0]);
 
   const [modalIsOpen, setIsOpen] = useState(false);
   const [currentComponentIndex, setCurrentComponentIndex] = useState(null);
@@ -48,7 +68,12 @@ export default function ProductResearchPageEdit() {
       keyComponents: keyComponents,
     });
   };
-
+  const handleWhyChooseChange = (descriptions) => {
+    setFormData({
+      ...formData,
+      whyChoose: descriptions,
+    });
+  };
   const openModal = (index, pointIndex) => {
     setCurrentComponentIndex(index);
     setCurrentPointIndex(pointIndex);
@@ -93,59 +118,71 @@ export default function ProductResearchPageEdit() {
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             name="description"
-            onChange={(e) => setFormData({ ...formData, description: e.target.value })}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
             value={formData.description}
             placeholder="Custom Service Description"
           />
           {/* Key Components */}
           <div className="border border-dashed border-custom-purple p-4 mt-6 ">
             <label className="text-webDescrip font-semibold text-[20px] mx-auto text-center ">
-              Key Points 
+              Key Points
             </label>
-          {formData.keyComponents.map((component, index) => (
-              <div key={index} >
+            {formData.keyComponents.map((component, index) => (
+              <div key={index}>
                 <div className="mt-4">
-              <label className="text-webDescrip font-semibold">
-                {component.heading}
-              </label>
-              <div className="flex gap-2 ">
-                <textarea
-                  className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  type="text"
-                  name="point1"
-                  onChange={(e) => handleChange(e, index, 0)}
-                  value={component.points[0]}
-                  placeholder={`Point 1 for ${component.heading}`}
-                  disabled
-                  />
-                <textarea
-                  className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                  type="text"
-                  name="point2"
-                  onChange={(e) => handleChange(e, index, 1)}
-                  value={component.points[1]}
-                  placeholder={`Point 2 for ${component.heading}`}
-                  disabled
-                />
+                  <label className="text-webDescrip font-semibold">
+                    {component.heading}
+                  </label>
+                  <div className="flex gap-2 ">
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point1"
+                      onChange={(e) => handleChange(e, index, 0)}
+                      value={component.points[0]}
+                      placeholder={`Point 1 for ${component.heading}`}
+                      disabled
+                    />
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point2"
+                      onChange={(e) => handleChange(e, index, 1)}
+                      value={component.points[1]}
+                      placeholder={`Point 2 for ${component.heading}`}
+                      disabled
+                    />
+                  </div>
+                </div>
+                <div className="flex justify-between ">
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 0)}
+                  >
+                    Edit{" "}
+                  </button>
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 1)}
+                  >
+                    Edit{" "}
+                  </button>
+                </div>
               </div>
-              </div>
-              <div className="flex justify-between ">
-                <button className="text-sm bg-green-700  py-1 px-[20px]  text-white" onClick={() => openModal(index, 0)}>Edit </button>
-                <button className="text-sm bg-green-700  py-1 px-[20px]  text-white" onClick={() => openModal(index, 1)}>Edit </button>
-              </div>
-            </div>
-          ))}
+            ))}
           </div>
           {/* Why Choose Section */}
-          <div className="border border-dashed border-custom-purple p-4 ">
-            <label className="text-webDescrip font-semibold text-[20px] mx-auto">
+          <div className="border border-dashed border-custom-purple p-4 mt-6 ">
+            <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
             </label>
             <WhyChooseSection
               descriptions={formData.whyChoose}
               minCards={3}
               maxCards={3}
-              onChange={(descriptions) => setFormData({ ...formData, whyChoose: descriptions })}
+              onChange={handleWhyChooseChange}
               cardLabels={cardLabels}
             />
           </div>
@@ -158,16 +195,23 @@ export default function ProductResearchPageEdit() {
           style={customModalStyles}
           contentLabel="Edit Point Modal"
         >
-
           <div className="flex flex-col justify-center items-center">
             <h2 className="text-lg font-semibold">Edit Point</h2>
             <textarea
               type="text"
               className="w-full bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              value={formData.keyComponents[currentComponentIndex]?.points[currentPointIndex]}
-              onChange={(e) => handleChange(e, currentComponentIndex, currentPointIndex)}
+              value={
+                formData.keyComponents[currentComponentIndex]?.points[
+                  currentPointIndex
+                ]
+              }
+              onChange={(e) =>
+                handleChange(e, currentComponentIndex, currentPointIndex)
+              }
             />
-            <button className="text-sm text-red-600 mt-2" onClick={closeModal}>Close</button>
+            <button className="text-sm text-red-600 mt-2" onClick={closeModal}>
+              Close
+            </button>
           </div>
         </Modal>
 

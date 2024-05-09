@@ -35,38 +35,56 @@ export const AiCard = ({ data }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
-                    <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Why Choose Us: </strong>
-                    </div>
-                    <div className="w-[50%]">
-                      <span className="text-black text-sm">
-                        {data?.whyChoose.join(" , ")}
-                      </span>
-                    </div>
+                  <strong style={{ color: "grey" }}>Why Choose Us:</strong>
+                  <div className="w-full flex flex-row flex-wrap justify-between">
+                    {data?.whyChoose.map((option, index) => (
+                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <h3 className="option-title text-gray-500 text-lg font-semibold">
+                          {option.name}
+                          {" :"}
+                        </h3>
+                        <p className="option-description text-gray-500">
+                          {" "}
+                          {option.description}
+                        </p>
+                        <div className="w-full flex justify-center items-center mt-2">
+                          <img
+                            src={
+                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
+                            }
+                            alt={option.name}
+                            className="option-image w-8 h-8"
+                          />
+                        </div>
+                      </div>
+                    ))}
                   </div>
-                  <div className="flex mt-2" style={{ width: "70%" }}>
+                  <div className="flex flex-col mt-2">
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Tech Stack: </strong>
                     </div>
-                    <div className="w-[50%]">
-                      <div className="flex flex-wrap justify-center items-center">
-                        {data?.techStack.map((tech, index) => (
-                          <div key={index} className="mr-6 mb-2 ">
+                    <div className="w-full flex flex-row flex-wrap justify-start gap-4 mt-8">
+                      {data?.techStack.map((option, index) => (
+                        <div class="block max-w-[32%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                          <h3 className="option-title text-gray-500 text-lg font-semibold">
+                            {option.name}
+                            {" :"}
+                          </h3>
+                          <p className="option-description text-gray-500">
+                            {" "}
+                            {option.type}
+                          </p>
+                          <div className="w-full flex justify-center items-center mt-2">
                             <img
-                              src={tech.img}
-                              alt={tech.type}
-                              style={{ width: "50px", height: "50px" }}
+                              src={
+                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
+                              }
+                              alt={option.name}
+                              className="option-image w-8 h-8 "
                             />
-                            <span className="text-webDescrip text-sm">
-                              {tech.type} :{" "}
-                            </span>
-                            <span className="text-webDescrip text-sm">
-                              {tech.name}
-                            </span>
                           </div>
-                        ))}
-                      </div>
+                        </div>
+                      ))}
                     </div>
                   </div>
                 </div>

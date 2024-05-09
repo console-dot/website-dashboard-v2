@@ -15,6 +15,29 @@ const data = [
       "Client Collaboration",
       "Customization",
     ],
+    whyChoose: [
+      {
+        name: "Expertise",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_erp_image.jpg"
+      },
+      {
+        name: "Innovative Solutions",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "SaaSbyonsoleDot.jpg"
+      },
+      {
+        name: "Client Collaboration",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_mvp_image.jpg"
+      },
+      {
+        name: "Customization",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_mvp_image.jpg"
+      },
+      
+    ],
     techStack: [
       { name: "React", type: "Frontend", img: "react.png" },
       { name: "Node.js", type: "Backend", img: "nodejs.png" },

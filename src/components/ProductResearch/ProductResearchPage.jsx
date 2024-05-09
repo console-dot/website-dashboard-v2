@@ -13,7 +13,24 @@ const data = [
       { heading: "Feasibility", points:["lorem42", "lorem20"]  },
       { heading: "Road Map", points:["lorem42", "lorem20"]  },
     ],
-    whyChoose: ["a", "b", "c"],
+    whyChoose: [
+      {
+        name: "ConsoleDot ERP",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_erp_image.jpg"
+      },
+      {
+        name: "SaaS by ConsoleDot",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "SaaSbyonsoleDot.jpg"
+      },
+      {
+        name: "ConsoleDot MVP",
+        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+        image: "console_mvp_image.jpg"
+      },
+      
+    ],
   },
 ];
 
