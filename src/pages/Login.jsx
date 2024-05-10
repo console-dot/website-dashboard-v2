@@ -2,28 +2,35 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../redux";
+import { useLogin } from "../hooks/login";
+import { getUser } from "../Auth";
 
-export default function Login({ loggedIn }) {
+export default function Login() {
   const dispatch = useDispatch();
-  const [formData, setFormData] = useState({
-    userName: "",
-    password: "",
-  });
-  // const [loggedIn, setLoggedIn] = useState(false);
   const navigate = useNavigate();
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
+  const { setLogin, isLoading, loggingIn, loggedIn, loginData } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
-    dispatch(login(formData));
-    navigate("/landingPage");
+    const newData = new FormData(e.currentTarget);
+    console.log("newData", newData);
+    setLogin({
+      email: newData.get("email"),
+      password: newData.get("password"),
+    });
   };
 
-  
+  useEffect(() => {
+    const temp = async () => {
+      const user = await getUser();
+      console.log("user", user);
+      if (user && user !== "null" && user !== "undefined") {
+        dispatch(login(loginData?.data?.user));
+        navigate("/landingPage");
+      }
+    };
+    temp();
+  }, [loggedIn, navigate]);
 
   return (
     <div className="w-full">
@@ -37,22 +44,18 @@ export default function Login({ loggedIn }) {
           onSubmit={handleSubmit}
         >
           <input
+            type="email"
+            name="email"
+            id="email"
             className="bg-white shadow-lg text-webDescrip px-8 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="userName"
-            id="userName"
-            onChange={handleChange}
-            value={formData?.userName}
-            placeholder="UserName"
-            required
+            placeholder="Email"
+            required=""
           />
           <input
             className="bg-white shadow-lg text-webDescrip px-8 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="password"
             name="password"
-            id="Password"
-            onChange={handleChange}
-            value={formData?.password}
+            id="password"
             placeholder="Password"
             required
           />
