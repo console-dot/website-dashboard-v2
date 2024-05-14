@@ -1,67 +1,56 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
 import { TechStack } from "../TechStack/TechStack";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
-// Assuming WhyChooseSection is in a separate file
-const data = [
-  {
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-   
-    whyChoose: [
-      {
-        name: "Expertise",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_erp_image.jpg"
-      },
-      {
-        name: "Innovative ",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "SaaSbyonsoleDot.jpg"
-      },
-      {
-        name: "Client ",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg"
-      },
-      {
-        name: "Customization",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg"
-      },
-      
-    ],
-    techStack: [
-      { name: "React", type: "BlockchainPlatforms", img: "react.png" },
-      { name: "Node.js", type: "BackendTechnologies", img: "nodejs.png" },
-      // Add more technologies as needed
-    ],
-  },
-];
+import { selectAiDetails, setAiData } from "../../redux";
+import { useDispatch, useSelector } from "react-redux";
+import WhyChooseUs from "./WhyChooseUs";
+import { editArtificialIntelligence } from "../../api/ai";
+import { addTechStack, editTechStack } from "../../api";
+import { addFile } from "../../api/file";
 
 export default function AiPageEdit() {
   const [isLoading, setIsLoading] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editItem, setEditItem] = useState(null);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const aiData = useSelector(selectAiDetails);
+  const [formData, setFormData] = useState(aiData);
+  const [whyChooseUs, setWhyChooseUs] = useState(aiData.whyChooseUs);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [techData, setTechData] = useState({
+    techStack: {
+      name: "",
+      type: "",
+      image: null, // Assuming img is initially null
+    },
+  });
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(data[0]);
+  const dispatch = useDispatch();
   const cardLabels = [
     "Expertise",
     "Innovation at the Core",
     "Collaboration for Success",
     "Tailored Solutions",
   ];
-  const handleWhyChooseChange = (descriptions) => {
-    setFormData({
-      ...formData,
-      whyChoose: descriptions,
-    });
-  };
-
+  // Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
+    // console.log("f1", formData);
+    const techIds = formData?.techStack?.map((item) => item._id);
+    const newForm = { ...formData, whyChooseUs, techStack: techIds };
+    editArtificialIntelligence(newForm)
+      .then((res) => {
+        console.log("res", res);
+        dispatch(setAiData(res?.data));
+      })
+      .catch((err) => console.log(err));
+
     setTimeout(() => {
       setIsLoading(false);
       toast.success("Form submitted", {
@@ -69,116 +58,142 @@ export default function AiPageEdit() {
         onClose: () => navigate("/ai"), // navigate after closing
       });
     }, 1500);
-
-    console.log(formData);
-    // dispatch(LandingPageEdit(formData));
-    // navigate("/landingPage");
   };
-    //tech stack
-    const openModal = () => setIsModalOpen(true);
-    const closeModal = () => setIsModalOpen(false);
-    const [isModalOpen, setIsModalOpen] = useState(false);
-    const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-    const handleOpenEditModal = (index) => {
-      setEditIndex(index);
-      setEditItem(formData.techStack[index]);
-      setIsEditModalOpen(true);
-    };
-    const handleDeleteTechStack = (index) => {
-      const updatedTechStack = formData.techStack.filter((_, i) => i !== index);
-      setFormData({
-        ...formData,
-        techStack: updatedTechStack,
-      });
-    };
-    const handleInputChange = (e) => {
-      const { name, value } = e.target;
-      setTechData((prevFormData) => ({
-        ...prevFormData,
-        techStack: {
-          ...prevFormData.techStack,
-          [name]: value,
-        },
-      }));
-    };
-    const [techData, setTechData] = useState({
-      techStack: {
-        name: "",
-        type: "",
-        img: null, // Assuming img is initially null
-      },
+
+  //Open New techStack Modal
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
+
+  const handleOpenEditModal = (index) => {
+    setEditIndex(index);
+    setEditItem(formData.techStack[index]);
+    setIsEditModalOpen(true);
+  };
+  // Delete techStack
+  const handleDeleteTechStack = (index) => {
+    const updatedTechStack = formData.techStack.filter((_, i) => i !== index);
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
     });
-    const handleEditInputChange = (e) => {
-      const { name, value, files } = e.target;
-      if (name === "img") {
-        // If the change is in the image input field
-        const file = files[0];
-        setEditItem((prevItem) => ({
-          ...prevItem,
-          img: file,
-        }));
-      } else {
-        // If the change is in other input fields
-        setEditItem((prevItem) => ({
-          ...prevItem,
-          [name]: value,
-        }));
-      }
-    };
-    const handleEditTechStack = () => {
-      // Implement logic to update the tech stack item with the edited data
-      // For example, you can update the item directly in the tech stack array
-      const updatedTechStack = [...formData.techStack];
-      updatedTechStack[editIndex] = editItem;
-      setFormData({
-        ...formData,
-        techStack: updatedTechStack,
-      });
-      // Close the edit modal
-      handleCloseEditModal();
-    };
-    // Function to close the edit modal
-    const handleCloseEditModal = () => {
-      setIsEditModalOpen(false);
-      setEditIndex(null);
-      setEditItem(null);
-    };
-  
-    const handleChange = (e, index) => {
-      const { name, value } = e.target;
-      const updatedTechStack = [...formData.techStack];
-      updatedTechStack[index][name] = value;
-      setFormData({
-        ...formData,
-        techStack: updatedTechStack,
-      });
-    };
-    const handleImageChange = (e, index) => {
-      const file = e.target.files[0];
-      const updatedTechStack = [...formData.techStack];
-      updatedTechStack[index]["img"] = URL.createObjectURL(file);
-      setFormData({
-        ...formData,
-        techStack: updatedTechStack,
-      });
-    };
-    const handleAddTechStack = () => {
-      const newTechStackItem = {
-        name: techData.techStack.name,
-        type: techData.techStack.type,
-        img: techData.techStack.img,
-      };
-  
-      // Add the new object to the techStack array
-      setFormData((prevFormData) => ({
-        ...prevFormData,
-        techStack: [...prevFormData.techStack, newTechStackItem],
+  };
+  // handle input change for New techStack
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setTechData((prevFormData) => ({
+      ...prevFormData,
+      techStack: {
+        ...prevFormData.techStack,
+        [name]: value,
+      },
+    }));
+  };
+  // handle edit techstack changes
+  const handleEditInputChange = (e) => {
+    const { name, value, files } = e.target;
+    if (name === "image") {
+      // If the change is in the image input field
+      const file = files[0];
+      setEditItem((prevItem) => ({
+        ...prevItem,
+        image: file,
       }));
-      closeModal();
+    } else {
+      // If the change is in other input fields
+      setEditItem((prevItem) => ({
+        ...prevItem,
+        [name]: value,
+      }));
+    }
+  };
+  // handle techstack submission
+  const handleEditTechStack = () => {
+    const updatedTechStack = [...formData.techStack];
+    updatedTechStack[editIndex] = editItem;
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
+    });
+    editTechStack(
+      {
+        name: updatedTechStack[editIndex]?.name,
+        image: updatedTechStack[editIndex]?.image,
+      },
+      updatedTechStack[editIndex]?._id
+    )
+      .then((res) => {
+        console.log("res", res);
+      })
+      .catch((err) => console.log(err));
+
+    // Close the edit modal
+    handleCloseEditModal();
+  };
+  // Function to close the edit modal
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditIndex(null);
+    setEditItem(null);
+  };
+  // handle Input change
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    const updatedTechStack = [...formData.techStack];
+    updatedTechStack[index]["image"] = URL.createObjectURL(file);
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
+    });
+  };
+  // handle File Upload
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  const handleAddTechStack = () => {
+    const newTechStackItem = {
+      name: techData.techStack.name,
+      type: techData.techStack.type,
+      image: techData.techStack.image,
     };
-    const [editIndex, setEditIndex] = useState(null);
-    const [editItem, setEditItem] = useState(null);
-  
+
+    if (selectedFile) {
+      addFile(selectedFile)
+        .then((res) => {
+          // console.log("res", res);
+          if (res?.status == 201) {
+            newTechStackItem.image = res?.data;
+            addTechStack(newTechStackItem)
+              .then((res) => {
+                console.log("res", res);
+                // Add the new object to the techStack array
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  techStack: [...prevFormData.techStack, res?.data],
+                }));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    // Close Modal
+    closeModal();
+  };
+  // handle why choose us
+  const handleWhyChooseUs = (index, event) => {
+    const updatedWhyChooseUs = [...whyChooseUs];
+    updatedWhyChooseUs[index] = event.target.value;
+    setWhyChooseUs(updatedWhyChooseUs);
+  };
 
   return (
     <div className="w-full mb-6">
@@ -193,7 +208,8 @@ export default function AiPageEdit() {
             Ai Edit
           </h1>
           <label className="text-webDescrip font-semibold">Description</label>
-          <textarea            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+          <textarea
+            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             name="description"
             id="description"
@@ -206,11 +222,11 @@ export default function AiPageEdit() {
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
             </label>
-            <WhyChooseSection
-              descriptions={formData.whyChoose}
+            <WhyChooseUs
+              data={whyChooseUs}
               minCards={4}
               maxCards={4}
-              onChange={handleWhyChooseChange}
+              onChange={handleWhyChooseUs}
               cardLabels={cardLabels}
             />
           </div>
@@ -232,12 +248,12 @@ export default function AiPageEdit() {
               </button>
             </div>
 
-            {console.log("formData", formData?.techStack)}
+            {console.log("techstack", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">
-            Machine Learning Frameworks
+              Machine Learning Frameworks
             </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "MachineLearningFrameworks" ? (
+              item?.type === "Machine Learning Frameworks" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -263,10 +279,10 @@ export default function AiPageEdit() {
             )}
             {/* Backend */}
             <div className="w-full text-webDescrip font-semibold">
-            Natural Language Processing
+              Natural Language Processing
             </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "NaturalLanguageProcessing" ? (
+              item?.type === "Natural Language Processing" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -291,9 +307,11 @@ export default function AiPageEdit() {
               ) : null
             )}
             {/* Database */}
-            <div className="w-full text-webDescrip font-semibold">Computer Vision</div>
+            <div className="w-full text-webDescrip font-semibold">
+              Computer Vision
+            </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "ComputerVision" ? (
+              item?.type === "Computer Vision" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -318,9 +336,11 @@ export default function AiPageEdit() {
               ) : null
             )}
             {/* CI/CD */}
-            <div className="w-full text-webDescrip font-semibold">AI Model Deployment</div>
+            <div className="w-full text-webDescrip font-semibold">
+              AI Model Deployment
+            </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "AIModelDeployment" ? (
+              item?.type === "AI Model Deployment" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -345,9 +365,11 @@ export default function AiPageEdit() {
               ) : null
             )}
             {/* VCS */}
-            <div className="w-full text-webDescrip font-semibold">Data Processing</div>
+            <div className="w-full text-webDescrip font-semibold">
+              Data Processing
+            </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "DataProcessing" ? (
+              item?.type === "Data Processing" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -371,7 +393,6 @@ export default function AiPageEdit() {
                 </div>
               ) : null
             )}
-            
           </div>
         </div>
 
@@ -424,15 +445,17 @@ export default function AiPageEdit() {
                   className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="">Select Tech Type</option>
-                  <option value="MachineLearningFrameworks">
-                  Machine Learning Frameworks
+                  <option value="Machine Learning Frameworks">
+                    Machine Learning Frameworks
                   </option>
-                  <option value="NaturalLanguageProcessing">
-                  Natural Language Processing
+                  <option value="Natural Language Processing">
+                    Natural Language Processing
                   </option>
-                  <option value="ComputerVision">Computer Vision</option>
-                  <option value="AIModelDeployment">AI Model Deployment</option>
-                  <option value="DataProcessing">Data Processing</option>
+                  <option value="Computer Vision">Computer Vision</option>
+                  <option value="AI Model Deployment">
+                    AI Model Deployment
+                  </option>
+                  <option value="Data Processing">Data Processing</option>
                 </select>
               </div>
               <div className="mt-4">
@@ -441,8 +464,8 @@ export default function AiPageEdit() {
                 </label>
                 <input
                   type="file"
-                  name="img"
-                  onChange={handleImageChange}
+                  name="image"
+                  onChange={handleFileChange}
                   accept="image/*"
                   className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
@@ -493,7 +516,7 @@ export default function AiPageEdit() {
               </label>
               <input
                 type="file"
-                name="img"
+                name="image"
                 onChange={handleEditInputChange}
                 accept="image/*"
                 className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -505,6 +528,12 @@ export default function AiPageEdit() {
                 onClick={handleEditTechStack}
               >
                 Update
+              </button>
+              <button
+                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+                onClick={handleCloseEditModal}
+              >
+                Cancel
               </button>
             </div>
           </div>
