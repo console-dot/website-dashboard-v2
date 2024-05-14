@@ -11,3 +11,11 @@ export const setLogout = () => {
   localStorage.removeItem("@dashboard-token");
   // window.location.reload();
 };
+
+export const toJson = (formData) => {
+  const obj = {};
+  formData.forEach(function (value, key) {
+    obj[key] = value;
+  });
+  return obj;
+};
