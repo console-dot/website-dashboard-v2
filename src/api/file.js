@@ -3,12 +3,14 @@ import config from "./config";
 
 const BASE_URL = config.BASE_URL;
 
-export const getLandingPage = () => {
+export const addFile = (values) => {
   const token = localStorage.getItem("@dashboard-token");
+  const formData = new FormData();
+  formData.append("avatar", values);
   return axios
-    .get(`${BASE_URL}/landingPage`, {
+    .post(`${BASE_URL}/file`, formData, {
       headers: {
-        "Content-Type": "application/json",
+        "Content-Type": "multipart/form-data",
         Authorization: "JWT " + token,
       },
     })
