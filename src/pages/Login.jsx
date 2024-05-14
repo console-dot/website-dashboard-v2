@@ -2,35 +2,32 @@ import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useDispatch } from "react-redux";
 import { login } from "../redux";
-import { useLogin } from "../hooks/login";
-import { getUser } from "../Auth";
+import { setLogin } from "../api";
+import { toJson } from "../utils";
 
 export default function Login() {
   const dispatch = useDispatch();
   const navigate = useNavigate();
-  const { setLogin, isLoading, loggingIn, loggedIn, loginData } = useLogin();
 
   const handleSubmit = (e) => {
     e.preventDefault();
     const newData = new FormData(e.currentTarget);
-    console.log("newData", newData);
-    setLogin({
-      email: newData.get("email"),
-      password: newData.get("password"),
-    });
-  };
-
-  useEffect(() => {
-    const temp = async () => {
-      const user = await getUser();
-      console.log("user", user);
-      if (user && user !== "null" && user !== "undefined") {
-        dispatch(login(loginData?.data?.user));
+    setLogin(toJson(newData))
+      .then((res) => {
+        if (res.response) {
+          return;
+        }
+        console.log("res", res);
+        localStorage.setItem("@dashboard-token", res?.data?.token);
+        localStorage.setItem(
+          "@dashboard-user",
+          JSON.stringify(res?.data?.data?.user)
+        );
+        dispatch(login(res?.data?.data?.user));
         navigate("/landingPage");
-      }
-    };
-    temp();
-  }, [loggedIn, navigate]);
+      })
+      .catch((err) => console.log(err));
+  };
 
   return (
     <div className="w-full">

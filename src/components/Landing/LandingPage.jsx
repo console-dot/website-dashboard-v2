@@ -1,6 +1,7 @@
-import React from "react";
+import React, { useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { LandingCard } from "./LandingCard";
+import { getLandingPage } from "../../api/landing";
 
 const data = [
   {
@@ -104,6 +105,13 @@ export const LandingPage = () => {
   const onView = (id) => {
     navigate(`view/${id}`);
   };
+
+  useEffect(() => {
+    // console.log("newData", newData);
+    getLandingPage()
+      .then((res) => console.log(res?.data))
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
