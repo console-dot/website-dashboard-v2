@@ -32,13 +32,6 @@ function WhyChooseSection({ descriptions = [], minCards = 3, maxCards = 4, onCha
       {descriptions.map((description, index) => (
         <div key={index} className="mt-4">
           <label className="text-webDescrip font-semibold">{cardLabels[index] || ''}</label>
-          <input
-            type="text"
-            placeholder="Name"
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            value={description.name}
-            onChange={(e) => handleInputChange(index, "name", e.target.value)}
-          />
           <textarea
             placeholder="Description"
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 mt-2"

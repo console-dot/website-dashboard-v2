@@ -5,12 +5,17 @@ import { FaEye, FaPen } from "react-icons/fa";
 
 export const CustomServiceCard = ({ data }) => {
   const navigate = useNavigate();
+  console.log("cs", data);
+  console.log(data);
+
+  // Check if data is an array and get the first element
+  const itemData = Array.isArray(data) && data.length > 0 ? data[0] : data;
 
   return (
     <div>
       <div className="d-flex justify-content-center">
         <div>
-          <div className="bg-dark rounded border-secondary text-white ">
+          <div className="bg-dark rounded border-secondary text-white">
             <div
               style={{
                 display: "flex",
@@ -30,7 +35,7 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.description}
+                        {itemData?.description}
                       </span>
                     </div>
                   </div>
@@ -40,7 +45,7 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.Proposition}
+                        {itemData?.proposition}
                       </span>
                     </div>
                   </div>
@@ -52,34 +57,24 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.whychooseDesc}
+                        {itemData?.whychooseDesc}
                       </span>
                     </div>
                   </div>
 
-                  <strong style={{ color: "grey" }}>Why Choose Us:</strong>
                   <div className="w-full flex flex-row flex-wrap justify-between">
-                    {data?.whyChoose.map((option, index) => (
-                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                        <h3 className="option-title text-gray-500 text-lg font-semibold">
-                          {option.name}
-                          {" :"}
-                        </h3>
-                        <p className="option-description text-gray-500">
-                          {" "}
-                          {option.description}
-                        </p>
-                        <div className="w-full flex justify-center items-center mt-2">
-                          <img
-                            src={
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
-                            }
-                            alt={option.name}
-                            className="option-image w-8 h-8"
-                          />
+                    <strong style={{ color: "grey" }}>Why Choose Us:</strong>
+                      {itemData?.whyChooseUs?.map((item, index) => (
+                        <div
+                          key={index}
+                          className="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                        >
+                          <h3 className="option-title text-gray-500 text-lg font-semibold">
+                            {item}
+                          </h3>
                         </div>
-                      </div>
-                    ))}
+                      ))}
+                    
                   </div>
 
                   <div className="flex" style={{ width: "70%" }}>
@@ -90,7 +85,7 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.delivers.actionDesc}
+                        {itemData?.delivers?.actionDescription}
                       </span>
                     </div>
                   </div>
@@ -102,7 +97,7 @@ export const CustomServiceCard = ({ data }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.delivers.collabDesc}
+                        {itemData?.delivers?.collabDescription}
                       </span>
                     </div>
                   </div>
@@ -114,7 +109,7 @@ export const CustomServiceCard = ({ data }) => {
                     icon={<FaPen />}
                     text={"Edit"}
                     click={() => {
-                      navigate(`/CustomSoftwarePageEdit/edit/:id`);
+                      navigate(`/CustomSoftwarePageEdit/edit/${itemData?._id}`);
                     }}
                   />
                   <Button text={"View"} icon={<FaEye />} />
