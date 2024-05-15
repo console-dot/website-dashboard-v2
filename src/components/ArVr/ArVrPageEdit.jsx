@@ -5,50 +5,36 @@ import { RiLoader3Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
 import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
-// Assuming WhyChooseSection is in a separate file
-const data = [
-  {
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-
-    whyChoose: [
-      {
-        name: "Expertise",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_erp_image.jpg",
-      },
-      {
-        name: "Innovative ",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "SaaSbyonsoleDot.jpg",
-      },
-      {
-        name: "Client ",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg",
-      },
-      {
-        name: "Customization",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg",
-      },
-    ],
-    techStack: [
-      { name: "React", type: "BlockchainPlatforms", img: "react.png" },
-      { name: "Node.js", type: "BackendTechnologies", img: "nodejs.png" },
-      // Add more technologies as needed
-    ],
-  },
-];
+import {
+  addTechStack,
+  editAR,
+  editTechStack,
+  removeTechStack,
+} from "../../api";
+import { addFile } from "../../api/file";
+import WhyChooseUs from "./WhyChooseUs";
+import { selectARDetails, setARData } from "../../redux/arvrSlice";
+import { useDispatch, useSelector } from "react-redux";
 
 export default function ArVrPageEdit() {
   const [isLoading, setIsLoading] = useState(false);
+  const [isModalOpen, setIsModalOpen] = useState(false);
+  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [editIndex, setEditIndex] = useState(null);
+  const [editItem, setEditItem] = useState(null);
+  const arData = useSelector(selectARDetails);
+  const [formData, setFormData] = useState(arData);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [whyChooseUs, setWhyChooseUs] = useState(arData.whyChooseUs);
+  const [techData, setTechData] = useState({
+    techStack: {
+      name: "",
+      type: "",
+      image: null, // Assuming img is initially null
+    },
+  });
   const navigate = useNavigate();
-  const [formData, setFormData] = useState(data[0]);
+  const dispatch = useDispatch();
   const cardLabels = [
     "Expertise in Immersive Technology",
     "Innovation-Driven Solutions",
@@ -62,38 +48,56 @@ export default function ArVrPageEdit() {
     });
   };
 
+  // Handle Form Submission
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500, // close after 1.5 seconds
-        onClose: () => navigate("/arvr"), // navigate after closing
-      });
-    }, 1500);
+    // console.log("f1", formData);
+    const techIds = formData?.techStack?.map((item) => item._id);
+    const newForm = { ...formData, whyChooseUs, techStack: techIds };
+    if (arData?._id) {
+      editAR(newForm, arData?._id)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setARData(res?.data));
+        })
+        .catch((err) => console.log(err));
 
-    console.log(formData);
-    // dispatch(LandingPageEdit(formData));
-    // navigate("/landingPage");
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500, // close after 1.5 seconds
+          onClose: () => navigate("/arvr"), // navigate after closing
+        });
+      }, 1500);
+    }
   };
   //tech stack
   const openModal = () => setIsModalOpen(true);
   const closeModal = () => setIsModalOpen(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+
   const handleOpenEditModal = (index) => {
     setEditIndex(index);
     setEditItem(formData.techStack[index]);
     setIsEditModalOpen(true);
   };
+
+  // Delete techStack
   const handleDeleteTechStack = (index) => {
+    const currentId = formData.techStack[index]?._id;
+    removeTechStack(currentId).then((res) => {
+      if (res.status == 200) {
+        console.log("Removed Successfully");
+      }
+    });
     const updatedTechStack = formData.techStack.filter((_, i) => i !== index);
     setFormData({
       ...formData,
       techStack: updatedTechStack,
     });
   };
+
+  // handle input change for New techStack
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTechData((prevFormData) => ({
@@ -104,21 +108,16 @@ export default function ArVrPageEdit() {
       },
     }));
   };
-  const [techData, setTechData] = useState({
-    techStack: {
-      name: "",
-      type: "",
-      img: null, // Assuming img is initially null
-    },
-  });
+
+  // handle edit techstack changes
   const handleEditInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "img") {
+    if (name === "image") {
       // If the change is in the image input field
       const file = files[0];
       setEditItem((prevItem) => ({
         ...prevItem,
-        img: file,
+        image: file,
       }));
     } else {
       // If the change is in other input fields
@@ -128,18 +127,53 @@ export default function ArVrPageEdit() {
       }));
     }
   };
+
+  // handle Edit Tech Stack submission
   const handleEditTechStack = () => {
-    // Implement logic to update the tech stack item with the edited data
-    // For example, you can update the item directly in the tech stack array
     const updatedTechStack = [...formData.techStack];
     updatedTechStack[editIndex] = editItem;
     setFormData({
       ...formData,
       techStack: updatedTechStack,
     });
+    if (updatedTechStack[editIndex]?.image) {
+      if (typeof updatedTechStack[editIndex]?.image === "string") {
+        editTechStack(
+          {
+            name: updatedTechStack[editIndex]?.name,
+            image: updatedTechStack[editIndex]?.image,
+          },
+          updatedTechStack[editIndex]?._id
+        )
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        addFile(updatedTechStack[editIndex]?.image)
+          .then((res) => {
+            if (res?.status == 201) {
+              updatedTechStack[editIndex].image = res?.data;
+              editTechStack(
+                {
+                  name: updatedTechStack[editIndex]?.name,
+                  image: updatedTechStack[editIndex]?.image,
+                },
+                updatedTechStack[editIndex]?._id
+              )
+                .then((res) => {
+                  console.log("res", res);
+                })
+                .catch((err) => console.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }
     // Close the edit modal
     handleCloseEditModal();
   };
+
   // Function to close the edit modal
   const handleCloseEditModal = () => {
     setIsEditModalOpen(false);
@@ -147,40 +181,58 @@ export default function ArVrPageEdit() {
     setEditItem(null);
   };
 
+  // handle Input change
   const handleChange = (e, index) => {
     const { name, value } = e.target;
-    const updatedTechStack = [...formData.techStack];
-    updatedTechStack[index][name] = value;
     setFormData({
       ...formData,
-      techStack: updatedTechStack,
+      [name]: value,
     });
   };
-  const handleImageChange = (e, index) => {
-    const file = e.target.files[0];
-    const updatedTechStack = [...formData.techStack];
-    updatedTechStack[index]["img"] = URL.createObjectURL(file);
-    setFormData({
-      ...formData,
-      techStack: updatedTechStack,
-    });
+
+  // handle File Upload
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
   };
+
+  // handle Add Tech Stack submission
   const handleAddTechStack = () => {
     const newTechStackItem = {
       name: techData.techStack.name,
       type: techData.techStack.type,
-      img: techData.techStack.img,
+      image: techData.techStack.image,
     };
 
-    // Add the new object to the techStack array
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      techStack: [...prevFormData.techStack, newTechStackItem],
-    }));
+    if (selectedFile) {
+      addFile(selectedFile)
+        .then((res) => {
+          // console.log("res", res);
+          if (res?.status == 201) {
+            newTechStackItem.image = res?.data;
+            addTechStack(newTechStackItem)
+              .then((res) => {
+                console.log("res", res);
+                // Add the new object to the techStack array
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  techStack: [...prevFormData.techStack, res?.data],
+                }));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    // Close Modal
     closeModal();
   };
-  const [editIndex, setEditIndex] = useState(null);
-  const [editItem, setEditItem] = useState(null);
+
+  // handle why choose us
+  const handleWhyChooseUs = (index, event) => {
+    const updatedWhyChooseUs = [...whyChooseUs];
+    updatedWhyChooseUs[index] = event.target.value;
+    setWhyChooseUs(updatedWhyChooseUs);
+  };
 
   return (
     <div className="w-full mb-6">
@@ -209,11 +261,11 @@ export default function ArVrPageEdit() {
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
             </label>
-            <WhyChooseSection
-              descriptions={formData.whyChoose}
+            <WhyChooseUs
+              data={whyChooseUs}
               minCards={4}
               maxCards={4}
-              onChange={handleWhyChooseChange}
+              onChange={handleWhyChooseUs}
               cardLabels={cardLabels}
             />
           </div>
@@ -240,7 +292,7 @@ export default function ArVrPageEdit() {
               AR Development
             </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "ARDevelopment" ? (
+              item?.type === "AR Development" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -269,7 +321,7 @@ export default function ArVrPageEdit() {
               VR Development
             </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "VRDevelopment" ? (
+              item?.type === "VR Development" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -298,7 +350,7 @@ export default function ArVrPageEdit() {
               3D Modeling
             </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "3DModeling" ? (
+              item?.type === "3D Modeling" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -327,7 +379,7 @@ export default function ArVrPageEdit() {
               Interaction Frameworks
             </div>
             {formData?.techStack?.map((item, index) =>
-              item?.type === "InteractionFrameworks" ? (
+              item?.type === "Interaction Frameworks" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
                     <div>{item?.name}</div>
@@ -432,10 +484,10 @@ export default function ArVrPageEdit() {
                   className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 >
                   <option value="">Select Tech Type</option>
-                  <option value="ARDevelopment">AR Development</option>
-                  <option value="VRDevelopment">VR Development</option>
-                  <option value="3DModeling">3D Modeling</option>
-                  <option value="InteractionFrameworks">
+                  <option value="AR Development">AR Development</option>
+                  <option value="VR Development">VR Development</option>
+                  <option value="3D Modeling">3D Modeling</option>
+                  <option value="Interaction Frameworks">
                     Interaction Frameworks
                   </option>
                   <option value="PlatformCompatibility">
@@ -449,8 +501,8 @@ export default function ArVrPageEdit() {
                 </label>
                 <input
                   type="file"
-                  name="img"
-                  onChange={handleImageChange}
+                  name="image"
+                  onChange={handleFileChange}
                   accept="image/*"
                   className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />
@@ -501,7 +553,7 @@ export default function ArVrPageEdit() {
               </label>
               <input
                 type="file"
-                name="img"
+                name="image"
                 onChange={handleEditInputChange}
                 accept="image/*"
                 className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -513,6 +565,12 @@ export default function ArVrPageEdit() {
                 onClick={handleEditTechStack}
               >
                 Update
+              </button>
+              <button
+                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                onClick={handleCloseEditModal}
+              >
+                Cancel
               </button>
             </div>
           </div>
