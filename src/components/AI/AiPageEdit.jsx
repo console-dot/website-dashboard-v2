@@ -44,20 +44,22 @@ export default function AiPageEdit() {
     // console.log("f1", formData);
     const techIds = formData?.techStack?.map((item) => item._id);
     const newForm = { ...formData, whyChooseUs, techStack: techIds };
-    editArtificialIntelligence(newForm)
-      .then((res) => {
-        console.log("res", res);
-        dispatch(setAiData(res?.data));
-      })
-      .catch((err) => console.log(err));
+    if (aiData?._id) {
+      editArtificialIntelligence(newForm, aiData?._id)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setAiData(res?.data));
+        })
+        .catch((err) => console.log(err));
 
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500, // close after 1.5 seconds
-        onClose: () => navigate("/ai"), // navigate after closing
-      });
-    }, 1500);
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500, // close after 1.5 seconds
+          onClose: () => navigate("/ai"), // navigate after closing
+        });
+      }, 1500);
+    }
   };
 
   //Open New techStack Modal
