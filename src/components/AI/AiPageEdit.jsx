@@ -121,24 +121,38 @@ export default function AiPageEdit() {
       techStack: updatedTechStack,
     });
     if (updatedTechStack[editIndex]?.image) {
-      addFile(updatedTechStack[editIndex]?.image)
-        .then((res) => {
-          if (res?.status == 201) {
-            updatedTechStack[editIndex].image = res?.data;
-            editTechStack(
-              {
-                name: updatedTechStack[editIndex]?.name,
-                image: updatedTechStack[editIndex]?.image,
-              },
-              updatedTechStack[editIndex]?._id
-            )
-              .then((res) => {
-                console.log("res", res);
-              })
-              .catch((err) => console.log(err));
-          }
-        })
-        .catch((err) => console.log(err));
+      if (typeof updatedTechStack[editIndex]?.image === "string") {
+        editTechStack(
+          {
+            name: updatedTechStack[editIndex]?.name,
+            image: updatedTechStack[editIndex]?.image,
+          },
+          updatedTechStack[editIndex]?._id
+        )
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        addFile(updatedTechStack[editIndex]?.image)
+          .then((res) => {
+            if (res?.status == 201) {
+              updatedTechStack[editIndex].image = res?.data;
+              editTechStack(
+                {
+                  name: updatedTechStack[editIndex]?.name,
+                  image: updatedTechStack[editIndex]?.image,
+                },
+                updatedTechStack[editIndex]?._id
+              )
+                .then((res) => {
+                  console.log("res", res);
+                })
+                .catch((err) => console.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      }
     }
     // Close the edit modal
     handleCloseEditModal();
@@ -162,7 +176,7 @@ export default function AiPageEdit() {
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
-// handle Add Tech Stack submission
+  // handle Add Tech Stack submission
   const handleAddTechStack = () => {
     const newTechStackItem = {
       name: techData.techStack.name,
