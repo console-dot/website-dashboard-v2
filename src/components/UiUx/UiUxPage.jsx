@@ -1,51 +1,27 @@
-// CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { UiUxCard } from "./UiUxCard";
-
-const data = [
-  {
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-   
-    whyChoose: [
-      {
-        name: "Expertise",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_erp_image.jpg"
-      },
-      {
-        name: "Innovative ",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "SaaSbyonsoleDot.jpg"
-      },
-      {
-        name: "Client ",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg"
-      },
-      {
-        name: "Customization",
-        description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg"
-      },
-      
-    ],
-    techStack: [
-      { name: "React", type: "Frontend", img: "react.png" },
-      { name: "Node.js", type: "Backend", img: "nodejs.png" },
-      // Add more technologies as needed
-    ],
-  },
-];
+import { useDispatch } from "react-redux";
+import { getUI } from "../../api";
+import { setUIData } from "../../redux/uiuxSlice";
 
 export const UiUxPage = () => {
-  //   const [data, setData] = useState();
+  const [data, setData] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onView = (id) => {
     navigate(`view/${id}`);
   };
+
+  useEffect(() => {
+    getUI()
+      .then((res) => {
+        setData(res?.data);
+        dispatch(setUIData(res?.data));
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   return (
     <>
@@ -63,12 +39,11 @@ export const UiUxPage = () => {
       {/* Center */}
       <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
         <div className="flex">
-          {data &&
-            data.map((item, index) => (
-              <div key={index} className="flex flex-col w-full">
-                <UiUxCard data={item} onView={() => onView(index)} />
-              </div>
-            ))}
+          {data && (
+            <div className="flex flex-col w-full">
+              <UiUxCard data={data} />
+            </div>
+          )}
         </div>
       </div>
     </>

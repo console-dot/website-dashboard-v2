@@ -44,20 +44,22 @@ export default function AiPageEdit() {
     // console.log("f1", formData);
     const techIds = formData?.techStack?.map((item) => item._id);
     const newForm = { ...formData, whyChooseUs, techStack: techIds };
-    editArtificialIntelligence(newForm)
-      .then((res) => {
-        console.log("res", res);
-        dispatch(setAiData(res?.data));
-      })
-      .catch((err) => console.log(err));
+    if (aiData?._id) {
+      editArtificialIntelligence(newForm, aiData?._id)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setAiData(res?.data));
+        })
+        .catch((err) => console.log(err));
 
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500, // close after 1.5 seconds
-        onClose: () => navigate("/ai"), // navigate after closing
-      });
-    }, 1500);
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500, // close after 1.5 seconds
+          onClose: () => navigate("/ai"), // navigate after closing
+        });
+      }, 1500);
+    }
   };
 
   //Open New techStack Modal
@@ -121,24 +123,38 @@ export default function AiPageEdit() {
       techStack: updatedTechStack,
     });
     if (updatedTechStack[editIndex]?.image) {
-      addFile(updatedTechStack[editIndex]?.image)
-        .then((res) => {
-          if (res?.status == 201) {
-            updatedTechStack[editIndex].image = res?.data;
-            editTechStack(
-              {
-                name: updatedTechStack[editIndex]?.name,
-                image: updatedTechStack[editIndex]?.image,
-              },
-              updatedTechStack[editIndex]?._id
-            )
-              .then((res) => {
-                console.log("res", res);
-              })
-              .catch((err) => console.log(err));
-          }
-        })
-        .catch((err) => console.log(err));
+      if (typeof updatedTechStack[editIndex]?.image === "string") {
+        editTechStack(
+          {
+            name: updatedTechStack[editIndex]?.name,
+            image: updatedTechStack[editIndex]?.image,
+          },
+          updatedTechStack[editIndex]?._id
+        )
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        addFile(updatedTechStack[editIndex]?.image)
+          .then((res) => {
+            if (res?.status == 201) {
+              updatedTechStack[editIndex].image = res?.data;
+              editTechStack(
+                {
+                  name: updatedTechStack[editIndex]?.name,
+                  image: updatedTechStack[editIndex]?.image,
+                },
+                updatedTechStack[editIndex]?._id
+              )
+                .then((res) => {
+                  console.log("res", res);
+                })
+                .catch((err) => console.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      }
     }
     // Close the edit modal
     handleCloseEditModal();
@@ -162,7 +178,7 @@ export default function AiPageEdit() {
   const handleFileChange = (e) => {
     setSelectedFile(e.target.files[0]);
   };
-// handle Add Tech Stack submission
+  // handle Add Tech Stack submission
   const handleAddTechStack = () => {
     const newTechStackItem = {
       name: techData.techStack.name,
