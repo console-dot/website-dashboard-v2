@@ -47,7 +47,9 @@ export const ProductResearchCard = ({ data }) => {
                         Client:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.client}
+                        {data?.keyComponents[0]?.client[0]}
+                        <br />
+                        {data?.keyComponents[0]?.client[1]}
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -55,7 +57,9 @@ export const ProductResearchCard = ({ data }) => {
                         Feasibility:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.feasibility}
+                        {data?.keyComponents[0]?.feasibility[0]}
+                        <br />
+                        {data?.keyComponents[0]?.feasibility[1]}
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -63,7 +67,9 @@ export const ProductResearchCard = ({ data }) => {
                         Market Analysis:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.marketAnalysis}
+                        {data?.keyComponents[0]?.marketAnalysis[0]}
+                        <br />
+                        {data?.keyComponents[0]?.marketAnalysis[1]} 
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -71,7 +77,9 @@ export const ProductResearchCard = ({ data }) => {
                         Roadmap:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.roadMap}
+                        {data?.keyComponents[0]?.roadMap[0]}
+                        <br />
+                        {data?.keyComponents[0]?.roadMap[1]}
                       </div>
                     </div>
                   </div>

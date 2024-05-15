@@ -2,9 +2,10 @@ import axios from "axios";
 import config from "./config";
 
 const BASE_URL = config.BASE_URL;
-const token = localStorage.getItem("@dashboard-token");
+
 
 export const getcustomservicepage = () => {
+  const token = localStorage.getItem("@dashboard-token");
   return axios
     .get(`${BASE_URL}/customService/6641ee227eed68c998c190cd`, {
       headers: {
