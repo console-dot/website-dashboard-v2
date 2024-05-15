@@ -6,7 +6,7 @@ const BASE_URL = config.BASE_URL;
 export const getAR = () => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .get(`${BASE_URL}/ar-vr/664206d95dec462c10f45b4b`, {
+    .get(`${BASE_URL}/ar-vr`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,

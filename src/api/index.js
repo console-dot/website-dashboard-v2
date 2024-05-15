@@ -4,3 +4,4 @@ export * from "./ai";
 export * from "./techStack";
 export * from "./blockChain";
 export * from "./arvr";
+export * from "./uiux";

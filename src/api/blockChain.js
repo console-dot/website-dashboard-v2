@@ -6,7 +6,7 @@ const BASE_URL = config.BASE_URL;
 export const getBlockChain = () => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .get(`${BASE_URL}/blockchain-dev/6641fcc675bebfa5a1cc0f72`, {
+    .get(`${BASE_URL}/blockchain-dev`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,
