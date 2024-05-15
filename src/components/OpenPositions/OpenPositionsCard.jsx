@@ -2,7 +2,7 @@ import React from "react";
 import { Button } from "../Button";
 import { FaPen, FaTrash } from "react-icons/fa";
 
-export const OpenPositionsCard = ({ data, onDelete,onEdit }) => {
+export const OpenPositionsCard = ({ data, onDelete, onEdit }) => {
   return (
     <div>
       <div className="d-flex justify-content-center">
@@ -59,7 +59,9 @@ export const OpenPositionsCard = ({ data, onDelete,onEdit }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Qualification: </strong>
+                      <strong style={{ color: "grey" }}>
+                        Qualification:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -91,7 +93,9 @@ export const OpenPositionsCard = ({ data, onDelete,onEdit }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>No Of Request: </strong>
+                      <strong style={{ color: "grey" }}>
+                        No Of Request:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">

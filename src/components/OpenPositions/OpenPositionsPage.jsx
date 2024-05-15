@@ -5,25 +5,18 @@ import { Button } from "../Button";
 import { FaPlus, FaTrash, FaPen } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
+import { setopData } from "../../redux/openpositionSlice";
+import { useDispatch } from "react-redux";
+import { getOpenPosition } from "../../api/openposition";
 
 export const OpenPositionsPage = () => {
-  const navigate = useNavigate();
   const [isLoading, setIsLoading] = useState(false);
-  
+  // const [data, setData] = useState();
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const [positions, setPositions] = useState([
-    {
-      id: 1,
-      jobType: "FullStack",
-      experience: "4-years.",
-      noOfPositions: "2",
-      qualifications: "BSCS",
-      employmentType: "Full-Time",
-      designation: "Senior",
-      noOfRequest: "3",
-      capacity: "2",
-    },
-  ]);
+
+  const [positions, setPositions] = useState([]);
 
   const [formData, setFormData] = useState({
     jobType: "",
@@ -57,6 +50,16 @@ export const OpenPositionsPage = () => {
     };
   }, [isModalOpen]);
 
+  useEffect(() => {
+    // console.log("newData", newData);
+    getOpenPosition()
+      .then((res) => {
+        setPositions(res?.data);
+        dispatch(setopData(res?.data));
+      })
+      .catch((err) => console.log(err));
+  }, []);
+
   const handleAddPosition = () => {
     setIsModalOpen(true);
   };
@@ -78,16 +81,14 @@ export const OpenPositionsPage = () => {
 
   const handleModalSubmit = () => {
     setIsLoading(true);
-      setTimeout(() => {
-        setIsLoading(false);
-        toast.success("Form submitted", {
-          autoClose: 1500, // close after 1.5 seconds
-          onClose: () => navigate("/LandingPage"), // navigate after closing
-        });
-      }, 1500);
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success("Form submitted", {
+        autoClose: 1500, // close after 1.5 seconds
+        onClose: () => navigate("/LandingPage"), // navigate after closing
+      });
+    }, 1500);
     if (editingId !== null) {
-      
-  
       // Editing existing position
       const updatedPositions = positions.map((pos) =>
         pos.id === editingId ? { ...pos, ...formData } : pos
