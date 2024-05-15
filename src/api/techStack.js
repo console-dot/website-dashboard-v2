@@ -36,3 +36,20 @@ export const addTechStack = (values) => {
     })
     .catch((err) => console.log(err));
 };
+
+export const removeTechStack = (id) => {
+  const token = localStorage.getItem("@dashboard-token");
+  return axios
+    .delete(`${BASE_URL}/techStack/${id}`, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "JWT " + token,
+      },
+    })
+    .then((res) => {
+      if (res?.data?.token)
+        localStorage.setItem("@dashboard-token", res?.data?.token);
+      return res?.data;
+    })
+    .catch((err) => console.log(err));
+};
