@@ -5,19 +5,16 @@ import { Button } from "../Button";
 import { FaPlus, FaTrash, FaPen } from "react-icons/fa";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
-import { setopData } from "../../redux/openpositionSlice";
 import { useDispatch } from "react-redux";
-import { getOpenPosition } from "../../api/openposition";
+import { setopData } from "../../redux/openpositionSlice";
+import { getOpenPosition, addPosition, editOpenPosition, deleteOpenPosition } from "../../api/openposition";
 
 export const OpenPositionsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
-  // const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-
   const [positions, setPositions] = useState([]);
-
   const [formData, setFormData] = useState({
     jobType: "",
     experience: "",
@@ -31,27 +28,9 @@ export const OpenPositionsPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
-
   const modalRef = useRef(null);
 
   useEffect(() => {
-    const handleClickOutside = (event) => {
-      if (modalRef.current && !modalRef.current.contains(event.target)) {
-        handleModalClose();
-      }
-    };
-
-    if (isModalOpen) {
-      document.addEventListener("mousedown", handleClickOutside);
-    }
-
-    return () => {
-      document.removeEventListener("mousedown", handleClickOutside);
-    };
-  }, [isModalOpen]);
-
-  useEffect(() => {
-    // console.log("newData", newData);
     getOpenPosition()
       .then((res) => {
         setPositions(res?.data);
@@ -81,27 +60,28 @@ export const OpenPositionsPage = () => {
 
   const handleModalSubmit = () => {
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500, // close after 1.5 seconds
-        onClose: () => navigate("/LandingPage"), // navigate after closing
-      });
-    }, 1500);
-    if (editingId !== null) {
-      // Editing existing position
-      const updatedPositions = positions.map((pos) =>
-        pos.id === editingId ? { ...pos, ...formData } : pos
-      );
-      setPositions(updatedPositions);
-    } else {
-      // Adding new position
-      const newId = Math.max(...positions.map((pos) => pos.id), 0) + 1;
-      setPositions([...positions, { id: newId, ...formData }]);
-    }
-    handleModalClose();
-    // Here you can add code to submit formData to your backend
-    console.log("Form data submitted:", formData);
+    const apiFunction = editingId !== null ? editOpenPosition : addPosition;
+    apiFunction(formData)
+      .then((res) => {
+        if (editingId !== null) {
+          const updatedPositions = positions.map((pos) =>
+            pos.id === editingId ? { ...pos, ...formData } : pos
+          );
+          setPositions(updatedPositions);
+        } else {
+          setPositions([...positions, res.data]);
+        }
+        toast.success("Form submitted", {
+          autoClose: 1500,
+          onClose: () => navigate("/LandingPage"),
+        });
+        handleModalClose();
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Error submitting form");
+      })
+      .finally(() => setIsLoading(false));
   };
 
   const handleEdit = (id) => {
@@ -112,8 +92,16 @@ export const OpenPositionsPage = () => {
   };
 
   const handleDelete = (id) => {
-    const updatedPositions = positions.filter((pos) => pos.id !== id);
-    setPositions(updatedPositions);
+    deleteOpenPosition(id)
+      .then(() => {
+        const updatedPositions = positions.filter((pos) => pos.id !== id);
+        setPositions(updatedPositions);
+        toast.success("Position deleted successfully");
+      })
+      .catch((error) => {
+        console.log(error);
+        toast.error("Error deleting position");
+      });
   };
 
   const handleChange = (e) => {
