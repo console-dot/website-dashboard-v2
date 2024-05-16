@@ -4,7 +4,9 @@ import { Button } from "../Button";
 import { FaEye, FaPen } from "react-icons/fa";
 
 export const LandingCard = ({ data, key, value }) => {
+  
   const navigate = useNavigate();
+  if (!data) return null;
   return (
     <div>
       <div className="d-flex justify-content-center">
@@ -35,7 +37,7 @@ export const LandingCard = ({ data, key, value }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.heroDescription}
+                        {data?.intro?.heroDescription}
                       </span>
                     </div>
                   </div>
@@ -47,7 +49,7 @@ export const LandingCard = ({ data, key, value }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.footerDescription}
+                        {data?.intro?.footerDescription}
                       </span>
                     </div>
                   </div>
@@ -56,7 +58,9 @@ export const LandingCard = ({ data, key, value }) => {
                       <strong style={{ color: "grey" }}>Email: </strong>
                     </div>
                     <div className="w-[50%]">
-                      <span className="text-black text-sm">{data?.email}</span>
+                      <span className="text-black text-sm">
+                        {data?.intro?.email}
+                      </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
@@ -64,7 +68,9 @@ export const LandingCard = ({ data, key, value }) => {
                       <strong style={{ color: "grey" }}>Phone: </strong>
                     </div>
                     <div className="w-[50%]">
-                      <span className="text-black text-sm">{data?.phone}</span>
+                      <span className="text-black text-sm">
+                        {data?.intro?.phone}
+                      </span>
                     </div>
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
@@ -73,7 +79,7 @@ export const LandingCard = ({ data, key, value }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.address}
+                        {data?.intro?.address}
                       </span>
                     </div>
                   </div>
@@ -82,14 +88,15 @@ export const LandingCard = ({ data, key, value }) => {
                       <strong style={{ color: "grey" }}>Social Links: </strong>
                     </div>
                     <div className="w-[50%]">
-                      {data?.socialLinks &&
-                        data.socialLinks.map((link, index) => (
-                          <span className="text-black text-sm" key={index}>
+                      {data?.intro?.socialLinks &&
+                        data?.intro?.socialLinks?.map((link) => (
+                          <span className="text-black text-sm" key={link?._id}>
                             <span className="text-heading font-semibold mr-2">
                               {link.name}
                             </span>
                             : <a href={link.link}>{link.link}</a>
-                            {index !== data.socialLinks.length - 1 && ", "}
+                            {link?._id !==
+                              data?.intro?.socialLinks.length - 1 && " "}
                           </span>
                         ))}
                     </div>
@@ -107,7 +114,7 @@ export const LandingCard = ({ data, key, value }) => {
                             Countries:
                           </span>
                           <span className="block">
-                            {data.workExperience.countries},
+                            {data?.intro?.workExperience?.countries},
                           </span>
                         </div>
                         <div className="flex flex-row">
@@ -115,7 +122,7 @@ export const LandingCard = ({ data, key, value }) => {
                             Employees:{" "}
                           </span>
                           <span className="block">
-                            {data.workExperience.expEmployees},
+                            {data?.intro?.workExperience?.expEmployees},
                           </span>
                         </div>
                         <div className="flex flex-row">
@@ -123,7 +130,7 @@ export const LandingCard = ({ data, key, value }) => {
                             Scrum Teams:{" "}
                           </span>
                           <span className="block">
-                            {data.workExperience.scrumTeams},
+                            {data?.intro?.workExperience?.scrumTeams},
                           </span>
                         </div>
                         <div className="flex flex-row">
@@ -131,7 +138,7 @@ export const LandingCard = ({ data, key, value }) => {
                             Full Stack Dev:{" "}
                           </span>
                           <span className="block">
-                            {data.workExperience.fullStackDev}
+                            {data?.intro?.workExperience?.fullStackDev}
                           </span>
                         </div>
                       </span>
@@ -150,7 +157,7 @@ export const LandingCard = ({ data, key, value }) => {
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.aboutDescription}
+                        {data?.about?.description}
                       </span>
                     </div>
                   </div>
@@ -179,24 +186,20 @@ export const LandingCard = ({ data, key, value }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {data?.testimonials.map((testimonial, index) => (
+                        {data?.testimonial?.map((items) => (
                           <tr
-                            key={index}
+                            key={items?._id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
                             <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              {testimonial.name}
+                              {items?.fullName}
                             </td>
-                            <td className="px-6 py-1">
-                              {testimonial.designation}
-                            </td>
-                            <td className="px-6 py-1">
-                              {testimonial.description}
-                            </td>
+                            <td className="px-6 py-1">{items?.designation}</td>
+                            <td className="px-6 py-1">{items?.description}</td>
                             <td className="px-6 py-1">
                               <img
-                                src={testimonial.img}
-                                alt={testimonial.name}
+                                src={items?.image}
+                                alt={items?.fullName}
                                 className="h-12 w-12"
                               />
                             </td>
@@ -225,21 +228,19 @@ export const LandingCard = ({ data, key, value }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {data?.expertises.map((expertise, index) => (
+                        {data?.expertises?.map((items) => (
                           <tr
-                            key={index}
+                            key={items?._id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
                           >
                             <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
-                              {expertise.expertisename}
+                              {items?.name}
                             </td>
-                            <td className="px-6 py-1">
-                              {expertise.expertisesdescription}
-                            </td>
+                            <td className="px-6 py-1">{items?.description}</td>
                             <td className="px-6 py-1">
                               <img
-                                src={expertise.expertisesimg}
-                                alt={expertise.name}
+                                src={items?.image}
+                                alt={items?.name}
                                 className="h-12 w-12"
                               />
                             </td>
@@ -255,25 +256,29 @@ export const LandingCard = ({ data, key, value }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Offshore Models
                   </h1>
-
-                  {data.offshoreComparison.map((model) => (
+                  {data?.offshoreComparison?.map((item) => (
                     <div
-                      key={model.type}
-                      className="flex"
-                      style={{ width: "70%" }}
+                      key={item?._id}
+                      className="flex flex-row "
+                      style={{ width: "100%" }}
                     >
-                      <div className="w-[50%]">
-                        <strong style={{ color: "grey" }}>{model.type}:</strong>
-                      </div>
-                      <div className="w-[50%]">
-                        <span className="text-black text-sm">
-                          <ul style={{ listStyle: "unset" }}>
-                            {model.comparisons.map((advantage, index) => (
-                              <li key={index}>{advantage}</li>
+                      {item?.offshoreType?.map((comparisonItem) => (
+                        <div key={comparisonItem?.type} className="w-[50%]">
+                          <strong style={{ color: "grey" }}>
+                            {comparisonItem?.type}:
+                          </strong>
+                          <ul
+                            style={{ listStyle: "unset  ",}}
+                            className="mt-4 pl-4 mb-4"
+                          >
+                            {comparisonItem?.comparison?.map((item, index) => (
+                              <li key={index} className="text-black text-sm mb-2">
+                                {item}
+                              </li>
                             ))}
                           </ul>
-                        </span>
-                      </div>
+                        </div>
+                      ))}
                     </div>
                   ))}
                 </div>

@@ -5,6 +5,12 @@ import { FaEye, FaPen } from "react-icons/fa";
 
 export const ProductResearchCard = ({ data }) => {
   const navigate = useNavigate();
+  console.log("productResearchData", data);
+  const cardLabels = [
+    "Holistic Approach",
+    "Proven Success",
+    "Strategic Partnership",
+  ];
 
   return (
     <div>
@@ -20,8 +26,6 @@ export const ProductResearchCard = ({ data }) => {
               }}
             >
               <div className="w-full flex flex-col justify-between mt-[10px]">
-                {/* ProductResearch Modal*/}
-
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
                     Product Research Model
@@ -37,41 +41,60 @@ export const ProductResearchCard = ({ data }) => {
                     </div>
                   </div>
                   <strong style={{ color: "grey" }}>Key Components:</strong>
-                  <div className=" flex flex-row flex-wrap justify-center gap-6 ">
-                    {data?.keyComponents?.map((option, index) => (
-                      <div
-                        key={index}
-                        className="block w-40 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
-                      >
-                        <h3 className="option-title text-gray-500 text-lg font-semibold">
-                          {option.heading}
-                          {" :"}
-                        </h3>
-                        <ul>
-                          {option.points.map((point, pointIndex) => (
-                            <li
-                              className="option-description text-gray-500"
-                              key={pointIndex}
-                            >
-                              {point}
-                            </li>
-                          ))}
-                        </ul>
+                  <div className="flex flex-row flex-wrap justify-center gap-6">
+                    <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                      <h3 className="option-title text-gray-500 text-lg font-semibold">
+                        Client:
+                      </h3>
+                      <div className="option-description text-gray-500">
+                        {data?.keyComponents[0]?.client[0]}
+                        <br />
+                        {data?.keyComponents[0]?.client[1]}
                       </div>
-                    ))}
+                    </div>
+                    <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                      <h3 className="option-title text-gray-500 text-lg font-semibold">
+                        Feasibility:
+                      </h3>
+                      <div className="option-description text-gray-500">
+                        {data?.keyComponents[0]?.feasibility[0]}
+                        <br />
+                        {data?.keyComponents[0]?.feasibility[1]}
+                      </div>
+                    </div>
+                    <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                      <h3 className="option-title text-gray-500 text-lg font-semibold">
+                        Market Analysis:
+                      </h3>
+                      <div className="option-description text-gray-500">
+                        {data?.keyComponents[0]?.marketAnalysis[0]}
+                        <br />
+                        {data?.keyComponents[0]?.marketAnalysis[1]} 
+                      </div>
+                    </div>
+                    <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                      <h3 className="option-title text-gray-500 text-lg font-semibold">
+                        Roadmap:
+                      </h3>
+                      <div className="option-description text-gray-500">
+                        {data?.keyComponents[0]?.roadMap[0]}
+                        <br />
+                        {data?.keyComponents[0]?.roadMap[1]}
+                      </div>
+                    </div>
                   </div>
 
                   <strong style={{ color: "grey" }}>Why Choose Us:</strong>
-                  <div className="w-full flex flex-row flex-wrap justify-between">
-                    {data?.whyChoose.map((option, index) => (
-                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                  <div className="w-full flex flex-row flex-wrap justify-center ">
+                    {data?.whyChooseUs.map((option, index) => (
+                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4 w-[20%]">
                         <h3 className="option-title text-gray-500 text-lg font-semibold">
-                          {option.name}
+                          {cardLabels[index]}
                           {" :"}
                         </h3>
                         <p className="option-description text-gray-500">
                           {" "}
-                          {option.description}
+                          {option}
                         </p>
                         <div className="w-full flex justify-center items-center mt-2">
                           <img
@@ -93,7 +116,7 @@ export const ProductResearchCard = ({ data }) => {
                     icon={<FaPen />}
                     text={"Edit"}
                     click={() => {
-                      navigate(`/ProductResearchPageEdit/edit/:id`);
+                      navigate(`/ProductResearchPageEdit/edit/${data?._id}`);
                     }}
                   />
                   <Button text={"View"} icon={<FaEye />} />

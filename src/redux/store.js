@@ -5,6 +5,7 @@ import aiSlice from "./aiSlice";
 import blockChainSlice from "./blockChainSlice";
 import arvrSlice from "./arvrSlice";
 import uiuxSlice from "./uiuxSlice";
+import openpositionSlice from "./openpositionSlice";
 
 export const store = configureStore({
   reducer: {
@@ -14,5 +15,6 @@ export const store = configureStore({
     blockChain: blockChainSlice,
     arvr: arvrSlice,
     uiux: uiuxSlice,
+    openPosition: openpositionSlice,
   },
 });

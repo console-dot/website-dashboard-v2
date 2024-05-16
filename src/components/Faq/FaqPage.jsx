@@ -85,7 +85,7 @@ export const FaqPage = () => {
           </h1>
           <div className="grid pt-8 text-left w-full border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-1">
             <div className="flex flex-col gap-8 w-full">
-              {formData.map((qa, index) => (
+              {formData?.map((qa, index) => (
                 <div key={index} className="mb-6">
                   <label className="text-webDescrip font-semibol text-[20px] ">
                     <div className="flex flex-row justify-start gap-2">

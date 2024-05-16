@@ -2,10 +2,17 @@ import React from "react";
 import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaPen } from "react-icons/fa";
+import config from "../../api/config";
 
 export const WebDevelopmentCard = ({ data }) => {
+  const BASE_URL = config.BASE_URL;
   const navigate = useNavigate();
-
+  console.log(data);
+  const cardLabels = [
+    "User-Centric Design", 
+    "Cross-Platform Compatibility",
+    "Performance Optimization",
+  ];
   return (
     <div>
       <div className="d-flex justify-content-center">
@@ -45,16 +52,16 @@ export const WebDevelopmentCard = ({ data }) => {
                     </div>
                   </div>
                   <strong style={{ color: "grey" }}>Why Choose Us:</strong>
-                  <div className="w-full flex flex-row flex-wrap justify-between">
-                    {data?.whyChoose.map((option, index) => (
-                      <div class="block max-w-[32%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                  <div className="w-full flex flex-row flex-wrap justify-center ">
+                    {data?.whyChooseUs.map((option, index) => (
+                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4 w-[20%]">
                         <h3 className="option-title text-gray-500 text-lg font-semibold">
-                          {option.name}
+                          {cardLabels[index]}
                           {" :"}
                         </h3>
                         <p className="option-description text-gray-500">
                           {" "}
-                          {option.description}
+                          {option}
                         </p>
                         <div className="w-full flex justify-center items-center mt-2">
                           <img
@@ -68,14 +75,13 @@ export const WebDevelopmentCard = ({ data }) => {
                       </div>
                     ))}
                   </div>
-
                   <div className="flex flex-col mt-2">
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Tech Stack: </strong>
                     </div>
-                    <div className="w-full flex flex-row flex-wrap justify-start gap-4 mt-8">
+                    <div className="w-full flex flex-row flex-wrap justify-center gap-4 mt-8">
                       {data?.techStack.map((option, index) => (
-                        <div class="block max-w-[32%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                        <div class="block max-w-[32%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 w-[10%]">
                           <h3 className="option-title text-gray-500 text-lg font-semibold">
                             {option.name}
                             {" :"}
@@ -86,11 +92,9 @@ export const WebDevelopmentCard = ({ data }) => {
                           </p>
                           <div className="w-full flex justify-center items-center mt-2">
                             <img
-                              src={
-                                "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
-                              }
+                              src={`${BASE_URL}/file/${option?.image}`}
                               alt={option.name}
-                              className="option-image w-8 h-8 "
+                              className="option-image w-5 h-5 "
                             />
                           </div>
                         </div>
@@ -105,7 +109,7 @@ export const WebDevelopmentCard = ({ data }) => {
                     icon={<FaPen />}
                     text={"Edit"}
                     click={() => {
-                      navigate(`/WebDevelopmentPageEdit/edit/:id`);
+                      navigate(`/WebDevelopmentPageEdit/edit/${data?._id}`);
                     }}
                   />
                   <Button text={"View"} icon={<FaEye />} />
