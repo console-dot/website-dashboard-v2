@@ -1,13 +1,11 @@
 import React from "react";
 
 export default function EditExpertiseModal({
-  handleImageUpload,
   handleChange,
   closeModal,
   handleEditExpertise,
   data,
 }) {
-  console.log('data',data)
   return (
     <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50 z-10">
       <div className="bg-white border border-dashed flex flex-col border-custom-purple p-4 mt-6">
@@ -18,18 +16,18 @@ export default function EditExpertiseModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
-            name="expertiseImage"
+            name="image"
             id="expertiseImage"
-            onChange={handleImageUpload}
+            onChange={handleChange}
             placeholder="Expertise Image"
           />
-          {data.expertiseImage && (
+          {data.image && (
             <div>
               <label className="text-webDescrip font-semibold mt-4">
                 Preview:
               </label>
               <img
-                src={data.expertiseImage}
+                src={data.image}
                 alt="Expertise Preview"
                 style={{
                   maxWidth: "100%",
@@ -47,10 +45,10 @@ export default function EditExpertiseModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="expertiseName"
+            name="name"
             id="expertiseName"
             onChange={handleChange}
-            value={data?.expertiseName}
+            value={data?.name}
             placeholder="Expertise Name"
           />
         </div>
@@ -61,14 +59,14 @@ export default function EditExpertiseModal({
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="expertiseDescription"
+            name="description"
             id="expertiseDescription"
             onChange={handleChange}
-            value={data?.expertiseDescription}
+            value={data?.description}
             placeholder="Expertise Description"
           />
         </div>
-       
+
         <div>
           <button
             type="button"

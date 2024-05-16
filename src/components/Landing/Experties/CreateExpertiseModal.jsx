@@ -17,7 +17,7 @@ export default function CreateExpertiseModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
-            name="expertiseImage"
+            name="image"
             id="expertiseImage"
             onChange={handleImageUpload}
             placeholder="Expertise Image"
@@ -31,8 +31,8 @@ export default function CreateExpertiseModal({
                 src={formData.expertiseImage}
                 alt="Expertise Preview"
                 style={{
-                  maxWidth: "100%",
-                  maxHeight: "200px",
+                  maxWidth: "100px",
+                  maxHeight: "100px",
                   marginTop: "10px",
                 }}
               />
@@ -46,10 +46,10 @@ export default function CreateExpertiseModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="expertiseName"
+            name="name"
             id="expertiseName"
             onChange={handleChange}
-            value={formData?.expertiseName}
+            value={formData?.expertise?.name}
             placeholder="Expertise Name"
           />
         </div>
@@ -60,10 +60,10 @@ export default function CreateExpertiseModal({
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="expertiseDescription"
+            name="description"
             id="expertiseDescription"
             onChange={handleChange}
-            value={formData?.expertiseDescription}
+            value={formData?.expertise?.description}
             placeholder="Expertise Description"
           />
         </div>

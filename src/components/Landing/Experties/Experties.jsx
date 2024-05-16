@@ -1,7 +1,15 @@
 import React from "react";
 import { FaEdit, FaTrash } from "react-icons/fa";
+import config from "../../../api/config";
 
-export default function Expertises({ data, open, closeExpertiseModal, handleOpenEditModal,deleteExpertise }) {
+export default function Expertises({
+  data,
+  open,
+  closeExpertiseModal,
+  handleOpenEditModal,
+  deleteExpertise,
+}) {
+  const BASE_URL = config.BASE_URL;
   return (
     <div className="relative overflow-x-auto shadow-md sm:rounded-lg">
       <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400">
@@ -32,12 +40,12 @@ export default function Expertises({ data, open, closeExpertiseModal, handleOpen
                   scope="row"
                   className="px-6 py-4 font-medium text-gray-900 whitespace-nowrap dark:text-white"
                 >
-                  {item?.expertiseName}
+                  {item?.name}
                 </th>
-                <td className="px-6 py-4">{item?.expertiseDescription}</td>
+                <td className="px-6 py-4">{item?.description}</td>
                 <td className="px-6 ">
                   <img
-                    src={item?.expertiseImg}
+                    src={`${BASE_URL}/file/${item?.image}`}
                     alt={item?.expertiseName}
                     className="h-12 w-12"
                   />
@@ -52,7 +60,7 @@ export default function Expertises({ data, open, closeExpertiseModal, handleOpen
                   </button>
                   <button
                     type="button"
-                    onClick={()=>deleteExpertise(index)}
+                    onClick={() => deleteExpertise(index)}
                     className="flex flex-row justify-center items-center text-error ml-2"
                   >
                     <FaTrash />
