@@ -17,7 +17,7 @@ export default function CreateModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
-            name="testimonialImage"
+            name="image"
             id="testimonialImage"
             onChange={handleImageUpload}
             placeholder="Testimonial Image"
@@ -32,8 +32,8 @@ export default function CreateModal({
                 src={formData.testimonialImage}
                 alt="Testimonial Preview"
                 style={{
-                  maxWidth: "100%",
-                  maxHeight: "200px",
+                  maxWidth: "100px",
+                  maxHeight: "100px",
                   marginTop: "10px",
                 }}
               />
@@ -48,10 +48,10 @@ export default function CreateModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="testimonialFullName"
+            name="fullName"
             id="testimonialFullName"
             onChange={handleChange}
-            value={formData?.testimonials?.name}
+            value={formData?.testimonial?.name}
             placeholder="testimonialFullName"
           />
         </div>
@@ -62,10 +62,10 @@ export default function CreateModal({
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="testimonialDescription"
+            name="description"
             id="testimonialDescription"
             onChange={handleChange}
-            value={formData?.testimonials?.description}
+            value={formData?.testimonial?.description}
             placeholder="Testimonial Description"
           />
         </div>
@@ -76,10 +76,10 @@ export default function CreateModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="testimonialDesignation"
+            name="designation"
             id="testimonialDesignation"
             onChange={handleChange}
-            value={formData?.testimonials?.designation}
+            value={formData?.testimonial?.designation}
             placeholder="Testimonial Designation"
           />
         </div>
