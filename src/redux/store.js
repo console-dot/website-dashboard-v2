@@ -6,6 +6,7 @@ import blockChainSlice from "./blockChainSlice";
 import arvrSlice from "./arvrSlice";
 import uiuxSlice from "./uiuxSlice";
 import openpositionSlice from "./openpositionSlice";
+import landingPageSlice from "./landingPageSlice";
 import offshoreserviceSlice from "./offshoreserviceSlice";
 import mobdevSlice from "./mobdevSlice";
 import webdevSlice from "./webdevSlice";
@@ -20,6 +21,7 @@ export const store = configureStore({
     arvr: arvrSlice,
     uiux: uiuxSlice,
     openPosition: openpositionSlice,
+    landingPage: landingPageSlice,
     offshoreservice:offshoreserviceSlice,
     mobdev: mobdevSlice, 
     webdev:webdevSlice,

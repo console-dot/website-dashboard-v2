@@ -3,10 +3,10 @@ import config from "./config";
 
 const BASE_URL = config.BASE_URL;
 
-export const getLandingPage = () => {
+export const getFaq = () => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .get(`${BASE_URL}/landingPage`, {
+    .get(`${BASE_URL}/faq`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,
@@ -20,10 +20,10 @@ export const getLandingPage = () => {
     .catch((err) => console.log(err));
 };
 
-export const editLandingPage = (values, id) => {
+export const editFaq = (values) => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .put(`${BASE_URL}/landingPage/${id}`, values, {
+    .put(`${BASE_URL}/faq/`, values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,

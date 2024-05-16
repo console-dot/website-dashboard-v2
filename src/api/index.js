@@ -5,3 +5,6 @@ export * from "./techStack";
 export * from "./blockChain";
 export * from "./arvr";
 export * from "./uiux";
+export * from "./faq";
+export * from "./testimonials";
+export * from "./expertise";

@@ -2,9 +2,10 @@ import React from "react";
 import { useNavigate } from "react-router-dom";
 import { Button } from "../Button";
 import { FaEye, FaPen } from "react-icons/fa";
+import config from "../../api/config";
 
 export const LandingCard = ({ data, key, value }) => {
-  
+  const BASE_URL = config.BASE_URL;
   const navigate = useNavigate();
   if (!data) return null;
   return (
@@ -198,7 +199,7 @@ export const LandingCard = ({ data, key, value }) => {
                             <td className="px-6 py-1">{items?.description}</td>
                             <td className="px-6 py-1">
                               <img
-                                src={items?.image}
+                                src={`${BASE_URL}/file/${items?.image}`}
                                 alt={items?.fullName}
                                 className="h-12 w-12"
                               />
@@ -228,7 +229,7 @@ export const LandingCard = ({ data, key, value }) => {
                         </tr>
                       </thead>
                       <tbody>
-                        {data?.expertises?.map((items) => (
+                        {data?.expertise?.map((items) => (
                           <tr
                             key={items?._id}
                             className="odd:bg-white odd:dark:bg-gray-900 even:bg-gray-50 even:dark:bg-gray-800 border-b dark:border-gray-700"
@@ -239,7 +240,7 @@ export const LandingCard = ({ data, key, value }) => {
                             <td className="px-6 py-1">{items?.description}</td>
                             <td className="px-6 py-1">
                               <img
-                                src={items?.image}
+                                src={`${BASE_URL}/file/${items?.image}`}
                                 alt={items?.name}
                                 className="h-12 w-12"
                               />

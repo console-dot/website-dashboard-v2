@@ -1,7 +1,6 @@
 import React from "react";
 
 export default function EditTestModal({
-  handleImageUpload,
   handleChange,
   closeModal,
   handleEditTestimonial,
@@ -17,9 +16,11 @@ export default function EditTestModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="file"
-            name="img"
+            name="image"
             id="testimonialImage"
-            onChange={handleImageUpload}
+            accept="image/*"
+            // onChange={handleImageUpload}
+            onChange={handleChange}
             placeholder="Testimonial Image"
           />
           {/*  */}
@@ -48,10 +49,10 @@ export default function EditTestModal({
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="name"
+            name="fullName"
             id="name"
             onChange={handleChange}
-            value={data?.name}
+            value={data?.fullName}
             placeholder="testimonialFullName"
           />
         </div>
@@ -83,7 +84,7 @@ export default function EditTestModal({
             placeholder="Testimonial Designation"
           />
         </div>
-        <div className=" flex flex-row justify-end gap-2 mt-4" >
+        <div className=" flex flex-row justify-end gap-2 mt-4">
           <button
             type="button"
             onClick={handleEditTestimonial}

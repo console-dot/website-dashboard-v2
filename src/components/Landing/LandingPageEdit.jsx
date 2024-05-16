@@ -11,120 +11,141 @@ import EditTestModal from "./Testimonils/EditTestModal";
 import Expertises from "./Experties/Experties";
 import CreateExpertiseModal from "./Experties/CreateExpertiseModal";
 import EditExpertiseModal from "./Experties/EditExpertiseModal";
+import { useSelector } from "react-redux";
+import {
+  selectLandingPageDetails,
+  setLandingPageData,
+} from "../../redux/landingPageSlice";
+import {
+  addExpertiseMethod,
+  addTestimonialMethod,
+  editExpertiseMethod,
+  editLandingPage,
+  editTestimonialMethod,
+  removeExpertiseMethod,
+  removeTestimonialMethod,
+} from "../../api";
+import { addFile } from "../../api/file";
+
+const data = {
+  heroDescription: "Leading provider of tech solutions.",
+  footerDescription: "Dedicated to innovation and excellence.",
+  email: "contact@techsolutions.com",
+  phone: "+1234567890",
+  address: "123 Tech Street, Silicon Valley, CA",
+  socialLinks: [
+    { name: "facebook", link: "https://twitter.com/techsolutions" },
+    { name: "youtube", link: "https://youtube.com/techsolutions" },
+  ],
+  workExperience: {
+    countries: "USA, Canada, Germany",
+    expEmployees: "200+",
+    scrumTeams: "15",
+    fullStackDev: "50+",
+  },
+  aboutDescription:
+    "TechSolutions specializes in providing high-quality IT services and innovative solutions to global clients.",
+  offshoreType: "Dedicated Development Center",
+  offshoreDescription:
+    "Offers flexible engagement models and full control over the process.",
+  offshoreAdvantages: ["Cost Effective", "Scalable Resources", "Expert Teams"],
+  offshoreComparison: [
+    {
+      type: "Hourly",
+      comparisons: [
+        "Cost-effective",
+        "Flexible resource allocation",
+        "Pay-as-you-go model",
+        "No long-term commitment",
+        "Good for short-term projects",
+        "Quick project start",
+      ],
+    },
+    {
+      type: "Fixed",
+      comparisons: [
+        "Predictable cost",
+        "Strict project timeline",
+        "Defined scope of work",
+        "Less client involvement",
+        "Reduced risk for the client",
+        "Good for well-defined projects",
+      ],
+    },
+    {
+      type: "Bot",
+      comparisons: [
+        "Automated processes",
+        "24/7 availability",
+        "Scalable solution",
+        "Improved efficiency",
+        "Cost-effective in the long run",
+        "Reduces human error",
+      ],
+    },
+  ],
+  testimonials: [
+    {
+      name: "test1",
+      description: "description",
+      designation: "designation",
+      img: "dummy.png",
+    },
+    {
+      name: "test1",
+      description: "description",
+      designation: "designation",
+      img: "dummy.png",
+    },
+  ],
+  expertises: [
+    {
+      expertiseName: "test",
+      expertiseDescription: "description",
+      expertiseImg: "dummy.png",
+    },
+    {
+      expertiseName: "test",
+      expertiseDescription: "description1",
+      expertiseImg: "dummy.png1",
+    },
+  ],
+  testimonialFullName: "Jane Doe",
+  testimonialDescription:
+    "The team at TechSolutions went above and beyond to meet our needs.",
+  testimonialDesignation: "CEO of Innovative Tech Co.",
+};
 
 export default function LandingPageEdit() {
-  const [formData, setFormData] = useState({
-    heroDescription: "Leading provider of tech solutions.",
-    footerDescription: "Dedicated to innovation and excellence.",
-    email: "contact@techsolutions.com",
-    phone: "+1234567890",
-    address: "123 Tech Street, Silicon Valley, CA",
-    socialLinks: [
-      { name: "facebook", link: "https://twitter.com/techsolutions" },
-      { name: "youtube", link: "https://youtube.com/techsolutions" },
-    ],
-    workExperience: {
-      countries: "USA, Canada, Germany",
-      expEmployees: "200+",
-      scrumTeams: "15",
-      fullStackDev: "50+",
-    },
-    aboutDescription:
-      "TechSolutions specializes in providing high-quality IT services and innovative solutions to global clients.",
-    offshoreType: "Dedicated Development Center",
-    offshoreDescription:
-      "Offers flexible engagement models and full control over the process.",
-    offshoreAdvantages: [
-      "Cost Effective",
-      "Scalable Resources",
-      "Expert Teams",
-    ],
-    offshoreComparison: [
-      {
-        type: "Hourly",
-        comparisons: [
-          "Cost-effective",
-          "Flexible resource allocation",
-          "Pay-as-you-go model",
-          "No long-term commitment",
-          "Good for short-term projects",
-          "Quick project start",
-        ],
-      },
-      {
-        type: "Fixed",
-        comparisons: [
-          "Predictable cost",
-          "Strict project timeline",
-          "Defined scope of work",
-          "Less client involvement",
-          "Reduced risk for the client",
-          "Good for well-defined projects",
-        ],
-      },
-      {
-        type: "Bot",
-        comparisons: [
-          "Automated processes",
-          "24/7 availability",
-          "Scalable solution",
-          "Improved efficiency",
-          "Cost-effective in the long run",
-          "Reduces human error",
-        ],
-      },
-    ],
-    testimonials: [
-      {
-        name: "test1",
-        description: "description",
-        designation: "designation",
-        img: "dummy.png",
-      },
-      {
-        name: "test1",
-        description: "description",
-        designation: "designation",
-        img: "dummy.png",
-      },
-    ],
-    expertises: [
-      {
-        expertiseName: "test",
-        expertiseDescription: "description",
-        expertiseImg: "dummy.png",
-      },
-      {
-        expertiseName: "test",
-        expertiseDescription: "description1",
-        expertiseImg: "dummy.png1",
-      },
-    ],
-    testimonialFullName: "Jane Doe",
-    testimonialDescription:
-      "The team at TechSolutions went above and beyond to meet our needs.",
-    testimonialDesignation: "CEO of Innovative Tech Co.",
-  });
-  // State declarations
+  const landingPageData = useSelector(selectLandingPageDetails);
+  const [formData, setFormData] = useState(landingPageData);
+  const [workExperienceData, setWorkExperienceData] = useState(null);
   const [isLoading, setIsLoading] = useState(false);
   const [isModalOpen, setIsModalOpen] = useState(false);
-  //
-  const [testimonialData, setTestimonialData] = useState({});
   const [editTestimonialModal, setEditTestimonialModal] = useState(false);
-  // State to hold the data of the testimonial item being edited
   const [editTestimonial, setEditTestimonial] = useState(null);
-  // State to manage the index of the tech stack item being edited
   const [editIndex, setEditIndex] = useState(null);
-  //
   const [isModalOpenSocialLink, setIsModalOpenSocialLink] = useState(false);
   const [socialLinks, setSocialLinks] = useState([]);
   const [socialLinkName, setSocialLinkName] = useState("");
   const [socialLinkURL, setSocialLinkURL] = useState("");
-  //
-  const [expertiseData, setExpertiseData] = useState({});
   const [editExpertise, setEditExpertise] = useState(null);
   const [isExpertiseModalOpen, setIsExpertiseModalOpen] = useState(false);
   const [editExpertiseModal, setEditExpertiseModal] = useState(false);
+  const [selectedFile, setSelectedFile] = useState(null);
+  const [testimonialData, setTestimonialData] = useState({
+    testimonial: {
+      fullName: "",
+      description: "",
+      designation: "",
+      image: null, // Assuming img is initially null
+    },
+  });
+  const [expertiseData, setExpertiseData] = useState({
+    name: "",
+    description: "",
+    image: null, // Assuming img is initially null
+  });
   //
   const navigate = useNavigate();
 
@@ -135,83 +156,133 @@ export default function LandingPageEdit() {
   const closeModal = () => setIsModalOpen(false);
   const openEditExpertiseModal = () => setEditExpertiseModal(true);
   const closeEditExpertiseModal = () => setEditExpertiseModal(false);
-
   const openEditTestModal = () => setEditTestimonialModal(true);
   const closeEditTestModal = () => setEditTestimonialModal(false);
-  const openExpertiseModal = () => setIsExpertiseModalOpen(true); // Added
-  const closeExpertiseModal = () => setIsExpertiseModalOpen(false); // Added
+  const openExpertiseModal = () => setIsExpertiseModalOpen(true);
+  const closeExpertiseModal = () => setIsExpertiseModalOpen(false);
 
-  // Social link functions
+  // Handle Form Submission
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const testimonialIds = formData?.testimonial?.map((item) => item._id);
+    const expertiseIds = formData?.expertise?.map((item) => item._id);
+    const newForm = {
+      heroDescription: formData?.intro?.heroDescription,
+      footerDescription: formData?.intro?.footerDescription,
+      email: formData?.intro?.email,
+      phone: formData?.intro?.phone,
+      address: formData?.intro?.address,
+      socialLinks: formData?.intro?.socialLinks,
+      workExperience: workExperienceData,
+      aboutDescription: formData?.about?.description,
+      testimonials: testimonialIds,
+      expertises: expertiseIds,
+    };
+    if (landingPageData?._id) {
+      editLandingPage(newForm, landingPageData?._id)
+        .then((res) => {
+          console.log("res", res);
+          // dispatch(setLandingPageData(res?.data));
+        })
+        .catch((err) => console.log(err));
+      // Timeout
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500,
+          onClose: () => navigate("/LandingPage"),
+        });
+      }, 1500);
+
+      // editLandingPage
+      if (!isModalOpenSocialLink) {
+        console.log(formData);
+      }
+    }
+  };
+
+  // Add New Social link
   const addSocialLink = () => {
     if (socialLinkName.trim() !== "" && socialLinkURL.trim() !== "") {
+      const newItem = {
+        name: socialLinkName,
+        link: socialLinkURL,
+      };
+      // const updatedSocialLink = [...formData?.intro?.socialLinks];
       setFormData((prevData) => ({
         ...prevData,
-        socialLinks: [
-          ...prevData.socialLinks,
-          { name: socialLinkName, link: socialLinkURL },
-        ],
+        intro: {
+          ...prevData.intro,
+          socialLinks: [...prevData?.intro?.socialLinks, newItem],
+        },
       }));
       closeModalSocialLink();
       setSocialLinkName("");
       setSocialLinkURL("");
     }
   };
+
+  // Remove Social Link
   const removeSocialLink = (index) => {
+    const updated = socialLinks.filter((_, i) => i !== index);
     setSocialLinks((prevLinks) => prevLinks.filter((_, i) => i !== index));
-  };
-
-  // Image upload functions
-  const handleImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          testimonialImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-  const handleExpertiseImageUpload = (e) => {
-    const file = e.target.files[0];
-    if (file) {
-      const reader = new FileReader();
-      reader.onloadend = () => {
-        setFormData((prevData) => ({
-          ...prevData,
-          expertiseImage: reader.result,
-        }));
-      };
-      reader.readAsDataURL(file);
-    }
-  };
-
-  // Form handling functions
-  const handleChangeExperience = (e, field) => {
-    const value = e.target.value;
-    setFormData((prevState) => ({
-      ...prevState,
-      workExperience: {
-        ...prevState.workExperience,
-        [field]: value,
+    setFormData((prevData) => ({
+      ...prevData,
+      intro: {
+        ...prevData.intro,
+        socialLinks: updated,
       },
     }));
   };
 
-  // Handle change
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
+  // Handle Change for nested Objects
+  const handleChange = (event) => {
+    const { name, value } = event.target;
+    setFormData((prevFormData) => {
+      // Check if the field is nested or not
+      if (name.includes(".")) {
+        const [obj, field] = name.split(".");
+        return {
+          ...prevFormData,
+          [obj]: {
+            ...prevFormData[obj],
+            [field]: value,
+          },
+        };
+      } else {
+        return {
+          ...prevFormData,
+          [name]: value,
+        };
+      }
+    });
   };
 
-  // Testimonials
+  // Handle WorkExperinece Data
+  const handleUpdateFormData = (e) => {
+    const { name, value } = e.target;
+    setWorkExperienceData((prevFormData) => ({
+      ...prevFormData,
+      [name]: value,
+    }));
+  };
+
+  // handle File Upload
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
+
+  // Testimonials --------------------------------------------------
+  // handle input change for New Testimonial
   const handleInputChange = (e) => {
     const { name, value } = e.target;
     setTestimonialData((prevFormData) => ({
       ...prevFormData,
-      [name]: value,
+      testimonial: {
+        ...prevFormData.testimonial,
+        [name]: value,
+      },
     }));
   };
 
@@ -224,31 +295,49 @@ export default function LandingPageEdit() {
     }));
   };
 
+  // handle Add New Testimonial Submission
   const handleAddTestimonial = () => {
     // Create new object
     const newItem = {
-      name: testimonialData?.testimonialFullName,
-      description: testimonialData?.testimonialDescription,
-      designation: testimonialData?.testimonialDesignation,
-      img: testimonialData?.img,
+      fullName: testimonialData?.testimonial?.fullName,
+      description: testimonialData?.testimonial?.description,
+      designation: testimonialData?.testimonial?.designation,
+      image: testimonialData?.image,
     };
-    // Add the new object to the testimonials array
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      testimonials: [...prevFormData.testimonials, newItem],
-    }));
+    console.log("newItem", newItem);
+    if (selectedFile) {
+      addFile(selectedFile)
+        .then((res) => {
+          // console.log("res", res);
+          if (res?.status == 201) {
+            newItem.image = res?.data;
+            addTestimonialMethod(newItem)
+              .then((res) => {
+                console.log("res", res);
+                // Add the new object to the testimonials array
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  testimonial: [...prevFormData.testimonial, res?.data],
+                }));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
     // Close Modal
     closeModal();
   };
 
+  // Edit Testimonial Values
   const handleEditInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "img") {
+    if (name === "image") {
       // If the change is in the image input field
       const file = files[0];
       setEditTestimonial((prevItem) => ({
         ...prevItem,
-        img: file,
+        image: file,
       }));
     } else {
       // If the change is in other input fields
@@ -259,85 +348,139 @@ export default function LandingPageEdit() {
     }
   };
 
+  // handle Edit Testimonial Submission
   const handleEditTestimonial = () => {
-    const updatedTestimonial = [...formData.testimonials];
+    const updatedTestimonial = [...formData.testimonial];
+    console.log("editTestimonial", editTestimonial);
     updatedTestimonial[editIndex] = editTestimonial;
     setFormData({
       ...formData,
-      testimonials: updatedTestimonial,
+      testimonial: updatedTestimonial,
     });
-
+    if (updatedTestimonial[editIndex]?.image) {
+      if (typeof updatedTestimonial[editIndex]?.image === "string") {
+        editTestimonialMethod(
+          {
+            description: updatedTestimonial[editIndex]?.description,
+            designation: updatedTestimonial[editIndex]?.designation,
+            fullName: updatedTestimonial[editIndex]?.fullName,
+            image: updatedTestimonial[editIndex]?.image,
+          },
+          updatedTestimonial[editIndex]?._id
+        )
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        addFile(updatedTestimonial[editIndex]?.image)
+          .then((res) => {
+            if (res?.status == 201) {
+              updatedTestimonial[editIndex].image = res?.data;
+              editTestimonialMethod(
+                {
+                  description: updatedTestimonial[editIndex]?.description,
+                  designation: updatedTestimonial[editIndex]?.designation,
+                  fullName: updatedTestimonial[editIndex]?.fullName,
+                  image: updatedTestimonial[editIndex]?.image,
+                },
+                updatedTestimonial[editIndex]?._id
+              )
+                .then((res) => {
+                  console.log("res", res);
+                })
+                .catch((err) => console.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+    // Close the edit modal
     handleCloseEditModal();
   };
 
-  // Function to open the edit modal
+  // Remove testimonial
+  const deleteTestimonial = (index) => {
+    const currentId = formData.testimonial[index]?._id;
+    removeTestimonialMethod(currentId).then((res) => {
+      if (res.status == 200) {
+        console.log("Removed Successfully");
+      }
+    });
+    const updatedTestimonials = formData.testimonial.filter(
+      (_, i) => i !== index
+    );
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      testimonial: updatedTestimonials,
+    }));
+  };
+
+  // Modal --------------------------------------------------------
+  // Open testimonial edit modal
   const handleOpenEditModal = (index) => {
-    console.log(index);
     setEditIndex(index);
-    console.log("d", formData.testimonials[index]);
-    setEditTestimonial(formData.testimonials[index]);
+    // console.log("d", formData.testimonial[index]);
+    setEditTestimonial(formData.testimonial[index]);
     setEditTestimonialModal(true);
   };
 
-  // Function to close the edit modal
+  // Close testimonial edit modal
   const handleCloseEditModal = () => {
     setEditTestimonialModal(false);
     setEditIndex(null);
     setEditTestimonial(null);
   };
-  //delete testimonial
-  const deleteTestimonial = (index) => {
-    const updatedTestimonials = formData.testimonials.filter(
-      (_, i) => i !== index
-    );
-    setFormData((prevData) => ({
-      ...prevData,
-      testimonials: updatedTestimonials,
-    }));
+
+  // Open Expertise Edit Modal
+  const handleOpenEditExpertiseModal = (index) => {
+    setEditIndex(index);
+    setEditExpertise(formData.expertise[index]);
+    setEditExpertiseModal(true);
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500,
-        onClose: () => navigate("/LandingPage"),
-      });
-    }, 1500);
-    if (!isModalOpenSocialLink) {
-      console.log(formData);
-    }
-  };
-  // expertise modal
-
-  //---------------------------------------------------------------
-
-  // Modal functions
-
-  // Expertise functions
+  // Expertise -----------------------------------------------------
+  // handle Add New Expertise Submission
   const handleAddExpertise = () => {
+    // Create new object
     const newItem = {
-      expertiseName: expertiseData?.expertiseName,
-      expertiseDescription: expertiseData?.expertiseDescription, // Corrected property name
-      expertiseImg: expertiseData?.expertiseImage,
+      name: expertiseData?.name,
+      description: expertiseData?.description,
+      image: expertiseData?.image,
     };
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      expertises: [...prevFormData.expertises, newItem],
-    }));
+    if (selectedFile) {
+      addFile(selectedFile)
+        .then((res) => {
+          // console.log("res", res);
+          if (res?.status == 201) {
+            newItem.image = res?.data;
+            addExpertiseMethod(newItem)
+              .then((res) => {
+                console.log("res", res);
+                // Add the new object to the array
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  expertise: [...prevFormData.expertise, res?.data],
+                }));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    // Close Modal
     closeExpertiseModal();
   };
 
+  // Edit Expertise Value Change
   const handleEditExpChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "img") {
+    if (name === "image") {
       // If the change is in the image input field
       const file = files[0];
       setEditExpertise((prevItem) => ({
         ...prevItem,
-        img: file,
+        image: file,
       }));
     } else {
       // If the change is in other input fields
@@ -348,42 +491,79 @@ export default function LandingPageEdit() {
     }
   };
 
+  // handle Edit Expertise Submission
   const handleEditExpertise = () => {
-    const updatedExpertises = [...formData.expertises];
+    const updatedExpertises = [...formData.expertise];
     updatedExpertises[editIndex] = editExpertise;
     setFormData({
       ...formData,
-      expertises: updatedExpertises,
+      expertise: updatedExpertises,
     });
+    if (updatedExpertises[editIndex]?.image) {
+      if (typeof updatedExpertises[editIndex]?.image === "string") {
+        editExpertiseMethod(
+          {
+            description: updatedExpertises[editIndex]?.description,
+            name: updatedExpertises[editIndex]?.name,
+            image: updatedExpertises[editIndex]?.image,
+          },
+          updatedExpertises[editIndex]?._id
+        )
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        addFile(updatedExpertises[editIndex]?.image)
+          .then((res) => {
+            if (res?.status == 201) {
+              updatedExpertises[editIndex].image = res?.data;
+              editExpertiseMethod(
+                {
+                  description: updatedExpertises[editIndex]?.description,
+                  name: updatedExpertises[editIndex]?.name,
+                  image: updatedExpertises[editIndex]?.image,
+                },
+                updatedExpertises[editIndex]?._id
+              )
+                .then((res) => {
+                  console.log("res", res);
+                })
+                .catch((err) => console.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+    // Close the edit modal
     closeEditExpertiseModal();
   };
 
-  const handleOpenEditExpertiseModal = (index) => {
-    setEditIndex(index);
-    setEditExpertise(formData.expertises[index]);
-    setEditExpertiseModal(true);
-  };
-
-  const handleCloseEditExpertiseModal = () => {
-    setEditExpertiseModal(false);
-    setEditIndex(null);
-    setEditExpertise(null);
-  };
-  //delete expertise
+  // Delete expertise
   const deleteExpertise = (index) => {
-    const updatedExpertises = formData.expertises.filter((_, i) => i !== index);
-    setFormData((prevData) => ({
-      ...prevData,
-      expertises: updatedExpertises,
+    const currentId = formData.expertise[index]?._id;
+    removeExpertiseMethod(currentId).then((res) => {
+      if (res.status == 200) {
+        console.log("Removed Successfully");
+      }
+    });
+    const updatedExpertises = formData.expertise.filter((_, i) => i !== index);
+    setFormData((prevFormData) => ({
+      ...prevFormData,
+      expertise: updatedExpertises,
     }));
   };
 
-  //---------------------------------------------------------------
-
   // Effect
   useEffect(() => {
-    setSocialLinks(formData.socialLinks);
-  }, [formData.socialLinks]);
+    setSocialLinks(formData?.intro?.socialLinks);
+  }, [formData?.intro?.socialLinks]);
+
+  useEffect(() => {
+    setWorkExperienceData(formData?.intro?.workExperience);
+  }, [formData?.intro?.workExperience]);
+
+  // console.log("formData", formData);
 
   return (
     <div className="w-full">
@@ -408,10 +588,10 @@ export default function LandingPageEdit() {
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
-              name="heroDescription"
+              name="intro.heroDescription"
               id="heroDescription"
               onChange={handleChange}
-              value={formData?.heroDescription}
+              value={formData?.intro?.heroDescription}
               placeholder="Hero Description"
             />
           </div>
@@ -422,10 +602,10 @@ export default function LandingPageEdit() {
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
-              name="footerDescription"
+              name="intro.footerDescription"
               id="footerDescription"
               onChange={handleChange}
-              value={formData?.footerDescription}
+              value={formData?.intro?.footerDescription}
               placeholder="footerdescription"
             />
           </div>
@@ -435,10 +615,10 @@ export default function LandingPageEdit() {
             <input
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
-              name="email"
+              name="intro.email"
               id="email"
               onChange={handleChange}
-              value={formData?.email}
+              value={formData?.intro?.email}
               placeholder="email"
             />
           </div>
@@ -448,10 +628,10 @@ export default function LandingPageEdit() {
             <input
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
-              name="phone"
+              name="intro.phone"
               id="phone"
               onChange={handleChange}
-              value={formData?.phone}
+              value={formData?.intro?.phone}
               placeholder="Phone"
             />
           </div>
@@ -462,10 +642,10 @@ export default function LandingPageEdit() {
             <input
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               type="text"
-              name="address"
+              name="intro.address"
               id="address"
               onChange={handleChange}
-              value={formData?.address}
+              value={formData?.intro?.address}
               placeholder="address"
             />
           </div>
@@ -504,11 +684,15 @@ export default function LandingPageEdit() {
               </div>
             </div>
             <div className="w-[100%] flex justify-center items-center">
-              <Button
+              <button
+                className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
+                type="button"
                 text={"Add Social Link"}
                 icon={<FaPlus />}
-                click={openModalSocialLink}
-              />
+                onClick={openModalSocialLink}
+              >
+                Add Social Link
+              </button>
             </div>
           </div>
           {/* Social link modal */}
@@ -560,8 +744,9 @@ export default function LandingPageEdit() {
                 type="text"
                 name="countries"
                 id="countries"
-                onChange={(e) => handleChangeExperience(e, "countries")}
-                value={formData?.workExperience?.countries}
+                // onChange={(e) => handleChangeExperience(e, "countries")}
+                onChange={handleUpdateFormData}
+                value={workExperienceData?.countries}
                 placeholder="Countries"
               />
             </div>
@@ -572,8 +757,9 @@ export default function LandingPageEdit() {
                 type="text"
                 name="expEmployees"
                 id="expEmployees"
-                onChange={(e) => handleChangeExperience(e, "expEmployees")}
-                value={formData?.workExperience?.expEmployees}
+                // onChange={(e) => handleChangeExperience(e, "expEmployees")}
+                onChange={handleUpdateFormData}
+                value={workExperienceData?.expEmployees}
                 placeholder="Employees"
               />
             </div>
@@ -584,8 +770,9 @@ export default function LandingPageEdit() {
                 type="text"
                 name="scrumTeams"
                 id="scrumTeams"
-                onChange={(e) => handleChangeExperience(e, "scrumTeams")}
-                value={formData?.workExperience?.scrumTeams}
+                // onChange={(e) => handleChangeExperience(e, "scrumTeams")}
+                onChange={handleUpdateFormData}
+                value={workExperienceData?.scrumTeams}
                 placeholder="Scrum Teams"
               />
             </div>
@@ -596,8 +783,9 @@ export default function LandingPageEdit() {
                 type="text"
                 name="fullStackDev"
                 id="fullStackDev"
-                onChange={(e) => handleChangeExperience(e, "fullStackDev")}
-                value={formData?.workExperience?.fullStackDev}
+                // onChange={(e) => handleChangeExperience(e, "fullStackDev")}
+                onChange={handleUpdateFormData}
+                value={workExperienceData?.fullStackDev}
                 placeholder="Full Stack Developers"
               />
             </div>
@@ -616,10 +804,10 @@ export default function LandingPageEdit() {
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="aboutDescription"
+            name="about.description"
             id="aboutDescription"
             onChange={handleChange}
-            value={formData?.aboutDescription}
+            value={formData?.about?.description}
             placeholder="About Description"
           />
         </div>
@@ -637,23 +825,34 @@ export default function LandingPageEdit() {
             <div className="w-full flex flex-row justify-start  border border-dashed border-custom-purple rounded-lg p-4">
               {formData.offshoreComparison.map((comparison, index) => (
                 <div key={index} className="w-full flex flex-col gap-6 mb-4 ">
-                  <div className="flex justify-between items-center ml-1">
-                    {/* Render type with edit and delete buttons */}
-                    <h3 className="text-lg font-semibold">{comparison.type}</h3>
-                    <div className="flex items-center gap-2"></div>
-                  </div>
-                  <div>
-                    {comparison.comparisons.map((advantage, idx) => (
-                      <div key={idx} className="flex justify-start ml-6  ">
-                        <ul
-                          className="text-webDescrip flex   gap-2"
-                          style={{ listStyle: "unset" }}
-                        >
-                          <li> {advantage}</li>{" "}
-                        </ul>
-                      </div>
-                    ))}
-                  </div>
+                  {comparison?.offshoreType?.map((items) => {
+                    return (
+                      <>
+                        <div className="flex justify-between items-center ml-1">
+                          {/* Render type with edit and delete buttons */}
+                          <h3 className="text-lg font-semibold">
+                            {items.type}
+                          </h3>
+                          <div className="flex items-center gap-2"></div>
+                        </div>
+                        <div>
+                          {items.comparison.map((advantage, idx) => (
+                            <div
+                              key={idx}
+                              className="flex justify-start ml-6  "
+                            >
+                              <ul
+                                className="text-webDescrip flex   gap-2"
+                                style={{ listStyle: "unset" }}
+                              >
+                                <li> {advantage}</li>{" "}
+                              </ul>
+                            </div>
+                          ))}
+                        </div>
+                      </>
+                    );
+                  })}
                 </div>
               ))}
             </div>
@@ -685,7 +884,7 @@ export default function LandingPageEdit() {
 
           {/* Table */}
           <Testimonials
-            data={formData?.testimonials}
+            data={formData?.testimonial}
             open={openEditTestModal}
             close={closeEditTestModal}
             deleteTestimonial={deleteTestimonial}
@@ -694,7 +893,7 @@ export default function LandingPageEdit() {
           {/*  */}
           {isModalOpen ? (
             <CreateModal
-              handleImageUpload={handleImageUpload}
+              handleImageUpload={handleFileChange}
               handleChange={handleInputChange}
               closeModal={closeModal}
               handleAddTestimonial={handleAddTestimonial}
@@ -706,7 +905,6 @@ export default function LandingPageEdit() {
 
           {editTestimonialModal ? (
             <EditTestModal
-              handleImageUpload={handleImageUpload}
               handleChange={handleEditInputChange}
               closeModal={closeEditTestModal}
               handleEditTestimonial={handleEditTestimonial}
@@ -733,7 +931,7 @@ export default function LandingPageEdit() {
             </button>
           </div>
           <Expertises
-            data={formData?.expertises}
+            data={formData?.expertise}
             open={openEditExpertiseModal}
             close={closeEditExpertiseModal}
             deleteExpertise={deleteExpertise}
@@ -741,7 +939,7 @@ export default function LandingPageEdit() {
           />
           {isExpertiseModalOpen ? (
             <CreateExpertiseModal
-              handleImageUpload={handleExpertiseImageUpload}
+              handleImageUpload={handleFileChange}
               handleChange={handleExpChange}
               closeModal={closeExpertiseModal}
               handleAddExpertise={handleAddExpertise}
@@ -752,7 +950,6 @@ export default function LandingPageEdit() {
           )}
           {editExpertiseModal ? (
             <EditExpertiseModal
-              handleImageUpload={handleExpertiseImageUpload}
               handleChange={handleEditExpChange}
               closeModal={closeEditExpertiseModal}
               handleEditExpertise={handleEditExpertise}

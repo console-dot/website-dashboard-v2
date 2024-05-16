@@ -1,14 +1,18 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
+import { editFaq, getFaq } from "../../api";
 
 export const FaqPage = () => {
-  const [formData, setFormData] = useState([
-    {
-      question: 'What do you mean by "Figma assets"?',
-      answer:
-        "You will have access to download the full Figma project including all of the pages, the components, responsive pages, and also the icons, illustrations, and images included in the screens.",
-    },
-  ]);
+  const [formData, setFormData] = useState([]);
+
+  useEffect(() => {
+    // console.log("newData", newData);
+    getFaq()
+      .then((res) => {
+        setFormData(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
+  }, []);
 
   const [editingIndex, setEditingIndex] = useState(null);
 
@@ -24,12 +28,28 @@ export const FaqPage = () => {
       if (editingIndex !== null) {
         const updatedQuestions = [...formData];
         updatedQuestions[editingIndex] = { question, answer };
-        setFormData(updatedQuestions);
+        // Call Api
+        editFaq({ data: updatedQuestions })
+          .then((res) => {
+            console.log("res", res);
+            setFormData(res?.data?.data);
+          })
+          .catch((err) => console.log(err));
+        // Set Form
+        // setFormData(updatedQuestions);
         setEditingIndex(null);
       } else {
         const newQuestion = { question, answer };
         const newQuestions = [...formData, newQuestion];
-        setFormData(newQuestions);
+        // Call Api
+        editFaq({ data: newQuestions })
+          .then((res) => {
+            console.log("res", res);
+            setFormData(res?.data?.data);
+          })
+          .catch((err) => console.log(err));
+        // set form
+        // setFormData(newQuestions);
       }
 
       questionInput.value = "";
@@ -39,7 +59,13 @@ export const FaqPage = () => {
 
   const deleteQuestion = (index) => {
     const updatedQuestions = formData.filter((_, i) => i !== index);
-    setFormData(updatedQuestions);
+    // Call Api
+    editFaq({ data: updatedQuestions })
+      .then((res) => {
+        console.log("res", res);
+        setFormData(res?.data?.data);
+      })
+      .catch((err) => console.log(err));
   };
 
   const editQuestion = (index) => {
@@ -49,7 +75,7 @@ export const FaqPage = () => {
     form.querySelector('[name="answer"]').value = question.answer;
     setEditingIndex(index);
   };
-  console.log(formData);
+
   return (
     <div className="w-full">
       <section className="bg-custom-white w-full">
