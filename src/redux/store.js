@@ -6,6 +6,10 @@ import blockChainSlice from "./blockChainSlice";
 import arvrSlice from "./arvrSlice";
 import uiuxSlice from "./uiuxSlice";
 import openpositionSlice from "./openpositionSlice";
+import offshoreserviceSlice from "./offshoreserviceSlice";
+import mobdevSlice from "./mobdevSlice";
+import webdevSlice from "./webdevSlice";
+import productresearchSlice from "./productresearchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -16,5 +20,9 @@ export const store = configureStore({
     arvr: arvrSlice,
     uiux: uiuxSlice,
     openPosition: openpositionSlice,
+    offshoreservice:offshoreserviceSlice,
+    mobdev: mobdevSlice, 
+    webdev:webdevSlice,
+    productresearch: productresearchSlice,
   },
 });

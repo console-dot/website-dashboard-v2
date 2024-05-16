@@ -1,17 +1,15 @@
 import React from "react";
 import { Button } from "../Button";
 import { FaEye, FaPen } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook to handle navigation
+import { useNavigate } from "react-router-dom";
 
 export const OffshoringCard = ({ data }) => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   return (
     <div className="bg-dark rounded border-secondary text-white p-4 mb-4">
       <div className="mb-4">
-        <h1 className="text-heading text-xl font-bold">
-          Offshoring Services Model
-        </h1>
+        <h1 className="text-heading text-xl font-bold">Offshoring Services Model</h1>
         <div className="mb-2">
           <strong style={{ color: "grey" }}>Top Description:</strong>
           <p className="text-black text-sm">{data?.topDescription}</p>
@@ -21,25 +19,19 @@ export const OffshoringCard = ({ data }) => {
           <p className="text-black text-sm">{data?.bottomDescription}</p>
         </div>
       </div>
-      {/* Map through each offShoreType */}
-      {data?.offShoreType.map((offShoreType, index) => (
-        <div
-          key={index}
-          className="w-full flex flex-col gap-2 border border-dashed mb-2 p-2 border-custom-purple"
-        >
-          <h2 className="text-heading text-lg font-bold mb-2">
-            Type: {offShoreType.name}
-          </h2>
+      {data?.offshoreType.map((offshoreType, index) => ( // Fixed typo in data property name
+        <div key={index} className="w-full flex flex-col gap-2 border border-dashed mb-2 p-2 border-custom-purple">
+          <h2 className="text-heading text-lg font-bold mb-2">Type: {offshoreType.type}</h2>
           <div className="flex flex-wrap">
             <div className="w-full md:w-1/2 lg:w-1/3 mb-4 px-2">
               <strong style={{ color: "grey" }}>Description:</strong>
-              <p className="text-black text-sm">{offShoreType.description}</p>
+              <p className="text-black text-sm">{offshoreType.description}</p> {/* Fixed property name */}
             </div>
             <div className="w-full md:w-1/2 lg:w-1/3 mb-4 px-2">
               <strong style={{ color: "grey" }}>Advantages:</strong>
               <ul className="text-black text-sm" style={{ listStyle: "unset" }}>
-                {offShoreType.advantages &&
-                  offShoreType.advantages.map((advantage, index) => (
+                {offshoreType.advantages &&
+                  offshoreType.advantages.map((advantage, index) => (
                     <li key={index}>{advantage}</li>
                   ))}
               </ul>
@@ -47,8 +39,8 @@ export const OffshoringCard = ({ data }) => {
             <div className="w-full md:w-1/2 lg:w-1/3 mb-4 px-2">
               <strong style={{ color: "grey" }}>Comparison:</strong>
               <ul className="text-black text-sm" style={{ listStyle: "unset" }}>
-                {offShoreType.comparison &&
-                  offShoreType.comparison.map((comparison, index) => (
+                {offshoreType.comparison &&
+                  offshoreType.comparison.map((comparison, index) => (
                     <li key={index}>{comparison}</li>
                   ))}
               </ul>
@@ -61,8 +53,7 @@ export const OffshoringCard = ({ data }) => {
           icon={<FaPen />}
           text={"Edit"}
           click={() => {
-            // Replace :id with the actual ID of the item if applicable
-            navigate(`/OffshoringPage/edit/:id`);
+            navigate(`/OffshoringPage/edit/${data?._id}`); {/* Fixed navigation path */}
           }}
         />
         <Button text={"View"} icon={<FaEye />} />

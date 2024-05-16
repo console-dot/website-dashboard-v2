@@ -19,7 +19,7 @@ export const mobdevSlice = createSlice({
 export const { setmobdevData, resetmobdevdata } = mobdevSlice.actions;
 
 // Selectors
-export const selectmobdevDetails = (state) => state.mobdev.aiData;
+export const selectmobdevDetails = (state) => state.mobdev.mobdevData;
 
 // The reducer
-export default mobdevSlice.reducer;
+export default mobdevSlice.reducer; 

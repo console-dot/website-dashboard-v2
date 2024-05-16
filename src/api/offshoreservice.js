@@ -3,10 +3,11 @@ import config from "./config";
 
 const BASE_URL = config.BASE_URL;
 
-export const getWebDevelopment = () => {
-  const token = localStorage.getItem("@dashboard-token");
+
+export const getoffshoreservicepage = () => {
+    const token = localStorage.getItem("@dashboard-token");
   return axios
-    .get(`${BASE_URL}/web-dev/6641f633464855376ec0a145`, {
+    .get(`${BASE_URL}/offshoringService/6641ad8aee9301ec9cb857fe`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,
@@ -20,10 +21,11 @@ export const getWebDevelopment = () => {
     .catch((err) => console.log(err));
 };
 
-export const editWebDevelopment = (values, id) => {
+
+export const editoffshoreservicepage = (values, id) => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .put(`${BASE_URL}/web-dev/${id}`, values, {
+    .put(`${BASE_URL}/offshoringService/${id}`, values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,
@@ -36,3 +38,4 @@ export const editWebDevelopment = (values, id) => {
     })
     .catch((err) => console.log(err));
 };
+

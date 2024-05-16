@@ -20,19 +20,15 @@ export const getMobDevelopment = () => {
     .catch((err) => console.log(err));
 };
 
-export const editMobDevelopment = (values) => {
-  const token = localStorage.getItem("@dashboard-token");
+export const editMobDevelopment = (values, id) => {
+  const token = localStorage.getItem("@dashboard-token"); 
   return axios
-    .put(
-      `${BASE_URL}/mob-dev/6641fa2d67b384de50e10bf4`,
-      values,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "JWT " + token,
-        },
-      }
-    )
+    .put(`${BASE_URL}/mob-dev/${id}`, values, {
+      headers: {
+        "Content-Type": "application/json", 
+        Authorization: "JWT " + token,
+      },
+    })
     .then((res) => {
       if (res?.data?.token)
         localStorage.setItem("@dashboard-token", res?.data?.token);
@@ -40,3 +36,4 @@ export const editMobDevelopment = (values) => {
     })
     .catch((err) => console.log(err));
 };
+
