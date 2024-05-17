@@ -24,7 +24,7 @@ export default function MobileAppPageEdit() {
     techStack: {
       name: "",
       type: "",
-      image: null, // Assuming img is initially null
+      image: null, 
     },
   });
   const navigate = useNavigate();
@@ -102,14 +102,12 @@ export default function MobileAppPageEdit() {
   const handleEditInputChange = (e) => {
     const { name, value, files } = e.target;
     if (name === "image") {
-      // If the change is in the image input field
       const file = files[0];
       setEditItem((prevItem) => ({
         ...prevItem,
         image: file,
       }));
     } else {
-      // If the change is in other input fields
       setEditItem((prevItem) => ({
         ...prevItem,
         [name]: value,
@@ -158,7 +156,6 @@ export default function MobileAppPageEdit() {
           .catch((err) => console.log(err));
       }
     }
-    // Close the edit modal
     handleCloseEditModal();
   };
   const handleCloseEditModal = () => {
@@ -189,13 +186,11 @@ export default function MobileAppPageEdit() {
     if (selectedFile) {
       addFile(selectedFile)
         .then((res) => {
-          // console.log("res", res);
           if (res?.status == 201) {
             newTechStackItem.image = res?.data;
             addTechStack(newTechStackItem)
               .then((res) => {
                 console.log("res", res);
-                // Add the new object to the techStack array
                 setFormData((prevFormData) => ({
                   ...prevFormData,
                   techStack: [...prevFormData.techStack, res?.data],
