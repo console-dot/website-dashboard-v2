@@ -1,13 +1,15 @@
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
+import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
 import Modal from "react-modal";
 import { ToastContainer, toast } from "react-toastify";
-import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
-import { useDispatch, useSelector } from "react-redux";
-import { selectproductresearchDetails, setproductresearchData } from "../../redux/productresearchSlice";
-import { editproductresearchpage } from "../../api/productresearch";
+import { RiLoader3Line } from "react-icons/ri";
+import { useSelector } from "react-redux";
+import { selectproductresearchDetails } from "../../redux/productresearchSlice";
+
 import WhyChooseUs from "./WhyChooseUs";
 
+// Define modal styles
 const customModalStyles = {
   content: {
     top: "50%",
@@ -18,54 +20,94 @@ const customModalStyles = {
     transform: "translate(-50%, -50%)",
   },
 };
+// const data = [
+//   {
+//     description:
+//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
+//     keyComponents: [
+//       { heading: "Market Analysis", points:["lorem42", "lorem20"]  },
+//       { heading: "Client", points:["lorem42", "lorem20"]  },
+//       { heading: "Feasibility", points:["lorem42", "lorem20"]  },
+//       { heading: "Road Map", points:["lorem42", "lorem20"]  },
+//     ],
+//     whyChoose: [
+//       {
+//         name: "Holistic",
+//         description: " sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+//         image: "console_erp_image.jpg"
+//       },
+//       {
+//         name: "SaaS by ConsoleDot",
+//         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+//         image: "SaaSbyonsoleDot.jpg"
+//       },
+//       {
+//         name: "ConsoleDot MVP",
+//         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
+//         image: "console_mvp_image.jpg"
+//       },
+
+//     ],
+//   },
+// ];
 
 export default function ProductResearchPageEdit() {
-  const [isLoading, setIsLoading] = useState(false);
-  const [formData, setFormData] = useState({});
-  const [whyChooseUs, setWhyChooseUs] = useState([]);
-  const productresearchData = useSelector(selectproductresearchDetails);
-  const navigate = useNavigate();
-  const dispatch = useDispatch();
+  const prData = useSelector(selectproductresearchDetails);
+  const [formData, setFormData] = useState(prData);
+  const [whyChooseUs, setWhyChooseUs] = useState(prData.whyChooseUs);
 
-// Initialize form data on component mount
-useEffect(() => {
-  if (productresearchData) {
-    setFormData(productresearchData);
-    setWhyChooseUs(productresearchData.whyChooseUs || []); // Ensure whyChooseUs is not null
-  }
-}, [productresearchData]);
-console.log(productresearchData, "productresearchData");
-
- 
-
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    editproductresearchpage(formData, formData._id)
-      .then((res) => {
-        dispatch(setproductresearchData(res.data));
-        setIsLoading(false);
-        toast.success("Form submitted", {
-          autoClose: 1500,
-          onClose: () => navigate("/ai"),
-        });
-      })
-      .catch((err) => {
-        setIsLoading(false);
-        toast.error("Failed to submit form");
-        console.log(err);
-      });
-  };
-
-  const handleChange = (e) => {
-    const { name, value } = e.target;
-    setFormData({ ...formData, [name]: value });
-  };
-
+  const [modalIsOpen, setIsOpen] = useState(false);
+  const [currentComponentIndex, setCurrentComponentIndex] = useState(null);
+  const [currentPointIndex, setCurrentPointIndex] = useState(null);
+  const cardLabels = [
+    "Holistic Approach",
+    "Proven Success",
+    "Strategic Partnership",
+  ];
   const handleWhyChooseUs = (index, event) => {
     const updatedWhyChooseUs = [...whyChooseUs];
     updatedWhyChooseUs[index] = event.target.value;
     setWhyChooseUs(updatedWhyChooseUs);
+  };
+  const handleChange = (e, index, pointIndex) => {
+    const { value } = e.target;
+    const keyComponents = [...formData.keyComponents];
+    keyComponents[index].points[pointIndex] = value;
+    setFormData({
+      ...formData,
+      keyComponents: keyComponents,
+    });
+  };
+  const handleWhyChooseChange = (descriptions) => {
+    setFormData({
+      ...formData,
+      whyChoose: descriptions,
+    });
+  };
+  const openModal = (index, pointIndex) => {
+    setCurrentComponentIndex(index);
+    setCurrentPointIndex(pointIndex);
+    setIsOpen(true);
+  };
+
+  const closeModal = () => {
+    setIsOpen(false);
+  };
+  const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    setTimeout(() => {
+      setIsLoading(false);
+      toast.success("Form submitted", {
+        autoClose: 1500, // close after 1.5 seconds
+        onClose: () => navigate("/productResearch"), // navigate after closing
+      });
+    }, 1500);
+
+    console.log(formData);
+    // Dispatch or handle form submission logic here
   };
 
   return (
@@ -75,47 +117,256 @@ console.log(productresearchData, "productresearchData");
         method="post"
         onSubmit={handleSubmit}
       >
+        {/* Custom Service Model */}
         <div>
-          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center">
+          <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Product Research Edit
           </h1>
+          {/* Description */}
           <label className="text-webDescrip font-semibold">Description</label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
             name="description"
-            onChange={handleChange}
-            value={formData.description || ""}
+            onChange={(e) =>
+              setFormData({ ...formData, description: e.target.value })
+            }
+            value={formData.description}
             placeholder="Custom Service Description"
           />
-          <div className="border border-dashed border-custom-purple p-4 mt-6">
-            <label className="text-webDescrip font-semibold text-[20px] mx-auto text-center">
+          {/* Key Components */}
+          <div className="border border-dashed border-custom-purple p-4 mt-6 ">
+            <label className="text-webDescrip font-semibold text-[20px] mx-auto text-center ">
               Key Points
             </label>
-            {/* Key Components */}
-            {/* Your key components rendering logic here */}
+            {formData.keyComponents.map((component, index) => (
+              <div key={index}>
+                {console.log(component.client[0], "lalsl")}
+                <div className="mt-4">
+                  <label className="text-webDescrip font-semibold">
+                    Client
+                  </label>
+                  <div className="flex gap-2 ">
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point1"
+                      onChange={(e) => handleChange(e, index, 0)}
+                      value={component.client[0]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point2"
+                      onChange={(e) => handleChange(e, index, 1)}
+                      value={component.client[1]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between ">
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 0)}
+                  >
+                    Edit{" "}
+                  </button>
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 1)}
+                  >
+                    Edit{" "}
+                  </button>
+                </div>
+              </div>
+            ))}
+            {formData.keyComponents.map((component, index) => (
+              <div key={index}>
+                {console.log(component.marketAnalysis[0], "lalsl")}
+                <div className="mt-4">
+                  <label className="text-webDescrip font-semibold">
+                    Market Analysis
+                  </label>
+                  <div className="flex gap-2 ">
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point1"
+                      onChange={(e) => handleChange(e, index, 0)}
+                      value={component.marketAnalysis[0]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point2"
+                      onChange={(e) => handleChange(e, index, 1)}
+                      value={component.marketAnalysis[1]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between ">
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 0)}
+                  >
+                    Edit{" "}
+                  </button>
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 1)}
+                  >
+                    Edit{" "}
+                  </button>
+                </div>
+              </div>
+            ))}{" "}
+            {formData.keyComponents.map((component, index) => (
+              <div key={index}>
+                {console.log(component.feasibility[0], "lalsl")}
+                <div className="mt-4">
+                  <label className="text-webDescrip font-semibold">
+                    Feasibility
+                  </label>
+                  <div className="flex gap-2 ">
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point1"
+                      onChange={(e) => handleChange(e, index, 0)}
+                      value={component.feasibility[0]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point2"
+                      onChange={(e) => handleChange(e, index, 1)}
+                      value={component.feasibility[1]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between ">
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 0)}
+                  >
+                    Edit{" "}
+                  </button>
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 1)}
+                  >
+                    Edit{" "}
+                  </button>
+                </div>
+              </div>
+            ))}{" "}
+            {formData.keyComponents.map((component, index) => (
+              <div key={index}>
+                {console.log(component.client[0], "lalsl")}
+                <div className="mt-4">
+                  <label className="text-webDescrip font-semibold">
+                    Road Map
+                  </label>
+                  <div className="flex gap-2 ">
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point1"
+                      onChange={(e) => handleChange(e, index, 0)}
+                      value={component.roadMap[0]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                    <textarea
+                      className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                      type="text"
+                      name="point2"
+                      onChange={(e) => handleChange(e, index, 1)}
+                      value={component.roadMap[1]}
+                      placeholder={`Point 1 for`}
+                      disabled
+                    />
+                  </div>
+                </div>
+
+                <div className="flex justify-between ">
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 0)}
+                  >
+                    Edit{" "}
+                  </button>
+                  <button
+                    className="text-sm bg-green-700  py-1 px-[20px]  text-white"
+                    onClick={() => openModal(index, 1)}
+                  >
+                    Edit{" "}
+                  </button>
+                </div>
+              </div>
+            ))}
           </div>
-          <div className="border border-dashed border-custom-purple p-4 mt-6">
-            <label className="text-webDescrip font-semibold text-[20px] mx-auto">
+          {/* Why Choose Section */}
+          <div className="border border-dashed border-custom-purple p-4 mt-6 ">
+            <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
             </label>
             <WhyChooseUs
               data={whyChooseUs}
-              minCards={3}
-              maxCards={3}
+              minCards={4}
+              maxCards={4}
               onChange={handleWhyChooseUs}
-              cardLabels={[
-                "Holistic Approach",
-                "Proven Success",
-                "Strategic Partnership",
-              ]}
+              cardLabels={cardLabels}
             />
           </div>
         </div>
+
+        {/* Modal for editing points */}
+        <Modal
+          isOpen={modalIsOpen}
+          onRequestClose={closeModal}
+          style={customModalStyles}
+          contentLabel="Edit Point Modal"
+        >
+          <div className="flex flex-col justify-center items-center">
+            <h2 className="text-lg font-semibold">Edit Point</h2>
+            <textarea
+              type="text"
+              className="w-full bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              value={
+                formData.keyComponents[currentComponentIndex]?.points[
+                  currentPointIndex
+                ]
+              }
+              onChange={(e) =>
+                handleChange(e, currentComponentIndex, currentPointIndex)
+              }
+            />
+            <button className="text-sm text-red-600 mt-2" onClick={closeModal}>
+              Close
+            </button>
+          </div>
+        </Modal>
+
         {/* Submit button */}
         <div className="w-full flex justify-center items-center mt-4 mb-4">
           <button
             type="submit"
+            onClick={handleSubmit}
             disabled={isLoading}
             className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
           >
