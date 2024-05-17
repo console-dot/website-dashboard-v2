@@ -12,14 +12,15 @@ export const getOpenPosition = async () => {
         Authorization: "JWT " + token,
       },
     });
-    if (res.data.token) localStorage.setItem("@dashboard-token", res.data.token);
+    if (res.data.token)
+      localStorage.setItem("@dashboard-token", res.data.token);
     return res.data;
   } catch (error) {
     console.log(error);
   }
 };
 //api to edit that particular id in db
-export const editOpenPosition = async (id, values) => {
+export const editOpenPosition = async (values, id) => {
   try {
     const token = localStorage.getItem("@dashboard-token");
     const res = await axios.put(`${BASE_URL}/open-positions/${id}`, values, {
@@ -28,7 +29,8 @@ export const editOpenPosition = async (id, values) => {
         Authorization: "JWT " + token,
       },
     });
-    if (res.data.token) localStorage.setItem("@dashboard-token", res.data.token);
+    if (res.data.token)
+      localStorage.setItem("@dashboard-token", res.data.token);
     return res.data;
   } catch (error) {
     console.log(error);
@@ -44,23 +46,25 @@ export const deleteOpenPosition = async (id) => {
         Authorization: "JWT " + token,
       },
     });
-    if (res.data.token) localStorage.setItem("@dashboard-token", res.data.token);
+    if (res.data.token)
+      localStorage.setItem("@dashboard-token", res.data.token);
     return res.data;
   } catch (error) {
     console.log(error);
   }
 };
 
-export const addPosition = async (newPosition) => {
+export const addPosition = async (values) => {
   try {
     const token = localStorage.getItem("@dashboard-token");
-    const res = await axios.post(`${BASE_URL}/open-positions`, newPosition, {
+    const res = await axios.post(`${BASE_URL}/open-positions`, values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,
       },
     });
-    if (res.data.token) localStorage.setItem("@dashboard-token", res.data.token);
+    if (res.data.token)
+      localStorage.setItem("@dashboard-token", res.data.token);
     return res.data;
   } catch (error) {
     console.log(error);
