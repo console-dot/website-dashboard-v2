@@ -7,6 +7,7 @@ import arvrSlice from "./arvrSlice";
 import uiuxSlice from "./uiuxSlice";
 import openpositionSlice from "./openpositionSlice";
 import landingPageSlice from "./landingPageSlice";
+import customServiceSlice from "./customServiceSlice";
 
 export const store = configureStore({
   reducer: {
@@ -18,5 +19,6 @@ export const store = configureStore({
     uiux: uiuxSlice,
     openPosition: openpositionSlice,
     landingPage: landingPageSlice,
+    customService: customServiceSlice,
   },
 });

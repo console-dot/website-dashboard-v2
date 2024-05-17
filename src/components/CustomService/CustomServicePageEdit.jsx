@@ -1,49 +1,55 @@
 import React, { useState } from "react";
-import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
+import {
+  selectCustomServiceDetails,
+  setCustomServiceData,
+} from "../../redux/customServiceSlice";
+import { useDispatch, useSelector } from "react-redux";
+import WhyChooseUs from "./WhyChooseUs";
+import { editCustomService } from "../../api/customservice";
 
 export default function CustomServicePageEdit() {
-  const data = [
-    {
-      description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-      Proposition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-      whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-      whyChoose: [
-        {
-          name: "ConsoleDot ERP",
-          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-          image: "console_erp_image.jpg"
-        },
-        {
-          name: "SaaS by ConsoleDot",
-          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-          image: "SaaSbyonsoleDot.jpg"
-        },
-        {
-          name: "ConsoleDot MVP",
-          description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-          image: "console_mvp_image.jpg"
-        }
-       
-      ],
-      delivers: { actionDesc: "facebook", collabDesc: "youtube" }
-    }
-  ];
-
-  const [formData, setFormData] = useState(data[0]);
-  const cardLabels = ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"];
+  const customSData = useSelector(selectCustomServiceDetails);
   const [isLoading, setIsLoading] = useState(false);
+  const [formData, setFormData] = useState(customSData);
+  const [whyChooseUs, setWhyChooseUs] = useState(customSData.whyChooseUs);
+  const cardLabels = ["ConsoleDot ERP", "SaaS by ConsoleDot", "ConsoleDot MVP"];
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
-  const handleWhyChooseChange = (descriptions) => {
-    setFormData({
-      ...formData,
-      whyChoose: descriptions,
-    });
+  // Handle Submit
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const newForm = {
+      delivers: formData?.delivers,
+      description: formData?.description,
+      proposition: formData?.proposition,
+      whyChooseDes: formData?.whyChooseDes,
+      whyChooseUs: whyChooseUs,
+    };
+
+    if (customSData?._id) {
+      editCustomService(newForm, customSData?._id)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setCustomServiceData(res?.data));
+        })
+        .catch((err) => console.log(err));
+      // Timeout
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500, // close after 1.5 seconds
+          onClose: () => navigate("/customSoftware"), // navigate after closing
+        });
+      }, 1500);
+    }
   };
 
+  // Handle form values
   const handleChange = (e) => {
     const { name, value } = e.target;
     if (name.includes("delivers.")) {
@@ -63,20 +69,11 @@ export default function CustomServicePageEdit() {
     }
   };
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500, // close after 1.5 seconds
-        onClose: () => navigate("/customSoftware"), // navigate after closing
-      });
-    }, 1500);
-
-    console.log(formData);
-    // dispatch(LandingPageEdit(formData));
-    // navigate("/landingPage");
+  // handle why choose us
+  const handleWhyChooseUs = (index, event) => {
+    const updatedWhyChooseUs = [...whyChooseUs];
+    updatedWhyChooseUs[index] = event.target.value;
+    setWhyChooseUs(updatedWhyChooseUs);
   };
 
   return (
@@ -98,17 +95,17 @@ export default function CustomServicePageEdit() {
             name="description"
             id="description"
             onChange={handleChange}
-            value={formData.description}
+            value={formData?.description}
             placeholder="Custom Service Description"
           />
           <div className="mt-4">
             <label className="text-webDescrip font-semibold">Proposition</label>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="Proposition"
-              id="Proposition"
+              name="proposition"
+              id="proposition"
               onChange={handleChange}
-              value={formData.Proposition}
+              value={formData?.proposition}
               placeholder="Custom Service Proposition"
             />
           </div>
@@ -118,10 +115,10 @@ export default function CustomServicePageEdit() {
             </label>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="whychooseDesc"
-              id="whychooseDesc"
+              name="whyChooseDes"
+              id="whyChooseDes"
               onChange={handleChange}
-              value={formData.whychooseDesc}
+              value={formData?.whyChooseDes}
               placeholder="Custom Service Why Choose Description"
             />
           </div>
@@ -129,11 +126,11 @@ export default function CustomServicePageEdit() {
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
             </label>
-            <WhyChooseSection
-              descriptions={formData.whyChoose}
-              minCards={3}
-              maxCards={3}
-              onChange={handleWhyChooseChange}
+            <WhyChooseUs
+              data={whyChooseUs}
+              minCards={4}
+              maxCards={4}
+              onChange={handleWhyChooseUs}
               cardLabels={cardLabels}
             />
           </div>
@@ -148,10 +145,10 @@ export default function CustomServicePageEdit() {
             </label>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="delivers.actionDesc"
+              name="delivers.actionDescription"
               id="actionDesc"
               onChange={handleChange}
-              value={formData.delivers.actionDesc}
+              value={formData?.delivers?.actionDescription}
               placeholder="Expertise in Action"
             />
           </div>
@@ -161,10 +158,10 @@ export default function CustomServicePageEdit() {
             </label>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="delivers.collabDesc"
+              name="delivers.collabDescription"
               id="collabDesc"
               onChange={handleChange}
-              value={formData.delivers.collabDesc}
+              value={formData?.delivers?.collabDescription}
               placeholder="Collaborative Ingenuity"
             />
           </div>

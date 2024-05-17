@@ -3,37 +3,13 @@ import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { CustomServiceCard } from "./CustomServiceCard";
 import { getcustomservicepage } from "../../api/customservice";
-
-// const data = [
-//   {
-//     description: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-//     Proposition: "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-//     whychooseDesc: "Lorem ipsum dolor, sit amet consectetur adipisicing elit.",
-//     whyChoose: [
-//       {
-//         name: "ConsoleDot ERP",
-//         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "console_erp_image.jpg"
-//       },
-//       {
-//         name: "SaaS by ConsoleDot",
-//         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "SaaSbyonsoleDot.jpg"
-//       },
-//       {
-//         name: "ConsoleDot MVP",
-//         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "console_mvp_image.jpg"
-//       },
-
-//     ],
-//     delivers: { actionDesc: "facebook", collabDesc: "youtube" }
-//   }
-// ];
+import { useDispatch } from "react-redux";
+import { setCustomServiceData } from "../../redux/customServiceSlice";
 
 export const CustomServicePage = () => {
   const [data, setData] = useState();
   const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const onView = (id) => {
     navigate(`view/${id}`);
@@ -41,10 +17,13 @@ export const CustomServicePage = () => {
 
   useEffect(() => {
     getcustomservicepage()
-      .then((res) => setData(res?.data))
+      .then((res) => {
+        setData(res?.data);
+        dispatch(setCustomServiceData(res?.data));
+      })
       .catch((err) => console.log(err));
   }, []);
-  console.log("data", data);
+
   return (
     <>
       <div
