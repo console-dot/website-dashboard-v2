@@ -69,7 +69,7 @@ export const ProductResearchCard = ({ data }) => {
                       <div className="option-description text-gray-500">
                         {data?.keyComponents[0]?.marketAnalysis[0]}
                         <br />
-                        {data?.keyComponents[0]?.marketAnalysis[1]} 
+                        {data?.keyComponents[0]?.marketAnalysis[1]}
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -85,22 +85,27 @@ export const ProductResearchCard = ({ data }) => {
                   </div>
 
                   <strong style={{ color: "grey" }}>Why Choose Us:</strong>
-                  <div className="w-full flex flex-row flex-wrap justify-center ">
+                  <div className="w-full flex flex-row flex-wrap justify-center">
                     {data?.whyChooseUs.map((option, index) => (
-                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4 w-[20%]">
-                        <h3 className="option-title text-gray-500 text-lg font-semibold">
-                          {cardLabels[index]}
-                          {" :"}
+                      <div className="block w-[30%] h-[30%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4">
+                        <h3
+                          className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
+                          style={{ height: "20px" }}
+                        >
+                          {cardLabels[index]}:
                         </h3>
-                        <p className="option-description text-gray-500">
-                          {" "}
+                        <p
+                          className="option-description text-gray-500 text-center mb-4"
+                          style={{ height: "100px" }}
+                        >
                           {option}
                         </p>
-                        <div className="w-full flex justify-center items-center mt-2">
+                        <div
+                          className="w-full flex justify-center items-center"
+                          style={{ height: "20px" }}
+                        >
                           <img
-                            src={
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
-                            }
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
                             alt={option.name}
                             className="option-image w-8 h-8"
                           />
