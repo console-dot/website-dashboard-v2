@@ -1,5 +1,5 @@
 import React, { useState } from "react";
-import WhyChooseUs from "./WhyChooseUs"
+import WhyChooseUs from "./WhyChooseUs";
 import { useNavigate } from "react-router-dom";
 import { RiLoader3Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
@@ -24,7 +24,7 @@ export default function MobileAppPageEdit() {
     techStack: {
       name: "",
       type: "",
-      image: null, 
+      image: null,
     },
   });
   const navigate = useNavigate();
@@ -54,8 +54,8 @@ export default function MobileAppPageEdit() {
       setTimeout(() => {
         setIsLoading(false);
         toast.success("Form submitted", {
-          autoClose: 1500, 
-          onClose: () => navigate("/mobileApp"), 
+          autoClose: 1500,
+          onClose: () => navigate("/mobileApp"),
         });
       }, 1500);
     }
@@ -363,7 +363,9 @@ export default function MobileAppPageEdit() {
               ) : null
             )}
             {/* CI/CD */}
-            <div className="w-full text-webDescrip font-semibold">Cloud Services</div>
+            <div className="w-full text-webDescrip font-semibold">
+              Cloud Services
+            </div>
             {formData?.techStack?.map((item, index) =>
               item?.type === "Cloud Services" ? (
                 <div className="w-full flex" key={item.name}>
@@ -390,7 +392,9 @@ export default function MobileAppPageEdit() {
               ) : null
             )}
             {/* VCS */}
-            <div className="w-full text-webDescrip font-semibold">Version Control System</div>
+            <div className="w-full text-webDescrip font-semibold">
+              Version Control System
+            </div>
             {formData?.techStack?.map((item, index) =>
               item?.type === "VCS" ? (
                 <div className="w-full flex" key={item.name}>
@@ -516,11 +520,10 @@ export default function MobileAppPageEdit() {
                 />
               </div>
             </div>
-            <div>
+            <div className="mt-4 flex gap-2 justify-center">
               <button
-                type="button"
+                className="text-white btn btn-accent btn-sm opacity-70 hover:opacity-100"
                 onClick={handleAddTechStack}
-                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
               >
                 Save
               </button>
@@ -528,9 +531,9 @@ export default function MobileAppPageEdit() {
               <button
                 type="button"
                 onClick={closeModal}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                className="text-white btn btn-error btn-sm opacity-70 hover:opacity-100"
               >
-                Cancel
+                Close
               </button>
             </div>
           </div>
@@ -567,12 +570,18 @@ export default function MobileAppPageEdit() {
                 className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex gap-2 justify-center">
               <button
-                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+                className="text-white btn btn-accent btn-sm opacity-70 hover:opacity-100"
                 onClick={handleEditTechStack}
               >
                 Update
+              </button>
+              <button
+                className="text-white btn btn-error btn-sm opacity-70 hover:opacity-100"
+                onClick={handleCloseEditModal}
+              >
+                Close
               </button>
             </div>
           </div>

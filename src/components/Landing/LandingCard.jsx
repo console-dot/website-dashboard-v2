@@ -168,20 +168,22 @@ export const LandingCard = ({ data, key, value }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Testimonials
                   </h1>
-                  <div className="overflow-x-auto shadow-md sm:rounded-lg mx-auto">
+                </div>
+                <div className="flex flex-row mx-auto w-[60%]">
+                  <div className="overflow-x-auto shadow-md sm:rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-row-group">
                       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
-                          <th className="px-6 py-3 w-8 text-left text-webDescrip">
+                          <th className="px-6 py-3  text-left text-webDescrip">
                             Name
                           </th>
-                          <th className="px-6 py-3 text-left text-webDescrip">
+                          <th className="px-6 py-3  text-left text-webDescrip">
                             Designation
                           </th>
-                          <th className="px-6 py-3 text-left text-webDescrip">
+                          <th className="px-6 py-3  text-left text-webDescrip">
                             Description
                           </th>
-                          <th className="px-6 py-3 text-left text-webDescrip">
+                          <th className="px-6 py-3  text-left text-webDescrip">
                             Image
                           </th>
                         </tr>
@@ -195,9 +197,13 @@ export const LandingCard = ({ data, key, value }) => {
                             <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                               {items?.fullName}
                             </td>
-                            <td className="px-6 py-1">{items?.designation}</td>
-                            <td className="px-6 py-1">{items?.description}</td>
-                            <td className="px-6 py-1">
+                            <td className="px-6 py-1 ">
+                              {items?.designation}
+                            </td>
+                            <td className="px-6 py-1 ">
+                              {items?.description}
+                            </td>
+                            <td className="px-6 py-1 ">
                               <img
                                 src={`${BASE_URL}/file/${items?.image}`}
                                 alt={items?.fullName}
@@ -213,7 +219,9 @@ export const LandingCard = ({ data, key, value }) => {
                 {/* Expertise */}
                 <div className="w-full flex flex-row gap-2 mt-4">
                   <h1 className="text-heading text-xl font-bold">Expertise</h1>
-                  <div className="overflow-x-auto shadow-md sm:rounded-lg mx-auto">
+                </div>
+                <div className="flex flex-row mx-auto w-[60%]">
+                  <div className="overflow-x-auto shadow-md sm:rounded-lg">
                     <table className="w-full text-sm text-left rtl:text-right text-gray-500 dark:text-gray-400 table-row-group">
                       <thead className="text-xs text-gray-700 uppercase bg-gray-50 dark:bg-gray-700 dark:text-gray-400">
                         <tr>
@@ -237,8 +245,10 @@ export const LandingCard = ({ data, key, value }) => {
                             <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                               {items?.name}
                             </td>
-                            <td className="px-6 py-1">{items?.description}</td>
-                            <td className="px-6 py-1">
+                            <td className="px-6 py-1 ">
+                              {items?.description}
+                            </td>
+                            <td className="px-6 py-1 ">
                               <img
                                 src={`${BASE_URL}/file/${items?.image}`}
                                 alt={items?.name}
@@ -269,11 +279,14 @@ export const LandingCard = ({ data, key, value }) => {
                             {comparisonItem?.type}:
                           </strong>
                           <ul
-                            style={{ listStyle: "unset  ",}}
+                            style={{ listStyle: "unset  " }}
                             className="mt-4 pl-4 mb-4"
                           >
                             {comparisonItem?.comparison?.map((item, index) => (
-                              <li key={index} className="text-black text-sm mb-2">
+                              <li
+                                key={index}
+                                className="text-black text-sm mb-2"
+                              >
                                 {item}
                               </li>
                             ))}

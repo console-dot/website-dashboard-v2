@@ -439,11 +439,10 @@ export default function UiUxPageEdit() {
                 />
               </div>
             </div>
-            <div>
+            <div className="mt-4 flex gap-2 justify-center">
               <button
-                type="button"
+                className="text-white btn btn-accent btn-sm opacity-70 hover:opacity-100"
                 onClick={handleAddTechStack}
-                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
               >
                 Save
               </button>
@@ -451,9 +450,9 @@ export default function UiUxPageEdit() {
               <button
                 type="button"
                 onClick={closeModal}
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                className="text-white btn btn-error btn-sm opacity-70 hover:opacity-100"
               >
-                Cancel
+                Close
               </button>
             </div>
           </div>
@@ -490,18 +489,18 @@ export default function UiUxPageEdit() {
                 className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               />
             </div>
-            <div className="mt-4">
+            <div className="mt-4 flex gap-2 justify-center">
               <button
-                className="text-white text-[16px] px-4 py-2 bg-blue-500 rounded-full  hover:bg-blue-600"
+                className="text-white btn btn-accent btn-sm opacity-70 hover:opacity-100"
                 onClick={handleEditTechStack}
               >
                 Update
               </button>
               <button
-                className="bg-gray-300 text-gray-700 px-4 py-2 rounded-full hover:bg-gray-400"
+                className="text-white btn btn-error btn-sm opacity-70 hover:opacity-100"
                 onClick={handleCloseEditModal}
               >
-                Cancel
+                Close
               </button>
             </div>
           </div>
