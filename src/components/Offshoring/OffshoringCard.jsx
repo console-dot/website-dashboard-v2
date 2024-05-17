@@ -9,7 +9,9 @@ export const OffshoringCard = ({ data }) => {
   return (
     <div className="bg-dark rounded border-secondary text-white p-4 mb-4">
       <div className="mb-4">
-        <h1 className="text-heading text-xl font-bold">Offshoring Services Model</h1>
+        <h1 className="text-heading text-xl font-bold">
+          Offshoring Services Model
+        </h1>
         <div className="mb-2">
           <strong style={{ color: "grey" }}>Top Description:</strong>
           <p className="text-black text-sm">{data?.topDescription}</p>
@@ -62,7 +64,10 @@ export const OffshoringCard = ({ data }) => {
           icon={<FaPen />}
           text={"Edit"}
           click={() => {
-            navigate(`/OffshoringPage/edit/${data?._id}`); {/* Fixed navigation path */}
+            navigate(`/OffshoringPage/edit/${data?._id}`);
+            {
+              /* Fixed navigation path */
+            }
           }}
         />
         <Button text={"View"} icon={<FaEye />} />
