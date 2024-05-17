@@ -7,7 +7,12 @@ import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useDispatch } from "react-redux";
 import { setopData } from "../../redux/openpositionSlice";
-import { getOpenPosition, addPosition, editOpenPosition, deleteOpenPosition } from "../../api/openposition";
+import {
+  getOpenPosition,
+  addPosition,
+  editOpenPosition,
+  deleteOpenPosition,
+} from "../../api/openposition";
 
 export const OpenPositionsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -58,44 +63,59 @@ export const OpenPositionsPage = () => {
     });
   };
 
-  const handleModalSubmit = () => {
+  const handleModalSubmit = (e) => {
+    e.preventDefault();
     setIsLoading(true);
-    const apiFunction = editingId !== null ? editOpenPosition : addPosition;
-    apiFunction(formData)
-      .then((res) => {
-        if (editingId !== null) {
-          const updatedPositions = positions.map((pos) =>
-            pos.id === editingId ? { ...pos, ...formData } : pos
-          );
-          setPositions(updatedPositions);
-        } else {
-          setPositions([...positions, res.data]);
-        }
-        toast.success("Form submitted", {
-          autoClose: 1500,
-          onClose: () => navigate("/LandingPage"),
-        });
-        handleModalClose();
-      })
-      .catch((error) => {
-        console.log(error);
-        toast.error("Error submitting form");
-      })
-      .finally(() => setIsLoading(false));
+    // If id exist then call Edit else call Add
+    if (editingId !== null) {
+      console.log("editingId", editingId);
+      editOpenPosition(formData, editingId)
+        .then((res) => {
+          console.log("res", res);
+          if (res?.status == 200) {
+            getOpenPosition()
+              .then((res) => {
+                setPositions(res?.data);
+                dispatch(setopData(res?.data));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+      handleModalClose();
+    } else {
+      addPosition(formData)
+        .then((res) => {
+          console.log("res", res);
+          if (res?.status == 201) {
+            getOpenPosition()
+              .then((res) => {
+                setPositions(res?.data);
+                dispatch(setopData(res?.data));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+      handleModalClose();
+    }
+    setIsLoading(false);
   };
 
-  const handleEdit = (id) => {
-    const positionToEdit = positions.find((pos) => pos.id === id);
+  const handleEdit = (_id) => {
+    const positionToEdit = positions.find((pos) => pos._id === _id);
     setFormData(positionToEdit);
-    setEditingId(id);
+    setEditingId(_id);
     setIsModalOpen(true);
   };
 
   const handleDelete = (id) => {
     deleteOpenPosition(id)
       .then(() => {
-        const updatedPositions = positions.filter((pos) => pos.id !== id);
+        const updatedPositions = positions.filter((pos) => pos._id !== id);
         setPositions(updatedPositions);
+        // console.log("updatedPositions", updatedPositions);
+        dispatch(setopData(updatedPositions));
         toast.success("Position deleted successfully");
       })
       .catch((error) => {
@@ -275,6 +295,16 @@ export const OpenPositionsPage = () => {
                           </p>
                         )}
                       </button>
+                      <button
+                        type="submit"
+                        onClick={() => setIsModalOpen(false)}
+                        disabled={isLoading}
+                        className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
+                      >
+                        <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
+                          Cancel
+                        </p>
+                      </button>
                       <ToastContainer />
                     </div>
                   </div>
@@ -289,11 +319,11 @@ export const OpenPositionsPage = () => {
       <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
         <div className="flex flex-col w-full">
           {positions.map((item) => (
-            <div key={item.id}>
+            <div key={item._id}>
               <OpenPositionsCard
                 data={item}
-                onEdit={() => handleEdit(item.id)}
-                onDelete={() => handleDelete(item.id)}
+                onEdit={() => handleEdit(item._id)}
+                onDelete={() => handleDelete(item._id)}
               />
               <hr className="my-4" />
             </div>

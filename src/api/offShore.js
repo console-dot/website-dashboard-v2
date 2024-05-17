@@ -3,10 +3,10 @@ import config from "./config";
 
 const BASE_URL = config.BASE_URL;
 
-export const getcustomservicepage = () => {
+export const getOffShore = () => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .get(`${BASE_URL}/customService`, {
+    .get(`${BASE_URL}/offshoringService`, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,
@@ -20,10 +20,10 @@ export const getcustomservicepage = () => {
     .catch((err) => console.log(err));
 };
 
-export const editCustomService = (values, id) => {
+export const editOffShore = (values, id) => {
   const token = localStorage.getItem("@dashboard-token");
   return axios
-    .put(`${BASE_URL}/customService/${id}`, values, {
+    .put(`${BASE_URL}/offshoringService/${id}`, values, {
       headers: {
         "Content-Type": "application/json",
         Authorization: "JWT " + token,

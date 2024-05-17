@@ -7,6 +7,8 @@ import arvrSlice from "./arvrSlice";
 import uiuxSlice from "./uiuxSlice";
 import openpositionSlice from "./openpositionSlice";
 import landingPageSlice from "./landingPageSlice";
+import customServiceSlice from "./customServiceSlice";
+import offShoreSlice from "./offShoreSlice";
 import offshoreserviceSlice from "./offshoreserviceSlice";
 import mobdevSlice from "./mobdevSlice";
 import webdevSlice from "./webdevSlice";
@@ -22,6 +24,8 @@ export const store = configureStore({
     uiux: uiuxSlice,
     openPosition: openpositionSlice,
     landingPage: landingPageSlice,
+    customService: customServiceSlice,
+    offShore: offShoreSlice,
     offshoreservice:offshoreserviceSlice,
     mobdev: mobdevSlice, 
     webdev:webdevSlice,

@@ -5,8 +5,6 @@ import { FaEye, FaPen } from "react-icons/fa";
 
 export const CustomServiceCard = ({ data }) => {
   const navigate = useNavigate();
-  console.log("cs", data);
-  console.log(data);
   const cardLabels = [
     "ConsoleDot ERP:",
     "SaaS by ConsoleDot",
