@@ -21,11 +21,11 @@ export const getproductresearchpage = async () => {
   }
 };
 
-export const editproductresearchpage = async (values, id) => {
+export const editproductresearchpage = async (values, _id) => {
   try {
     const token = localStorage.getItem("@dashboard-token");
     const response = await axios.put(
-      `${BASE_URL}/productRS/${id}`,
+      `${BASE_URL}/productRS/${_id}`,
       values,
       {
         headers: {

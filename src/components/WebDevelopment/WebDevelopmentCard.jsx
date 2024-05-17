@@ -9,7 +9,7 @@ export const WebDevelopmentCard = ({ data }) => {
   const navigate = useNavigate();
   console.log(data);
   const cardLabels = [
-    "User-Centric Design", 
+    "User-Centric Design",
     "Cross-Platform Compatibility",
     "Performance Optimization",
   ];
@@ -52,22 +52,27 @@ export const WebDevelopmentCard = ({ data }) => {
                     </div>
                   </div>
                   <strong style={{ color: "grey" }}>Why Choose Us:</strong>
-                  <div className="w-full flex flex-row flex-wrap justify-center ">
+                  <div className="w-full flex flex-row flex-wrap justify-center">
                     {data?.whyChooseUs.map((option, index) => (
-                      <div class="block max-w-[32%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4 w-[20%]">
-                        <h3 className="option-title text-gray-500 text-lg font-semibold">
-                          {cardLabels[index]}
-                          {" :"}
+                      <div className="block w-[30%] h-[30%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4">
+                        <h3
+                          className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
+                          style={{ height: "20px" }}
+                        >
+                          {cardLabels[index]}:
                         </h3>
-                        <p className="option-description text-gray-500">
-                          {" "}
+                        <p
+                          className="option-description text-gray-500 text-center mb-4"
+                          style={{ height: "100px" }}
+                        >
                           {option}
                         </p>
-                        <div className="w-full flex justify-center items-center mt-2">
+                        <div
+                          className="w-full flex justify-center items-center"
+                          style={{ height: "20px" }}
+                        >
                           <img
-                            src={
-                              "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
-                            }
+                            src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcSTw3HApB4bsvabXW3L14cV-LhFo0L71QmEESJN3vW9Ow&s"
                             alt={option.name}
                             className="option-image w-8 h-8"
                           />
@@ -75,26 +80,34 @@ export const WebDevelopmentCard = ({ data }) => {
                       </div>
                     ))}
                   </div>
+
                   <div className="flex flex-col mt-2">
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Tech Stack: </strong>
                     </div>
                     <div className="w-full flex flex-row flex-wrap justify-center gap-4 mt-8">
                       {data?.techStack.map((option, index) => (
-                        <div class="block max-w-[32%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 w-[10%]">
-                          <h3 className="option-title text-gray-500 text-lg font-semibold">
-                            {option.name}
-                            {" :"}
+                        <div className="block w-[20%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
+                          <h3
+                            className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
+                            style={{ height: "20px" }}
+                          >
+                            {option.name}:
                           </h3>
-                          <p className="option-description text-gray-500">
-                            {" "}
+                          <p
+                            className="option-description text-gray-500 text-center mb-4"
+                            style={{ height: "48px" }}
+                          >
                             {option.type}
                           </p>
-                          <div className="w-full flex justify-center items-center mt-2">
+                          <div
+                            className="w-full flex justify-center items-center"
+                            style={{ height: "20px" }}
+                          >
                             <img
                               src={`${BASE_URL}/file/${option?.image}`}
                               alt={option.name}
-                              className="option-image w-5 h-5 "
+                              className="option-image w-8 h-8"
                             />
                           </div>
                         </div>
