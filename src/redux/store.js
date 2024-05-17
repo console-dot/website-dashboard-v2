@@ -8,6 +8,7 @@ import uiuxSlice from "./uiuxSlice";
 import openpositionSlice from "./openpositionSlice";
 import landingPageSlice from "./landingPageSlice";
 import customServiceSlice from "./customServiceSlice";
+import offShoreSlice from "./offShoreSlice";
 
 export const store = configureStore({
   reducer: {
@@ -20,5 +21,6 @@ export const store = configureStore({
     openPosition: openpositionSlice,
     landingPage: landingPageSlice,
     customService: customServiceSlice,
+    offShore: offShoreSlice,
   },
 });

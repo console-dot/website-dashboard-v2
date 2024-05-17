@@ -4,88 +4,29 @@ import { FaEdit, FaPen, FaPlus, FaTrash } from "react-icons/fa";
 import { RiLoader3Line } from "react-icons/ri";
 import { ToastContainer, toast } from "react-toastify";
 import { useNavigate } from "react-router-dom";
+import {
+  selectOffShoreDetails,
+  setOffShoreData,
+} from "../../redux/offShoreSlice";
+import { useDispatch, useSelector } from "react-redux";
+import { editOffShore } from "../../api/offShore";
 
 export default function OffshoringPageEdit() {
   // Form data state
-  const [formData, setFormData] = useState({
-    topDescription:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde dolorem veniam beatae laborum deserunt fugit repellat qui animi quas earum!",
-    bottomDescription:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Unde dolorem veniam beatae laborum deserunt fugit repellat qui animi quas earum!",
-
-    offShoreType: [
-      {
-        name: "hourly",
-        description:
-          "Hourly offshore type involves paying workers based on the number of hours worked.",
-        advantages: [
-          "Flexibility in adjusting workload and hours.",
-          "Transparent billing based on actual work hours.",
-          "Easier to track progress and productivity.",
-        ],
-        comparison: [
-          "May be more expensive if hours are not managed efficiently.",
-          "Requires effective time tracking systems.",
-          "Limited cost predictability compared to fixed-price models.",
-          "Can lead to disputes over billed hours.",
-          "Not suitable for projects with well-defined scope and timeline.",
-          "May incentivize longer hours rather than efficiency.",
-        ],
-      },
-      {
-        name: "fixed",
-        description:
-          "Fixed offshore type involves agreeing on a set price for a project or specific tasks.",
-        advantages: [
-          "Predictable costs for budgeting and planning.",
-          "Clear scope and deliverables defined upfront.",
-          "Lower risk for budget overruns.",
-        ],
-        comparison: [
-          "Less flexibility for changes or additional work.",
-          "Risk of underestimating project scope and costs.",
-          "Requires thorough initial planning and requirements gathering.",
-          "May lead to disputes if scope changes are not managed effectively.",
-          "Can be challenging to accommodate unforeseen issues or changes.",
-          "Less suitable for projects with evolving requirements.",
-        ],
-      },
-      {
-        name: "bot",
-        description:
-          "Bot offshore type involves leveraging automation and AI-driven bots to perform tasks.",
-        advantages: [
-          "High speed and efficiency in task execution.",
-          "24/7 availability for repetitive tasks.",
-          "Reduced error rates compared to human counterparts.",
-        ],
-        comparison: [
-          "Initial investment required for bot development and integration.",
-          "May not be suitable for tasks requiring nuanced human judgment.",
-          "Limited capability for handling complex or unstructured tasks.",
-          "Requires ongoing maintenance and updates for optimal performance.",
-          "Potential job displacement concerns.",
-          "Not applicable for tasks requiring creativity or empathy.",
-        ],
-      },
-    ],
-  });
-
-  // Loading state
+  const offshoreData = useSelector(selectOffShoreDetails);
+  const [formData, setFormData] = useState(offshoreData);
   const [isLoading, setIsLoading] = useState(false);
-
-  // Navigation
-  const navigate = useNavigate();
-
-  // Modal states and functions
   const [isModalOpenAdvantage, setIsModalOpenAdvantage] = useState(false);
   const [isModalOpenComparison, setIsModalOpenComparison] = useState(null);
   const [advantageInput, setAdvantageInput] = useState("");
   const [comparisonInput, setComparisonInput] = useState("");
   const [editingAdvantageIndex, setEditingAdvantageIndex] = useState(null);
   const [editingComparisonIndex, setEditingComparisonIndex] = useState(null);
-
   const [modalIndex, setModalIndex] = useState(null);
+
+  // Navigation
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
 
   const openModalAdvantage = (index) => {
     setIsModalOpenAdvantage(true);
@@ -107,14 +48,25 @@ export default function OffshoringPageEdit() {
   // Function to handle form submission
   const handleSubmit = (e) => {
     e.preventDefault();
+    // console.log("formData", formData);
     setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500,
-        onClose: () => navigate("/offShoring"),
-      });
-    }, 1500);
+
+    if (offshoreData?._id) {
+      editOffShore(formData, offshoreData?._id)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setOffShoreData(res?.data));
+        })
+        .catch((err) => console.log(err));
+
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500,
+          onClose: () => navigate("/offShoring"),
+        });
+      }, 1500);
+    }
 
     if (!isModalOpenAdvantage && !isModalOpenComparison) {
       console.log(formData);
@@ -124,16 +76,20 @@ export default function OffshoringPageEdit() {
   // Function to handle description change
   const handleDescriptionChange = (newValue, index) => {
     setFormData((prevData) => {
-      const updatedOffShoreType = [...prevData.offShoreType];
-      updatedOffShoreType[index].description = newValue;
-      return { ...prevData, offShoreType: updatedOffShoreType };
+      const updatedOffShoreType = prevData.offshoreType.map((item, idx) => {
+        if (idx === index) {
+          return { ...item, description: newValue };
+        }
+        return item;
+      });
+      return { ...prevData, offshoreType: updatedOffShoreType };
     });
   };
 
-  // Function to edit an advantage
+  // Function to Set edit for advantage
   const editAdvantage = (typeIndex, advantageIndex) => {
     const currentAdvantage =
-      formData.offShoreType[typeIndex].advantages[advantageIndex];
+      formData.offshoreType[typeIndex].advantages[advantageIndex];
     setAdvantageInput(currentAdvantage);
     // Open the modal for editing advantages
     setIsModalOpenAdvantage(true);
@@ -141,10 +97,10 @@ export default function OffshoringPageEdit() {
     setEditingAdvantageIndex({ typeIndex, advantageIndex });
   };
 
-  // Function to edit a comparison
+  // Function to Set edit for comparison
   const editComparison = (typeIndex, comparisonIndex) => {
     const currentComparison =
-      formData.offShoreType[typeIndex].comparison[comparisonIndex];
+      formData.offshoreType[typeIndex].comparison[comparisonIndex];
     setComparisonInput(currentComparison);
     // Open the modal for editing comparisons
     setIsModalOpenComparison(true);
@@ -152,33 +108,62 @@ export default function OffshoringPageEdit() {
     setEditingComparisonIndex({ typeIndex, comparisonIndex });
   };
 
-  // Functions to add and remove advantages
+  // Functions to add advantages
   const addAdvantage = () => {
     if (advantageInput.trim() !== "") {
       const { typeIndex, advantageIndex } = editingAdvantageIndex;
-      const updatedOffShoreType = [...formData.offShoreType];
-      updatedOffShoreType[typeIndex].advantages[advantageIndex] =
-        advantageInput;
+
+      // Create a copy of the current offshoreType array
+      const updatedOffShoreType = formData.offshoreType.map((type, index) => {
+        if (index === typeIndex) {
+          // Create a copy of the advantages array and update the specific advantage
+          const updatedAdvantages = type.advantages.map((advantage, advIndex) =>
+            advIndex === advantageIndex ? advantageInput : advantage
+          );
+          // Return a new object with the updated advantages array
+          return { ...type, advantages: updatedAdvantages };
+        }
+        return type; // For all other items, return as is
+      });
+
+      // Update the formData state with the new offshoreType array
       setFormData((prevData) => ({
         ...prevData,
-        offShoreType: updatedOffShoreType,
+        offshoreType: updatedOffShoreType,
       }));
+
+      // Clear the input and close the modal
       setAdvantageInput("");
       setIsModalOpenAdvantage(false); // Close modal after editing
     }
   };
 
-  // Functions to add and remove comparisons
+  // Functions to add comparisons
   const addComparison = () => {
     if (comparisonInput.trim() !== "") {
       const { typeIndex, comparisonIndex } = editingComparisonIndex;
-      const updatedOffShoreType = [...formData.offShoreType];
-      updatedOffShoreType[typeIndex].comparison[comparisonIndex] =
-        comparisonInput;
+
+      // Create a copy of the current offshoreType array
+      const updatedOffShoreType = formData.offshoreType.map((type, index) => {
+        if (index === typeIndex) {
+          // Create a copy of the comparison array and update the specific comparison
+          const updatedComparisons = type.comparison.map(
+            (comparison, cmpIndex) =>
+              cmpIndex === comparisonIndex ? comparisonInput : comparison
+          );
+          // Return a new object with the updated comparison array
+          return { ...type, comparison: updatedComparisons };
+        }
+        return type; // For all other items, return as is
+      });
+
+      // Update the formData state with the new offshoreType array
       setFormData((prevData) => ({
         ...prevData,
-        offShoreType: updatedOffShoreType,
+        offshoreType: updatedOffShoreType,
       }));
+
+      // Clear the input and close the modal
       setComparisonInput("");
       setIsModalOpenComparison(null); // Close modal after editing
     }
@@ -222,8 +207,8 @@ export default function OffshoringPageEdit() {
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="offshoreType"
-            id="offshoreType"
+            name="topDescription"
+            id="topDescription"
             onChange={handleChange}
             value={formData?.topDescription}
             placeholder="Offshore Type"
@@ -234,19 +219,19 @@ export default function OffshoringPageEdit() {
           <input
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
-            name="offshoreType"
-            id="offshoreType"
+            name="bottomDescription"
+            id="bottomDescription"
             onChange={handleChange}
             value={formData?.bottomDescription}
             placeholder="Offshore Type"
           />
           <div className="mt-4">
-            {formData.offShoreType.map((type, index) => (
+            {formData.offshoreType.map((type, index) => (
               <div
                 key={index}
                 className="border border-dashed border-custom-purple rounded-lg p-4 mt-4"
               >
-                <h2 className="text-lg font-semibold">{type.name}</h2>
+                <h2 className="text-lg font-semibold">{type?.type}</h2>
                 <div className="mt-2">
                   <label className="text-webDescrip font-semibold">
                     Description
@@ -261,7 +246,7 @@ export default function OffshoringPageEdit() {
                   />
                 </div>
                 <div className="mt-4">
-                <div className="flex flex-row justify-between items-center mb-2">
+                  <div className="flex flex-row justify-between items-center mb-2">
                     <label className="text-webDescrip font-semibold">
                       Advantage
                     </label>
@@ -299,7 +284,7 @@ export default function OffshoringPageEdit() {
                     <label className="text-webDescrip font-semibold">
                       Comparison
                     </label>
-                    {/* 
+                    {/*
                      */}
                   </div>
 
