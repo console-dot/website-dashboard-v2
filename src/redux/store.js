@@ -9,6 +9,10 @@ import openpositionSlice from "./openpositionSlice";
 import landingPageSlice from "./landingPageSlice";
 import customServiceSlice from "./customServiceSlice";
 import offShoreSlice from "./offShoreSlice";
+import offshoreserviceSlice from "./offshoreserviceSlice";
+import mobdevSlice from "./mobdevSlice";
+import webdevSlice from "./webdevSlice";
+import productresearchSlice from "./productresearchSlice";
 
 export const store = configureStore({
   reducer: {
@@ -22,5 +26,9 @@ export const store = configureStore({
     landingPage: landingPageSlice,
     customService: customServiceSlice,
     offShore: offShoreSlice,
+    offshoreservice:offshoreserviceSlice,
+    mobdev: mobdevSlice, 
+    webdev:webdevSlice,
+    productresearch: productresearchSlice,
   },
 });

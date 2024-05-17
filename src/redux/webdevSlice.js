@@ -15,11 +15,11 @@ export const webdevSlice = createSlice({
   },
 });
 
-// Action creators are generated for each case reducer function
+// Action creators are generated for each case reducer function 
 export const { setwebdevData, resetwebdevdata } = webdevSlice.actions;
 
 // Selectors
-export const selectwebdevDetails = (state) => state.webdev.aiData;
+export const selectwebdevDetails = (state) => state.webdev.webdevData;
 
 // The reducer
 export default webdevSlice.reducer;

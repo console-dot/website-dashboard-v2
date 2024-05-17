@@ -1,6 +1,4 @@
 import React, { useEffect, useState } from "react";
-import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
-import { TechStack } from "../TechStack/TechStack";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
@@ -31,6 +29,8 @@ export default function AiPageEdit() {
   });
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const cardLabels = [
     "Expertise",
     "Innovation at the Core",
@@ -61,10 +61,6 @@ export default function AiPageEdit() {
       }, 1500);
     }
   };
-
-  //Open New techStack Modal
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   const handleOpenEditModal = (index) => {
     setEditIndex(index);

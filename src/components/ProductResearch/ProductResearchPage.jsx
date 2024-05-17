@@ -4,6 +4,8 @@ import { useNavigate } from "react-router-dom";
 import { ProductResearchCard } from "./ProductResearchCard";
 import { getcustomservicepage } from "../../api/customservice";
 import { getproductresearchpage } from "../../api/productresearch";
+import { setproductresearchData } from "../../redux/productresearchSlice";
+import { useDispatch } from "react-redux";
 
 // const data = [
 //   {
@@ -31,19 +33,22 @@ import { getproductresearchpage } from "../../api/productresearch";
 //         description: "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
 //         image: "console_mvp_image.jpg"
 //       },
-      
+
 //     ],
 //   },
 // ];
 
 export const ProductResearchPage = () => {
-    const [data, setData] = useState();
+  const [data, setData] = useState();
   const navigate = useNavigate();
-
+  const dispatch = useDispatch();
 
   useEffect(() => {
     getproductresearchpage()
-      .then((res) => setData(res?.data))
+      .then((res) => {
+        setData(res?.data);
+        dispatch(setproductresearchData(res?.data));
+      })
       .catch((err) => console.log(err));
   }, []);
   console.log("data", data);
@@ -66,11 +71,9 @@ export const ProductResearchPage = () => {
       {/* Center */}
       <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
         <div className="flex">
-          
-              <div  className="flex flex-col w-full">
-                <ProductResearchCard data={data}/>
-              </div>
-        
+          <div className="flex flex-col w-full">
+            <ProductResearchCard data={data} />
+          </div>
         </div>
       </div>
     </>

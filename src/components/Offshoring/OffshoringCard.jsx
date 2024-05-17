@@ -1,17 +1,15 @@
 import React from "react";
 import { Button } from "../Button";
 import { FaEye, FaPen } from "react-icons/fa";
-import { useNavigate } from "react-router-dom"; // Import useNavigate hook to handle navigation
+import { useNavigate } from "react-router-dom";
 
 export const OffshoringCard = ({ data }) => {
-  const navigate = useNavigate(); // Initialize useNavigate hook
+  const navigate = useNavigate();
 
   return (
     <div className="bg-dark rounded border-secondary text-white p-4 mb-4">
       <div className="mb-4">
-        <h1 className="text-heading text-xl font-bold">
-          Offshoring Services Model
-        </h1>
+        <h1 className="text-heading text-xl font-bold">Offshoring Services Model</h1>
         <div className="mb-2">
           <strong style={{ color: "grey" }}>Top Description:</strong>
           <p className="text-black text-sm">{data?.topDescription}</p>
@@ -64,8 +62,7 @@ export const OffshoringCard = ({ data }) => {
           icon={<FaPen />}
           text={"Edit"}
           click={() => {
-            // Replace :id with the actual ID of the item if applicable
-            navigate(`/OffshoringPage/edit/:id`);
+            navigate(`/OffshoringPage/edit/${data?._id}`); {/* Fixed navigation path */}
           }}
         />
         <Button text={"View"} icon={<FaEye />} />
