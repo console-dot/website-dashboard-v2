@@ -1,84 +1,79 @@
-import React, { useState } from "react";
-import WhyChooseSection from "../WhyChooseSection/WhyChooseSection";
-import { TechStack } from "../TechStack/TechStack";
+import React, { useEffect, useState } from "react";
 import { ToastContainer, toast } from "react-toastify";
 import { RiLoader3Line } from "react-icons/ri";
 import { useNavigate } from "react-router-dom";
 import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
-// Assuming WhyChooseSection is in a separate file
-const data = [
-  {
-    description:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-    proposition:
-      "Lorem ipsum dolor sit amet consectetur adipisicing elit. Porro?",
-    whyChoose: [
-      {
-        name: "User-Centric Design",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_erp_image.jpg",
-      },
-      {
-        name: "Cross-Platform ",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "SaaSbyonsoleDot.jpg",
-      },
-      {
-        name: "Performance Optimization",
-        description:
-          "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-        image: "console_mvp_image.jpg",
-      },
-    ],
-    techStack: [
-      { name: "React", type: "Frontend", img: "react.png" },
-      { name: "Node.js", type: "Backend", img: "nodejs.png" },
-      // Add more technologies as needed
-    ],
-  },
-];
+import { selectwebdevDetails, setwebdevData } from "../../redux/webdevSlice";
+import { useDispatch, useSelector } from "react-redux";
+import WhyChooseUs from "./WhyChooseUs";
+import { editWebDevelopment } from "../../api/webdevelopment";
+import { addTechStack, editTechStack, removeTechStack } from "../../api";
+import { addFile } from "../../api/file";
 
 export default function WebDevelopmentPageEdit() {
+  //---------------------------------------------------------
   const [isLoading, setIsLoading] = useState(false);
-  const [isModalOpen, setIsModalOpen] = useState(false);
-  // State to manage the index of the tech stack item being edited
   const [editIndex, setEditIndex] = useState(null);
-  // State to hold the data of the tech stack item being edited
   const [editItem, setEditItem] = useState(null);
-  // State to manage the modal visibility
+  const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
-  // Navigate
-  const navigate = useNavigate();
-  // Use Form State
-  const [formData, setFormData] = useState(data[0]);
-
+  const webdevData = useSelector(selectwebdevDetails);
+  const [formData, setFormData] = useState(webdevData);
+  const [whyChooseUs, setWhyChooseUs] = useState(webdevData.whyChooseUs);
+  const [selectedFile, setSelectedFile] = useState(null);
   const [techData, setTechData] = useState({
     techStack: {
       name: "",
       type: "",
-      img: null, // Assuming img is initially null
+      image: null,
     },
   });
-
+  const navigate = useNavigate();
+  const dispatch = useDispatch();
+  const openModal = () => setIsModalOpen(true);
+  const closeModal = () => setIsModalOpen(false);
   const cardLabels = [
     "User-Centric Design",
     "Cross-Platform Compatibility",
     "Performance Optimization",
   ];
+  const handleSubmit = (e) => {
+    e.preventDefault();
+    setIsLoading(true);
+    const techIds = formData?.techStack?.map((item) => item._id);
+    const newForm = { ...formData, whyChooseUs, techStack: techIds };
+    if (webdevData?._id) {
+      editWebDevelopment(newForm, webdevData?._id)
+        .then((res) => {
+          console.log("res", res);
+          dispatch(setwebdevData(res?.data));
+        })
+        .catch((err) => console.log(err));
 
-  const handleWhyChooseChange = (descriptions) => {
-    setFormData({
-      ...formData,
-      whyChoose: descriptions,
-    });
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.success("Form submitted", {
+          autoClose: 1500,
+          onClose: () => navigate("/webDevelopment"),
+        });
+      }, 1500);
+    }
   };
 
-  const handleChange = (e, index) => {
-    const { name, value } = e.target;
-    const updatedTechStack = [...formData.techStack];
-    updatedTechStack[index][name] = value;
+  const handleOpenEditModal = (index) => {
+    setEditIndex(index);
+    setEditItem(formData.techStack[index]);
+    setIsEditModalOpen(true);
+  };
+
+  const handleDeleteTechStack = (index) => {
+    const currentId = formData.techStack[index]?._id;
+    removeTechStack(currentId).then((res) => {
+      if (res.status == 200) {
+        console.log("Removed Successfully");
+      }
+    });
+    const updatedTechStack = formData.techStack.filter((_, i) => i !== index);
     setFormData({
       ...formData,
       techStack: updatedTechStack,
@@ -96,54 +91,21 @@ export default function WebDevelopmentPageEdit() {
     }));
   };
 
-  const handleImageChange = (e) => {
-    const file = e.target.files[0];
-    setTechData((prevFormData) => ({
-      ...prevFormData,
-      techStack: {
-        ...prevFormData.techStack,
-        img: file,
-      },
-    }));
-  };
-
-  // Function to open the edit modal
-  const handleOpenEditModal = (index) => {
-    setEditIndex(index);
-    setEditItem(formData.techStack[index]);
-    setIsEditModalOpen(true);
-  };
-
-  // Function to close the edit modal
-  const handleCloseEditModal = () => {
-    setIsEditModalOpen(false);
-    setEditIndex(null);
-    setEditItem(null);
-  };
-
-  // Function to handle editing of the tech stack item
-  const handleEditTechStack = () => {
-    // Implement logic to update the tech stack item with the edited data
-    // For example, you can update the item directly in the tech stack array
-    const updatedTechStack = [...formData.techStack];
-    updatedTechStack[editIndex] = editItem;
+  const handleWhyChooseChange = (descriptions) => {
     setFormData({
       ...formData,
-      techStack: updatedTechStack,
+      whyChoose: descriptions,
     });
-    // Close the edit modal
-    handleCloseEditModal();
   };
 
-  // Function to handle changes in the edit modal input fields
   const handleEditInputChange = (e) => {
     const { name, value, files } = e.target;
-    if (name === "img") {
+    if (name === "image") {
       // If the change is in the image input field
       const file = files[0];
       setEditItem((prevItem) => ({
         ...prevItem,
-        img: file,
+        image: file,
       }));
     } else {
       // If the change is in other input fields
@@ -154,61 +116,113 @@ export default function WebDevelopmentPageEdit() {
     }
   };
 
-  // const handleImageChange = (e, index) => {
-  //   const file = e.target.files[0];
-  //   const updatedTechStack = [...formData.techStack];
-  //   updatedTechStack[index]["img"] = URL.createObjectURL(file);
-  //   setFormData({
-  //     ...formData,
-  //     techStack: updatedTechStack,
-  //   });
-  // };
+  const handleEditTechStack = () => {
+    const updatedTechStack = [...formData.techStack];
+    updatedTechStack[editIndex] = editItem;
+    setFormData({
+      ...formData,
+      techStack: updatedTechStack,
+    });
+    if (updatedTechStack[editIndex]?.image) {
+      if (typeof updatedTechStack[editIndex]?.image === "string") {
+        editTechStack(
+          {
+            name: updatedTechStack[editIndex]?.name,
+            image: updatedTechStack[editIndex]?.image,
+          },
+          updatedTechStack[editIndex]?._id
+        )
+          .then((res) => {
+            console.log("res", res);
+          })
+          .catch((err) => console.log(err));
+      } else {
+        addFile(updatedTechStack[editIndex]?.image)
+          .then((res) => {
+            if (res?.status == 201) {
+              updatedTechStack[editIndex].image = res?.data;
+              editTechStack(
+                {
+                  name: updatedTechStack[editIndex]?.name,
+                  image: updatedTechStack[editIndex]?.image,
+                },
+                updatedTechStack[editIndex]?._id
+              )
+                .then((res) => {
+                  console.log("res", res);
+                })
+                .catch((err) => console.log(err));
+            }
+          })
+          .catch((err) => console.log(err));
+      }
+    }
+    // Close the edit modal
+    handleCloseEditModal();
+  };
+  const handleCloseEditModal = () => {
+    setIsEditModalOpen(false);
+    setEditIndex(null);
+    setEditItem(null);
+  };
+
+  const handleChange = (e, index) => {
+    const { name, value } = e.target;
+    setFormData({
+      ...formData,
+      [name]: value,
+    });
+  };
+
+  const handleFileChange = (e) => {
+    setSelectedFile(e.target.files[0]);
+  };
 
   const handleAddTechStack = () => {
-    // console.log("new", formData);
-    // setFormData({
-    //   ...formData,
-    //   techStack: [...formData.techStack, { name: "", type: "", img: "" }],
-    // });
     const newTechStackItem = {
       name: techData.techStack.name,
       type: techData.techStack.type,
-      img: techData.techStack.img,
+      image: techData.techStack.image,
     };
-    
 
-    // Add the new object to the techStack array
-    setFormData((prevFormData) => ({
-      ...prevFormData,
-      techStack: [...prevFormData.techStack, newTechStackItem],
-    }));
+    if (selectedFile) {
+      addFile(selectedFile)
+        .then((res) => {
+          // console.log("res", res);
+          if (res?.status == 201) {
+            newTechStackItem.image = res?.data;
+            addTechStack(newTechStackItem)
+              .then((res) => {
+                console.log("res", res);
+                // Add the new object to the techStack array
+                setFormData((prevFormData) => ({
+                  ...prevFormData,
+                  techStack: [...prevFormData.techStack, res?.data],
+                }));
+              })
+              .catch((err) => console.log(err));
+          }
+        })
+        .catch((err) => console.log(err));
+    }
+    // Close Modal
     closeModal();
   };
-  const handleDeleteTechStack = (index) => {
-    const updatedTechStack = formData.techStack.filter((_, i) => i !== index);
+  const handleImageChange = (e, index) => {
+    const file = e.target.files[0];
+    const updatedTechStack = [...formData.techStack];
+    updatedTechStack[index]["img"] = URL.createObjectURL(file);
     setFormData({
       ...formData,
       techStack: updatedTechStack,
     });
   };
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    setIsLoading(true);
-    setTimeout(() => {
-      setIsLoading(false);
-      toast.success("Form submitted", {
-        autoClose: 1500, // close after 1.5 seconds
-        onClose: () => navigate("/webDevelopment"), // navigate after closing
-      });
-    }, 1500);
 
-    console.log(formData);
-    // dispatch(LandingPageEdit(formData));
-    // navigate("/landingPage");
+  const handleWhyChooseUs = (index, event) => {
+    const updatedWhyChooseUs = [...whyChooseUs];
+    updatedWhyChooseUs[index] = event.target.value;
+    setWhyChooseUs(updatedWhyChooseUs);
   };
-
-  const openModal = () => setIsModalOpen(true);
-  const closeModal = () => setIsModalOpen(false);
 
   return (
     <div className="w-full mb-6">
@@ -236,10 +250,10 @@ export default function WebDevelopmentPageEdit() {
             <label className="text-webDescrip font-semibold">Proposition</label>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-              name="Proposition"
-              id="Proposition"
+              name="proposition"
+              id="proposition"
               onChange={handleChange}
-              value={formData.Proposition}
+              value={formData.proposition}
               placeholder="Custom Service Proposition"
             />
           </div>
@@ -247,11 +261,11 @@ export default function WebDevelopmentPageEdit() {
             <label className="text-webDescrip font-semibol text-[20px] mx-auto">
               Why Choose Us
             </label>
-            <WhyChooseSection
-              descriptions={formData.whyChoose}
-              minCards={3}
-              maxCards={3}
-              onChange={handleWhyChooseChange}
+            <WhyChooseUs
+              data={whyChooseUs}
+              minCards={4}
+              maxCards={4}
+              onChange={handleWhyChooseUs}
               cardLabels={cardLabels}
             />
           </div>
@@ -301,7 +315,7 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* Backend */}
             <div className="w-full text-webDescrip font-semibold">Backend</div>
-            {formData?.techStack?.map((item,index) =>
+            {formData?.techStack?.map((item, index) =>
               item?.type === "Backend" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
@@ -328,7 +342,7 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* Database */}
             <div className="w-full text-webDescrip font-semibold">Database</div>
-            {formData?.techStack?.map((item,index) =>
+            {formData?.techStack?.map((item, index) =>
               item?.type === "Database" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
@@ -355,7 +369,7 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* CI/CD */}
             <div className="w-full text-webDescrip font-semibold">CI/CD</div>
-            {formData?.techStack?.map((item,index) =>
+            {formData?.techStack?.map((item, index) =>
               item?.type === "CI/CD" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
@@ -382,7 +396,7 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* VCS */}
             <div className="w-full text-webDescrip font-semibold">VCS</div>
-            {formData?.techStack?.map((item,index) =>
+            {formData?.techStack?.map((item, index) =>
               item?.type === "VCS" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
@@ -409,7 +423,7 @@ export default function WebDevelopmentPageEdit() {
             )}
             {/* Testing */}
             <div className="w-full text-webDescrip font-semibold">Testing</div>
-            {formData?.techStack?.map((item,index) =>
+            {formData?.techStack?.map((item, index) =>
               item?.type === "Testing" ? (
                 <div className="w-full flex" key={item.name}>
                   <div className="w-full flex justify-between">
@@ -503,7 +517,7 @@ export default function WebDevelopmentPageEdit() {
                 <input
                   type="file"
                   name="img"
-                  onChange={handleImageChange}
+                  onChange={handleFileChange}
                   accept="image/*"
                   className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                 />

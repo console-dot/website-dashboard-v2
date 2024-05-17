@@ -5,57 +5,13 @@ import { AiCard } from "./AiCard";
 import { getArtificialIntelligence } from "../../api/ai";
 import { useDispatch } from "react-redux";
 import { setAiData } from "../../redux";
-
-// const data = [
-//   {
-//     description:
-//       "Lorem ipsum dolor sit amet consectetur adipisicing elit. Aspernatur recusandae quaerat est et culpa unde perferendis voluptates qui quo laudantium!",
-
-//     whyChoose: [
-//       {
-//         name: "Expertise",
-//         description:
-//           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "console_erp_image.jpg",
-//       },
-//       {
-//         name: "Innovative ",
-//         description:
-//           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "SaaSbyonsoleDot.jpg",
-//       },
-//       {
-//         name: "Client ",
-//         description:
-//           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "console_mvp_image.jpg",
-//       },
-//       {
-//         name: "Customization",
-//         description:
-//           "Lorem ipsum dolor sit amet, consectetur adipisicing elit. Nemo, praesentium. Corrupti delectus cum repellat porro sed ex eaque ipsum sapiente.",
-//         image: "console_mvp_image.jpg",
-//       },
-//     ],
-//     techStack: [
-//       { name: "React", type: "Frontend", img: "react.png" },
-//       { name: "Node.js", type: "Backend", img: "nodejs.png" },
-//       // Add more technologies as needed
-//     ],
-//   },
-// ];
-
 export const AiPage = () => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onView = (id) => {
-    navigate(`view/${id}`);
-  };
 
   useEffect(() => {
-    // console.log("newData", newData);
     getArtificialIntelligence()
       .then((res) => {
         setData(res?.data);
