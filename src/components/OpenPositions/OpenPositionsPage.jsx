@@ -297,7 +297,8 @@ export const OpenPositionsPage = () => {
                       </button>
                       <button
                         type="submit"
-                        onClick={() => setIsModalOpen(false)}
+                        // onClick={() => setIsModalOpen(false)}
+                        onClick={handleModalClose}
                         disabled={isLoading}
                         className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
                       >
