@@ -7,14 +7,21 @@ import config from "../../api/config";
 export const MobileAppCard = ({ data }) => {
   const navigate = useNavigate();
   const BASE_URL = config.BASE_URL;
-  console.log("data",data)
+  console.log("data", data);
   const cardLabels = [
     "Expertise",
     "Innovative Solutions",
     "Client Collaboration",
     "Customization",
   ];
-
+  const groupBy = (array, key) => {
+    return array.reduce((result, currentValue) => {
+      (result[currentValue[key]] = result[currentValue[key]] || []).push(
+        currentValue
+      );
+      return result;
+    }, {});
+  };
   return (
     <div>
       <div className="d-flex justify-content-center">
@@ -84,36 +91,47 @@ export const MobileAppCard = ({ data }) => {
                   </div>
                   <div className="flex flex-col mt-2">
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Tech Stack: </strong>
+                      <h1 className="text-heading text-xl font-bold">
+                        Tech Stack
+                      </h1>
                     </div>
-                    <div className="w-full flex flex-row flex-wrap justify-center gap-4 mt-8">
-                      {data?.techStack.map((option, index) => (
-                        <div className="block w-[20%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
-                          <h3
-                            className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
-                            style={{ height: "20px" }}
-                          >
-                            {option.name}:
-                          </h3>
-                          <p
-                            className="option-description text-gray-500 text-center mb-4"
-                            style={{ height: "48px" }}
-                          >
-                            {option.type}
-                          </p>
-                          <div
-                            className="w-full flex justify-center items-center"
-                            style={{ height: "20px" }}
-                          >
-                            <img
-                              src={`${BASE_URL}/file/${option?.image}`}
-                              alt={option.name}
-                              className="option-image w-8 h-8"
-                            />
+                    {data &&
+                      data.techStack &&
+                      data.techStack.length > 0 &&
+                      Object.entries(groupBy(data.techStack, "type")).map(
+                        ([type, options], index) => (
+                          <div key={index} className=" flex flex-row mt-8">
+                            <div className="w-[18%]">
+                              <strong style={{ color: "grey" }}>{type}:</strong>
+                            </div>
+                            <div className="w-[80%] flex flex-row flex-wrap justify-start gap-4 mt-2">
+                              {options.map((option, index) => (
+                                <div
+                                  key={index}
+                                  className="block w-[20%] p-6 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700"
+                                >
+                                  <p
+                                    className="option-description text-gray-500 text-center mb-4"
+                                    style={{ height: "48px" }}
+                                  >
+                                    {option.name}
+                                  </p>
+                                  <div
+                                    className="w-full flex justify-center items-center"
+                                    style={{ height: "20px" }}
+                                  >
+                                    <img
+                                      src={`${BASE_URL}/file/${option?.image}`}
+                                      alt={option.name}
+                                      className="option-image w-8 h-8"
+                                    />
+                                  </div>
+                                </div>
+                              ))}
+                            </div>
                           </div>
-                        </div>
-                      ))}
-                    </div>
+                        )
+                      )}
                   </div>
                 </div>
               </div>
