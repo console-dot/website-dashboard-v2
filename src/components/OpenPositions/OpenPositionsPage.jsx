@@ -131,22 +131,17 @@ export const OpenPositionsPage = () => {
 
   return (
     <>
-      <div
-        className="w-[90%] m-auto"
-        style={{
-          display: "flex",
-          justifyContent: "space-between",
-          alignItems: "center",
-        }}
-      >
+      <div className="flex flex-row w-[90%] m-auto justify-between items-center">
         <h2 className="text-black text-2xl font-bold">Open Positions Page</h2>
-        <div className="z-10">
-          <Button
-            text={"Add Position"}
-            icon={<FaPlus />}
-            click={handleAddPosition}
-          />
-        </div>
+
+        <button
+          type="button"
+          onClick={handleAddPosition}
+          className="text-white btn btn-success"
+        >
+          <FaPlus />
+          Add Position
+        </button>
       </div>
 
       {/* Modal */}
@@ -156,7 +151,7 @@ export const OpenPositionsPage = () => {
             className="relative w-[90%] my-6 mx-auto max-w-sm"
             ref={modalRef}
           >
-            <div className="border-1 rounded-lg shadow-lg relative flex flex-col w-full bg-slate-200 border-dashed border-emerald-500 outline-none focus:outline-none">
+            <div className="bg-white border border-dashed flex flex-col border-custom-purple  mt-6">
               <div className="relative p-6 flex-auto">
                 <form
                   className="flex flex-col w-full"
@@ -167,7 +162,7 @@ export const OpenPositionsPage = () => {
                     <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center">
                       Add New Position
                     </h1>
-                    <div className="grid grid-cols-2 gap-4">
+                    <div className="grid grid-cols-1 gap-2">
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
                           Job Type
@@ -222,7 +217,7 @@ export const OpenPositionsPage = () => {
                       </div>
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                          Job Type
+                          Employment Type
                         </label>
                         <input
                           className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -248,19 +243,6 @@ export const OpenPositionsPage = () => {
                       </div>
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                          No Of Request
-                        </label>
-                        <input
-                          className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                          type="text"
-                          name="noOfRequest"
-                          onChange={handleChange}
-                          value={formData?.noOfRequest}
-                          placeholder="noOfRequest"
-                        />
-                      </div>
-                      <div>
-                        <label className="text-webDescrip font-semibold mt-4">
                           Capacity
                         </label>
                         <input
@@ -276,37 +258,24 @@ export const OpenPositionsPage = () => {
                     </div>
                     {/* introduction End */}
 
-                    <div className="w-full flex justify-center items-center mt-4 mb-4">
+                    <div className="mt-4 flex gap-2 justify-center">
                       <button
+                        className="text-white btn btn-accent btn-sm opacity-70 hover:opacity-100"
                         type="submit"
                         onClick={handleModalSubmit}
                         disabled={isLoading}
-                        className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
                       >
-                        {isLoading ? (
-                          <div className="absolute inset-0 flex items-center justify-center">
-                            <RiLoader3Line className="animate-spin h-5 w-5 mr-3" />
-
-                            <span>Submitting</span>
-                          </div>
-                        ) : (
-                          <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
-                            Submit
-                          </p>
-                        )}
+                        Update
                       </button>
                       <button
+                        className="text-white btn btn-error btn-sm opacity-70 hover:opacity-100"
                         type="submit"
                         // onClick={() => setIsModalOpen(false)}
                         onClick={handleModalClose}
                         disabled={isLoading}
-                        className={`text-white text-[16px] w-[300px] h-[48px] px-5 bg-gradient-to-r from-fromclr to-toclr hover:bg-gradient-to-r hover:from-toclr hover:to-fromclr rounded-full flex justify-center items-center focus:outline-none relative`}
                       >
-                        <p className="font-Lato text-base font-medium leading-[28px] tracking-normal">
-                          Cancel
-                        </p>
+                        Close
                       </button>
-                      <ToastContainer />
                     </div>
                   </div>
                 </form>

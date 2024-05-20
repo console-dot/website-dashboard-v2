@@ -23,7 +23,7 @@ export const OpenPositionsCard = ({ data, onDelete, onEdit }) => {
                 {/* Introduction */}
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Open Position
+                    Open Position for  {data?.jobType.toUpperCase()}
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
