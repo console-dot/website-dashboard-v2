@@ -21,13 +21,12 @@ export const OpenPositionsPage = () => {
 
   const [positions, setPositions] = useState([]);
   const [formData, setFormData] = useState({
-    jobType: "",
+    jobCategory: "",
     experience: "",
     noOfPositions: "",
     qualifications: "",
     employmentType: "",
     designation: "",
-    noOfRequest: "",
     capacity: "",
   });
 
@@ -52,13 +51,12 @@ export const OpenPositionsPage = () => {
     setIsModalOpen(false);
     setEditingId(null);
     setFormData({
-      jobType: "",
+      jobCategory: "",
       experience: "",
       noOfPositions: "",
       qualifications: "",
       employmentType: "",
       designation: "",
-      noOfRequest: "",
       capacity: "",
     });
   };
@@ -165,15 +163,15 @@ export const OpenPositionsPage = () => {
                     <div className="grid grid-cols-1 gap-2">
                       <div>
                         <label className="text-webDescrip font-semibold mt-4">
-                          Job Type
+                          Category
                         </label>
                         <input
                           className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
                           type="text"
-                          name="jobType"
+                          name="jobCategory"
                           onChange={handleChange}
-                          value={formData?.jobType}
-                          placeholder="Job Type"
+                          value={formData?.jobCategory}
+                          placeholder="Category"
                         />
                       </div>
                       <div>
@@ -265,7 +263,7 @@ export const OpenPositionsPage = () => {
                         onClick={handleModalSubmit}
                         disabled={isLoading}
                       >
-                        Update
+                        Submit
                       </button>
                       <button
                         className="text-white btn btn-error btn-sm opacity-70 hover:opacity-100"

@@ -23,15 +23,15 @@ export const OpenPositionsCard = ({ data, onDelete, onEdit }) => {
                 {/* Introduction */}
                 <div className="w-full flex flex-col gap-2">
                   <h1 className="text-heading text-xl font-bold">
-                    Open Position for  {data?.jobType.toUpperCase()}
+                    Open Position for {data?.jobCategory?.toUpperCase()}
                   </h1>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Job Type: </strong>
+                      <strong style={{ color: "grey" }}>Category: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
-                        {data?.jobType}
+                        {data?.jobCategory}
                       </span>
                     </div>
                   </div>
@@ -59,9 +59,7 @@ export const OpenPositionsCard = ({ data, onDelete, onEdit }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        Qualification:{" "}
-                      </strong>
+                      <strong style={{ color: "grey" }}>Qualification: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -93,9 +91,7 @@ export const OpenPositionsCard = ({ data, onDelete, onEdit }) => {
                   </div>
                   <div className="flex" style={{ width: "70%" }}>
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>
-                        No Of Request:{" "}
-                      </strong>
+                      <strong style={{ color: "grey" }}>No Of Request: </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
