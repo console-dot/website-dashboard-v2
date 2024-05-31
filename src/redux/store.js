@@ -1,34 +1,36 @@
 import { configureStore } from "@reduxjs/toolkit";
-import counterSlice from "./counterSlice";
-import loginSlice from "./loginSlice";
-import aiSlice from "./aiSlice";
-import blockChainSlice from "./blockChainSlice";
-import arvrSlice from "./arvrSlice";
-import uiuxSlice from "./uiuxSlice";
-import openpositionSlice from "./openpositionSlice";
-import landingPageSlice from "./landingPageSlice";
-import customServiceSlice from "./customServiceSlice";
-import offShoreSlice from "./offShoreSlice";
-import offshoreserviceSlice from "./offshoreserviceSlice";
-import mobdevSlice from "./mobdevSlice";
-import webdevSlice from "./webdevSlice";
-import productresearchSlice from "./productresearchSlice";
+import counterReducer from "./counterSlice";
+import loginReducer from "./loginSlice";
+import aiReducer from "./aiSlice";
+import blockChainReducer from "./blockChainSlice";
+import arvrReducer from "./arvrSlice";
+import uiuxReducer from "./uiuxSlice";
+import openpositionReducer from "./openpositionSlice";
+import landingPageReducer from "./landingPageSlice";
+import customServiceReducer from "./customServiceSlice";
+import offShoreReducer from "./offShoreSlice";
+import offshoreserviceReducer from "./offshoreserviceSlice";
+import mobdevReducer from "./mobdevSlice";
+import webdevReducer from "./webdevSlice";
+import productresearchReducer from "./productresearchSlice";
+import caseStudiesReducer from "./caseStudiesSlice";
 
 export const store = configureStore({
   reducer: {
-    counter: counterSlice,
-    login: loginSlice,
-    ai: aiSlice,
-    blockChain: blockChainSlice,
-    arvr: arvrSlice,
-    uiux: uiuxSlice,
-    openPosition: openpositionSlice,
-    landingPage: landingPageSlice,
-    customService: customServiceSlice,
-    offShore: offShoreSlice,
-    offshoreservice:offshoreserviceSlice,
-    mobdev: mobdevSlice, 
-    webdev:webdevSlice,
-    productresearch: productresearchSlice,
+    counter: counterReducer,
+    login: loginReducer,
+    ai: aiReducer,
+    blockChain: blockChainReducer,
+    arvr: arvrReducer,
+    uiux: uiuxReducer,
+    openPosition: openpositionReducer,
+    landingPage: landingPageReducer,
+    customService: customServiceReducer,
+    offShore: offShoreReducer,
+    offshoreservice: offshoreserviceReducer,
+    mobdev: mobdevReducer, 
+    webdev: webdevReducer,
+    productresearch: productresearchReducer,
+    caseStudies: caseStudiesReducer,
   },
 });

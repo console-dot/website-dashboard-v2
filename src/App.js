@@ -27,6 +27,8 @@ import ArVrPageEdit from "./components/ArVr/ArVrPageEdit";
 import { UiUxPage } from "./components/UiUx/UiUxPage";
 import UiUxPageEdit from "./components/UiUx/UiUxPageEdit";
 import { OpenPositionsPage } from "./components/OpenPositions/OpenPositionsPage";
+import { CaseStudiesPage } from "./components/CaseStudies/CaseStudiesPage";
+import CaseStudiesPageEdit from "./components/CaseStudies/CaseStudiesPageEdit";
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
   return (
@@ -82,9 +84,9 @@ function App() {
               <Route path="/ArVrPageEdit/edit/:id" element={<ArVrPageEdit />} />
               <Route path="/uiux" element={<UiUxPage />} />
               <Route path="/UiUxPageEdit/edit/:id" element={<UiUxPageEdit />} />
-              {/* <Route path="/casestudies" element={<UiUxPage/>}/>
-              <Route path="/casestudiesEdit/edit/:id" element={<UiUxPageEdit/>}/>
-              <Route path="/jobcategories" element={<UiUxPage/>}/>
+              <Route path="/casestudies" element={<CaseStudiesPage/>}/>
+              <Route path="/casestudiesEdit/edit/:id" element={<CaseStudiesPageEdit/>}/>
+              {/* <Route path="/jobcategories" element={<UiUxPage/>}/>
               <Route path="/jobcategoriesEdit/edit/:id" element={<UiUxPageEdit/>}/> */}
               <Route path="/openpositions" element={<OpenPositionsPage />} />
               <Route path="/logout" element={<Logout />} />
