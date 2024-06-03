@@ -170,7 +170,7 @@ export const OpenPositionsPage = () => {
                           type="text"
                           name="jobCategory"
                           onChange={handleChange}
-                          value={formData?.jobCategory}
+                          value={formData?.jobCategory?.toLowerCase()}
                           placeholder="Category"
                         />
                       </div>
@@ -222,7 +222,7 @@ export const OpenPositionsPage = () => {
                           type="text"
                           name="employmentType"
                           onChange={handleChange}
-                          value={formData?.employmentType}
+                          value={formData?.employmentType?.toLowerCase()}
                           placeholder="Employment Type"
                         />
                       </div>

@@ -3,11 +3,11 @@ import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaPen } from "react-icons/fa";
 import config from "../../api/config";
+import { truncateString } from "../../utils";
 
 export const WebDevelopmentCard = ({ data }) => {
   const BASE_URL = config.BASE_URL;
   const navigate = useNavigate();
-  console.log(data);
   const cardLabels = [
     "User-Centric Design",
     "Cross-Platform Compatibility",
@@ -39,7 +39,7 @@ export const WebDevelopmentCard = ({ data }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Web Development Model
                   </h1>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}> Description: </strong>
                     </div>
@@ -49,7 +49,7 @@ export const WebDevelopmentCard = ({ data }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Proposition: </strong>
                     </div>
@@ -62,19 +62,21 @@ export const WebDevelopmentCard = ({ data }) => {
                   <strong style={{ color: "grey" }}>Why Choose Us:</strong>
                   <div className="w-full flex flex-row flex-wrap justify-center">
                     {data?.whyChooseUs.map((option, index) => (
-                      <div className="block w-[30%] h-[30%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4">
-                        <h3
-                          className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
-                          style={{ height: "20px" }}
-                        >
-                          {cardLabels[index]}:
-                        </h3>
-                        <p
-                          className="option-description text-gray-500 text-center mb-4"
-                          style={{ height: "100px" }}
-                        >
-                          {option}
-                        </p>
+                      <div className="flex flex-col gap-4 w-[30%] h-[30%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4">
+                        <div className="w-full h-[80%]">
+                          <h3
+                            className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
+                            style={{ height: "20px" }}
+                          >
+                            {cardLabels[index]}:
+                          </h3>
+                          <p
+                            className="option-description text-gray-500 text-center mb-4"
+                            style={{ height: "100px" }}
+                          >
+                            {truncateString(option, 150)}
+                          </p>
+                        </div>
                         <div
                           className="w-full flex justify-center items-center"
                           style={{ height: "20px" }}

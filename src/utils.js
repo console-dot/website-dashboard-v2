@@ -19,3 +19,8 @@ export const toJson = (formData) => {
   });
   return obj;
 };
+
+export const truncateString = (string, maxLength) => {
+  if (string.length <= maxLength) return string;
+  return string.slice(0, maxLength) + "...";
+};
