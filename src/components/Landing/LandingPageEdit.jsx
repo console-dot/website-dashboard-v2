@@ -662,10 +662,20 @@ export default function LandingPageEdit() {
             />
           </div>
           <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Social Links
-            </label>
-            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4">
+            <div className="flex justify-between items-center mb-2">
+              <label className="text-webDescrip font-semibold ">
+                Social Links
+              </label>
+              <button
+                type="button"
+                onClick={openModalSocialLink}
+                className="text-white btn btn-success"
+              >
+                <FaPlus />
+                Add
+              </button>
+            </div>
+            <div className="w-full flex flex-col justify-start items-center border border-dashed border-custom-purple rounded-lg p-4 mb-4">
               <div className="w-full flex gap-2 justify-between mb-4 flex-col ">
                 {socialLinks &&
                   socialLinks.length > 0 &&
@@ -695,23 +705,13 @@ export default function LandingPageEdit() {
                   ))}
               </div>
             </div>
-            <div className="w-[100%] flex justify-center items-center">
-              <button
-                className="bg-blue-500 text-white px-4 py-2 rounded-full mr-2 hover:bg-blue-600"
-                type="button"
-                text={"Add Social Link"}
-                icon={<FaPlus />}
-                onClick={openModalSocialLink}
-              >
-                Add Social Link
-              </button>
-            </div>
           </div>
           {/* Social link modal */}
           {isModalOpenSocialLink && (
             <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
               <div className="bg-white w-[30%] h-[35%] flex flex-col justify-center p-4 rounded-lg">
                 <h2 className="text-lg font-semibold mb-2">Add Social Link</h2>
+
                 <input
                   type="text"
                   value={socialLinkName}
@@ -828,11 +828,14 @@ export default function LandingPageEdit() {
         {/* offshore start */}
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Offshore
+            Offshore Comparison
           </h1>
           <div className="mt-4">
-            <label className="text-webDescrip font-semibold mt-4">
-              Offshore Comparison
+            <label className="text-webDescrip font-semibold mt-4 flex justify-between">
+              Offshore Comparison{" "}
+              <small className="text-red-500">
+                (Note: Editable only on Offshore Page)
+              </small>
             </label>
             <div className="w-full flex flex-row justify-start  border border-dashed border-custom-purple rounded-lg p-4">
               {formData.offshoreComparison.map((comparison, index) => (

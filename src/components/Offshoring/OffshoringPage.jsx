@@ -23,7 +23,6 @@ export const OffshoringPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-console.log('data',data)
   return (
     <>
       <div

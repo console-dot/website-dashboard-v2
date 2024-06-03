@@ -286,8 +286,6 @@ export default function ArVrPageEdit() {
                 Add
               </button>
             </div>
-
-            {console.log("formData", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">
               AR Development
             </div>
