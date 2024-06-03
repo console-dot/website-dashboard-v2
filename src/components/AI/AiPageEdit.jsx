@@ -264,8 +264,6 @@ export default function AiPageEdit() {
                 Add
               </button>
             </div>
-
-            {console.log("techstack", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">
               Machine Learning Frameworks
             </div>

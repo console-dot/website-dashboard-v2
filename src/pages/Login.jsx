@@ -17,7 +17,7 @@ export default function Login() {
         if (res.response) {
           return;
         }
-        console.log("res", res);
+        
         localStorage.setItem("@dashboard-token", res?.data?.token);
         localStorage.setItem(
           "@dashboard-user",

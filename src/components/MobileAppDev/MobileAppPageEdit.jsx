@@ -281,7 +281,6 @@ export default function MobileAppPageEdit() {
               </button>
             </div>
 
-            {console.log("formData", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">Frontend</div>
             {formData?.techStack?.map((item, index) =>
               item?.type === "Frontend" ? (

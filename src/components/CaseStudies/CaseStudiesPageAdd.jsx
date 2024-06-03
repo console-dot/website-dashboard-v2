@@ -211,7 +211,7 @@ export default function CaseStudiesPageAdd() {
             <button
               type="button"
               onClick={handleAddTech}
-              className="ml-2 bg-blue-500 text-white px-3 py-2 rounded"
+              className="ml-2 btn btn-success text-white px-3 py-2 rounded"
             >
               Add
             </button>

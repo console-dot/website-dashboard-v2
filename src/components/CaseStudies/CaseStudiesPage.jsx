@@ -24,7 +24,7 @@ export const CaseStudiesPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log("data", data);
+ 
 
   return (
     <>

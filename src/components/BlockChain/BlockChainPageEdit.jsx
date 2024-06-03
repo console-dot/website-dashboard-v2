@@ -279,8 +279,6 @@ export default function BlockChainPageEdit() {
                 Add
               </button>
             </div>
-
-            {console.log("formData", formData?.techStack)}
             <div className="w-full text-webDescrip font-semibold">
               Blockchain Platforms
             </div>
