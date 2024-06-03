@@ -9,12 +9,15 @@ import {
 } from "../../redux/caseStudiesSlice";
 import { editcaseStudies } from "../../api";
 import config from "../../api/config";
+import { RxCross1 } from "react-icons/rx";
+import { addFile } from "../../api/file";
 
 export default function CaseStudiesPageEdit() {
   const BASE_URL = config.BASE_URL;
   const caseStudiesData = useSelector(selectCaseStudiesDetails);
   const [isLoading, setIsLoading] = useState(false);
   const [formData, setFormData] = useState({});
+  const [newTech, setNewTech] = useState("");
   const [newImages, setNewImages] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
@@ -25,7 +28,6 @@ export default function CaseStudiesPageEdit() {
     }
   }, [caseStudiesData]);
 
-  // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
     setIsLoading(true);
@@ -39,19 +41,17 @@ export default function CaseStudiesPageEdit() {
           })
           .catch((err) => console.log(err));
 
-        // Timeout
         setTimeout(() => {
           setIsLoading(false);
           toast.success("Form submitted", {
-            autoClose: 1500, // close after 1.5 seconds
-            onClose: () => navigate("/caseStudies"), // navigate after closing
+            autoClose: 1500,
+            onClose: () => navigate("/caseStudies"),
           });
         }, 1500);
       }
     }
   };
 
-  // Handle form values
   const handleChange = (e) => {
     const { name, value } = e.target;
     setFormData({
@@ -60,15 +60,66 @@ export default function CaseStudiesPageEdit() {
     });
   };
 
-  // Handle file change
   const handleFileChange = (e) => {
-    const files = Array.from(e.target.files);
-    setNewImages(files);
+    const newImage = e.target.files[0];
+    addFile(newImage)
+      .then((res) => {
+        if (res?.status == 201) {
+          setFormData((prevData) => ({
+            ...prevData,
+            images: [...(prevData.images || []), res?.data],
+          }));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
 
-    const filePreviews = files.map((file) => URL.createObjectURL(file));
+  const handleRemoveProjectSnippets = (index) => {
     setFormData((prevData) => ({
       ...prevData,
-      images: [...(prevData.images || []), ...filePreviews],
+      images: prevData.images.filter((_, i) => i !== index),
+    }));
+  };
+
+  const handleProjectImage = (e) => {
+    const newImage = e.target.files[0];
+    addFile(newImage)
+      .then((res) => {
+        if (res?.status == 201) {
+          setFormData((prevData) => ({
+            ...prevData,
+            projectImage: res?.data,
+          }));
+        }
+      })
+      .catch((err) => console.log(err));
+  };
+
+  const handleRemoveProjectImage = () => {
+    setFormData((prevData) => ({
+      ...prevData,
+      projectImage: null,
+    }));
+  };
+
+  const handleNewTechChange = (e) => {
+    setNewTech(e.target.value);
+  };
+
+  const handleAddTech = () => {
+    if (newTech.trim() !== "") {
+      setFormData((prevData) => ({
+        ...prevData,
+        tech: [...prevData.tech, newTech],
+      }));
+      setNewTech("");
+    }
+  };
+
+  const handleRemoveTech = (index) => {
+    setFormData((prevData) => ({
+      ...prevData,
+      tech: prevData.tech.filter((_, i) => i !== index),
     }));
   };
 
@@ -139,21 +190,71 @@ export default function CaseStudiesPageEdit() {
             placeholder="Services"
           />
           <label className="text-webDescrip font-semibold mt-4">Tech</label>
+          <div className="flex items-center">
+            <input
+              className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+              type="text"
+              name="newTech"
+              id="newTech"
+              onChange={handleNewTechChange}
+              value={newTech}
+              placeholder="Add Tech"
+            />
+            <button
+              type="button"
+              onClick={handleAddTech}
+              className="ml-2 bg-blue-500 text-white px-3 py-2 rounded"
+            >
+              Add
+            </button>
+          </div>
+          <div className="flex mt-2">
+            {formData.tech?.map((techItem, index) => (
+              <div key={index} className="flex items-center">
+                <div className="flex justify-center items-center gap-2 bg-gray-200 text-gray-800 px-2 py-1 rounded mr-2">
+                  <span>{techItem}</span>
+                  <span
+                    className="cursor-pointer"
+                    onClick={() => handleRemoveTech(index)}
+                  >
+                    <RxCross1 />
+                  </span>
+                </div>
+              </div>
+            ))}
+          </div>
+          <label className="text-webDescrip font-semibold mt-4">
+            Project Image
+          </label>
+          <div className="flex justify-center gap-6 w-full mt-4">
+            {formData?.projectImage ? (
+              <div className="flex">
+                <img
+                  src={`${BASE_URL}/file/${formData?.projectImage}`}
+                  style={{ maxWidth: "100px", maxHeight: "100px" }}
+                />
+                <span
+                  className="cursor-pointer"
+                  onClick={() => handleRemoveProjectImage()}
+                >
+                  <RxCross1 />
+                </span>
+              </div>
+            ) : null}
+          </div>
           <input
+            type="file"
+            multiple
+            accept="image/*"
+            onChange={handleProjectImage}
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            type="text"
-            name="tech"
-            id="tech"
-            onChange={handleChange}
-            value={formData?.tech}
-            placeholder="Tech"
           />
           <label className="text-webDescrip font-semibold mt-4">
             Project Snippets
           </label>
           <div className="flex justify-center gap-6 w-full mt-4">
             {formData?.images?.map((image, index) => (
-              <div key={index}>
+              <div className="flex" key={index}>
                 <img
                   src={
                     image.startsWith("blob:")
@@ -163,12 +264,15 @@ export default function CaseStudiesPageEdit() {
                   alt={`${formData.title} snippet ${index + 1}`}
                   style={{ maxWidth: "100px", maxHeight: "100px" }}
                 />
+                <span
+                  className="cursor-pointer"
+                  onClick={() => handleRemoveProjectSnippets(index)}
+                >
+                  <RxCross1 />
+                </span>
               </div>
             ))}
           </div>
-          <label className="text-webDescrip font-semibold mt-4">
-            Upload New Images
-          </label>
           <input
             type="file"
             multiple
@@ -178,7 +282,6 @@ export default function CaseStudiesPageEdit() {
           />
         </div>
 
-        {/* Submit button */}
         <div className="w-full flex justify-center items-center mt-4 mb-4">
           <button
             type="submit"

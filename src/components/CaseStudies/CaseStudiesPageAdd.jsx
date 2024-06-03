@@ -140,7 +140,7 @@ export default function CaseStudiesPageAdd() {
       >
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
-            Case Study Edit
+            Add New Case Study 
           </h1>
           <label className="text-webDescrip font-semibold">Title</label>
           <input

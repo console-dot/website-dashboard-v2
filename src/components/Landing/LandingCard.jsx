@@ -106,7 +106,7 @@ export const LandingCard = ({ data, key, value }) => {
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Social Links: </strong>
                     </div>
-                    <div className="w-[50%]">
+                    <div className="w-[50%] flex justify-start flex-col">
                       {data?.intro?.socialLinks &&
                         data?.intro?.socialLinks?.map((link) => (
                           <span className="text-black text-sm" key={link?._id}>
