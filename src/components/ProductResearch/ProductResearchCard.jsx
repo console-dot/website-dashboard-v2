@@ -2,10 +2,10 @@ import React from "react";
 import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaPen } from "react-icons/fa";
+import { truncateString } from "../../utils";
 
 export const ProductResearchCard = ({ data }) => {
   const navigate = useNavigate();
-  console.log("productResearchData", data);
   const cardLabels = [
     "Holistic Approach",
     "Proven Success",
@@ -30,7 +30,7 @@ export const ProductResearchCard = ({ data }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Product Research Model
                   </h1>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}> Description: </strong>
                     </div>
@@ -47,9 +47,11 @@ export const ProductResearchCard = ({ data }) => {
                         Client:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.client[0]}
-                        <br />
-                        {data?.keyComponents[0]?.client[1]}
+                        <ul className="list-disc">
+                          <li>{data?.keyComponents[0]?.client[0]}</li>
+                          <br />
+                          <li>{data?.keyComponents[0]?.client[1]}</li>
+                        </ul>
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -57,9 +59,11 @@ export const ProductResearchCard = ({ data }) => {
                         Feasibility:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.feasibility[0]}
-                        <br />
-                        {data?.keyComponents[0]?.feasibility[1]}
+                        <ul className="list-disc">
+                          <li>{data?.keyComponents[0]?.feasibility[0]}</li>
+                          <br />
+                          <li>{data?.keyComponents[0]?.feasibility[1]}</li>
+                        </ul>
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -67,9 +71,11 @@ export const ProductResearchCard = ({ data }) => {
                         Market Analysis:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.marketAnalysis[0]}
-                        <br />
-                        {data?.keyComponents[0]?.marketAnalysis[1]}
+                        <ul className="list-disc">
+                          <li>{data?.keyComponents[0]?.marketAnalysis[0]}</li>
+                          <br />
+                          <li>{data?.keyComponents[0]?.marketAnalysis[1]}</li>
+                        </ul>
                       </div>
                     </div>
                     <div className="block w-72 p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700">
@@ -77,9 +83,11 @@ export const ProductResearchCard = ({ data }) => {
                         Roadmap:
                       </h3>
                       <div className="option-description text-gray-500">
-                        {data?.keyComponents[0]?.roadMap[0]}
-                        <br />
-                        {data?.keyComponents[0]?.roadMap[1]}
+                        <ul className="list-disc">
+                          <li>{data?.keyComponents[0]?.roadMap[0]}</li>
+                          <br />
+                          <li>{data?.keyComponents[0]?.roadMap[1]}</li>
+                        </ul>
                       </div>
                     </div>
                   </div>
@@ -87,19 +95,21 @@ export const ProductResearchCard = ({ data }) => {
                   <strong style={{ color: "grey" }}>Why Choose Us:</strong>
                   <div className="w-full flex flex-row flex-wrap justify-center">
                     {data?.whyChooseUs.map((option, index) => (
-                      <div className="block w-[30%] h-[30%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4">
-                        <h3
-                          className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
-                          style={{ height: "20px" }}
-                        >
-                          {cardLabels[index]}:
-                        </h3>
-                        <p
-                          className="option-description text-gray-500 text-center mb-4"
-                          style={{ height: "100px" }}
-                        >
-                          {option}
-                        </p>
+                      <div className="flex flex-col gap-4 w-[30%] h-[30%] p-6 mb-4 bg-white border border-gray-200 rounded-lg shadow hover:bg-gray-100 dark:bg-gray-800 dark:border-gray-700 dark:hover:bg-gray-700 mr-4 over">
+                        <div className="w-full h-[80%]">
+                          <h3
+                            className="option-title text-gray-500 text-lg font-semibold text-center mb-2"
+                            style={{ height: "20px" }}
+                          >
+                            {cardLabels[index]}:
+                          </h3>
+                          <p
+                            className="option-description text-gray-500 text-center mb-4"
+                            style={{ height: "100px" }}
+                          >
+                            {truncateString(option, 150)}
+                          </p>
+                        </div>
                         <div
                           className="w-full flex justify-center items-center"
                           style={{ height: "20px" }}

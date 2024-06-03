@@ -30,7 +30,10 @@ export const LandingCard = ({ data, key, value }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Introduction
                   </h1>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>
                         Hero Description:{" "}
@@ -42,7 +45,10 @@ export const LandingCard = ({ data, key, value }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>
                         Footer Description:{" "}
@@ -54,7 +60,10 @@ export const LandingCard = ({ data, key, value }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Email: </strong>
                     </div>
@@ -64,7 +73,10 @@ export const LandingCard = ({ data, key, value }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Phone: </strong>
                     </div>
@@ -74,7 +86,10 @@ export const LandingCard = ({ data, key, value }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Address: </strong>
                     </div>
@@ -84,7 +99,10 @@ export const LandingCard = ({ data, key, value }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Social Links: </strong>
                     </div>
@@ -102,7 +120,10 @@ export const LandingCard = ({ data, key, value }) => {
                         ))}
                     </div>
                   </div>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>
                         Work Experience:{" "}
@@ -150,7 +171,10 @@ export const LandingCard = ({ data, key, value }) => {
                 {/* About */}
                 <div className="w-full flex flex-col gap-2 mt-4">
                   <h1 className="text-heading text-xl font-bold">About</h1>
-                  <div className="flex" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>
                         About Description:
@@ -197,12 +221,8 @@ export const LandingCard = ({ data, key, value }) => {
                             <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                               {items?.fullName}
                             </td>
-                            <td className="px-6 py-1 ">
-                              {items?.designation}
-                            </td>
-                            <td className="px-6 py-1 ">
-                              {items?.description}
-                            </td>
+                            <td className="px-6 py-1 ">{items?.designation}</td>
+                            <td className="px-6 py-1 ">{items?.description}</td>
                             <td className="px-6 py-1 ">
                               <img
                                 src={`${BASE_URL}/file/${items?.image}`}
@@ -245,9 +265,7 @@ export const LandingCard = ({ data, key, value }) => {
                             <td className="px-6 py-1 font-medium text-gray-900 whitespace-nowrap dark:text-white">
                               {items?.name}
                             </td>
-                            <td className="px-6 py-1 ">
-                              {items?.description}
-                            </td>
+                            <td className="px-6 py-1 ">{items?.description}</td>
                             <td className="px-6 py-1 ">
                               <img
                                 src={`${BASE_URL}/file/${items?.image}`}
@@ -263,7 +281,7 @@ export const LandingCard = ({ data, key, value }) => {
                 </div>
 
                 {/* Offshore */}
-                <div className="w-full flex flex-col gap-2 mt-4">
+                <div className="border-t border-solid border-custom-purple w-full flex flex-col gap-2 mt-4">
                   <h1 className="text-heading text-xl font-bold">
                     Offshore Models
                   </h1>

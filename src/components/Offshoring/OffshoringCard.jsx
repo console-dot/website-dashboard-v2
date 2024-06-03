@@ -12,11 +12,11 @@ export const OffshoringCard = ({ data }) => {
         <h1 className="text-heading text-xl font-bold">
           Offshoring Services Model
         </h1>
-        <div className="mb-2">
+        <div className="border-b border-solid border-custom-purple mb-2">
           <strong style={{ color: "grey" }}>Top Description:</strong>
           <p className="text-black text-sm">{data?.topDescription}</p>
         </div>
-        <div className="mb-2">
+        <div className="border-b border-solid border-custom-purple mb-2">
           <strong style={{ color: "grey" }}>Bottom Description:</strong>
           <p className="text-black text-sm">{data?.bottomDescription}</p>
         </div>

@@ -29,6 +29,7 @@ import UiUxPageEdit from "./components/UiUx/UiUxPageEdit";
 import { OpenPositionsPage } from "./components/OpenPositions/OpenPositionsPage";
 import { CaseStudiesPage } from "./components/CaseStudies/CaseStudiesPage";
 import CaseStudiesPageEdit from "./components/CaseStudies/CaseStudiesPageEdit";
+import CaseStudiesPageAdd from "./components/CaseStudies/CaseStudiesPageAdd";
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
   return (
@@ -66,8 +67,6 @@ function App() {
                 path="/WebDevelopmentPageEdit/edit/:id"
                 element={<WebDevelopmentPageEdit />}
               />
-              <Route path="/faq" element={<FaqPage />} />
-
               <Route path="/mobileApp" element={<MobileAppPage />} />
               <Route
                 path="/MobileAppPageEdit/edit/:id"
@@ -84,10 +83,16 @@ function App() {
               <Route path="/ArVrPageEdit/edit/:id" element={<ArVrPageEdit />} />
               <Route path="/uiux" element={<UiUxPage />} />
               <Route path="/UiUxPageEdit/edit/:id" element={<UiUxPageEdit />} />
-              <Route path="/casestudies" element={<CaseStudiesPage/>}/>
-              <Route path="/casestudiesEdit/edit/:id" element={<CaseStudiesPageEdit/>}/>
-              {/* <Route path="/jobcategories" element={<UiUxPage/>}/>
-              <Route path="/jobcategoriesEdit/edit/:id" element={<UiUxPageEdit/>}/> */}
+              <Route path="/faq" element={<FaqPage />} />
+              <Route path="/casestudies" element={<CaseStudiesPage />} />
+              <Route
+                path="/case-studies-new"
+                element={<CaseStudiesPageAdd />}
+              />
+              <Route
+                path="/casestudiesEdit/edit/:id"
+                element={<CaseStudiesPageEdit />}
+              />
               <Route path="/openpositions" element={<OpenPositionsPage />} />
               <Route path="/logout" element={<Logout />} />
             </Routes>

@@ -5,6 +5,7 @@ import { useDispatch } from "react-redux";
 import { getcaseStudiespage } from "../../api";
 import { setCaseStudiesData } from "../../redux";
 import { CaseStudiesCard } from "./CaseStudiesCard";
+import { FaPlus } from "react-icons/fa";
 
 export const CaseStudiesPage = () => {
   const [data, setData] = useState();
@@ -23,7 +24,7 @@ export const CaseStudiesPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
-  console.log("data", data)
+  console.log("data", data);
 
   return (
     <>
@@ -35,9 +36,17 @@ export const CaseStudiesPage = () => {
           alignItems: "center",
         }}
       >
-        <h2 className="text-black text-2xl font-bold">
-          Case Studies Page
-        </h2>
+        <h2 className="text-black text-2xl font-bold">Case Studies Page</h2>
+        <button
+          type="button"
+          onClick={() => {
+            navigate(`/case-studies-new`);
+          }}
+          className="text-white btn btn-success"
+        >
+          <FaPlus />
+          Add Case Study
+        </button>
         {/* add add button and call the add api to add the case study and should open the modal on add button and ask the user to enter that data  */}
       </div>
 

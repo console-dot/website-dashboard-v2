@@ -467,6 +467,18 @@ export default function LandingPageEdit() {
           }
         })
         .catch((err) => console.log(err));
+    } else {
+      newItem.image = null;
+      addExpertiseMethod(newItem)
+        .then((res) => {
+          console.log("res", res);
+          // Add the new object to the array
+          setFormData((prevFormData) => ({
+            ...prevFormData,
+            expertise: [...prevFormData.expertise, res?.data],
+          }));
+        })
+        .catch((err) => console.log(err));
     }
     // Close Modal
     closeExpertiseModal();

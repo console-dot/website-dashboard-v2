@@ -78,11 +78,6 @@ export default function Navbar({ children }) {
       icon: <MdOutlineLibraryBooks size={25} />,
     },
     {
-      path: "/jobcategories",
-      name: "Job-Categories",
-      icon: <MdCategory   size={25} />,
-    },
-    {
       path: "/openpositions",
       name: "Open-Positions",
       icon: <MdOutlineCardTravel size={25} />,
