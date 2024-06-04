@@ -144,6 +144,16 @@ export default function CaseStudiesPageEdit() {
             value={formData?.title}
             placeholder="Case Study Title"
           />
+          <label className="text-webDescrip font-semibold">Project Link</label>
+          <input
+            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+            name="projectLink"
+            id="projectLink"
+            onChange={handleChange}
+            value={formData?.projectLink}
+            placeholder="Project Link"
+          />
           <label className="text-webDescrip font-semibold mt-4">
             Client Name
           </label>
