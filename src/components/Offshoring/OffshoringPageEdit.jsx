@@ -342,7 +342,7 @@ export default function OffshoringPageEdit() {
           <ToastContainer />
         </div>
       </form>
-      // For Advantage Modal
+  
       {isModalOpenAdvantage && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
           <div className="bg-white w-[40%] h-[20%] flex flex-col justify-center p-4 rounded-lg">
@@ -373,7 +373,7 @@ export default function OffshoringPageEdit() {
           </div>
         </div>
       )}
-      // For Comparison Modal
+      
       {isModalOpenComparison !== null && (
         <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
           <div className="bg-white w-[40%] h-[20%] flex flex-col justify-center p-4 rounded-lg">
