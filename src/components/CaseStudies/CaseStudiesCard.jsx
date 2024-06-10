@@ -29,8 +29,8 @@ export const CaseStudiesCard = ({ data }) => {
       toast.error("Failed to delete case study");
     }
   };
-  
 
+  console.log("data", data);
   return (
     <div>
       <div className="d-flex flex-wrap justify-content-center">
@@ -52,7 +52,10 @@ export const CaseStudiesCard = ({ data }) => {
                       <h1 className="text-heading text-xl font-bold">
                         {itemData.title}
                       </h1>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>
                             {" "}
@@ -65,7 +68,29 @@ export const CaseStudiesCard = ({ data }) => {
                           </span>
                         </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
+                        <div className="w-[50%]">
+                          <strong style={{ color: "grey" }}>Highlights:</strong>
+                        </div>
+                        <div className="w-[50%] flex flex-col">
+                          {itemData?.highlights.map((highlight, index) => (
+                            <span key={index} className="text-black text-sm">
+                              {highlight.heading} :{" "}
+                              <span className="text-webDescrip">
+                                {highlight.description}
+                              </span>
+                            </span>
+                          ))}
+                        </div>
+                      </div>
+
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>
                             {" "}
@@ -78,19 +103,29 @@ export const CaseStudiesCard = ({ data }) => {
                           </span>
                         </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
-                        <div className="w-[50%]">
+                      <div
+                        className="flex flex-col  border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
+                        {" "}
+                        <span className="text-custom-purple font-extrabold" >Client </span>
+                        <div className="flex flex-row">
+                        <div className="w-[50%] flex flex-col ">
                           <strong style={{ color: "grey" }}>
                             Client Name:{" "}
                           </strong>
                         </div>
                         <div className="w-[50%]">
                           <span className="text-black text-sm">
-                            {itemData.clientName}
+                            {itemData?.client[0]?.name}
                           </span>
                         </div>
+                        </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>
                             Project Duration:{" "}
@@ -102,7 +137,10 @@ export const CaseStudiesCard = ({ data }) => {
                           </span>
                         </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>Services: </strong>
                         </div>
@@ -112,17 +150,23 @@ export const CaseStudiesCard = ({ data }) => {
                           </span>
                         </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>Tech: </strong>
                         </div>
                         <div className="w-[50%]">
                           <span className="text-black text-sm">
-                            {itemData.tech.join(", ")}
+                            {/* {itemData.tech.join(", ")} */}
                           </span>
                         </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>
                             Project Image:{" "}
@@ -139,7 +183,10 @@ export const CaseStudiesCard = ({ data }) => {
                           />
                         </div>
                       </div>
-                      <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                      <div
+                        className="flex border-b border-solid border-custom-purple"
+                        style={{ width: "70%" }}
+                      >
                         <div className="w-[50%]">
                           <strong style={{ color: "grey" }}>
                             Project Snippets:{" "}
