@@ -459,7 +459,7 @@ export default function CaseStudiesPageEdit() {
             value={formData?.projectLink}
             placeholder="Project Link"
           />
-          
+
           <div>
             <label className="text-webDescrip font-semibold">Tags</label>
             <div className="flex justify-between items-center gap-2">
@@ -498,7 +498,14 @@ export default function CaseStudiesPageEdit() {
             </div>
           </div>
 
-          <label className="text-webDescrip font-semibold mt-4">Product</label>
+          <div className="flex justify-between">
+            <label className="text-webDescrip font-semibold mt-4">
+              Product
+            </label>
+            <small className="text-error mt-4">
+              Note: Type \n for next line
+            </small>
+          </div>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -508,7 +515,14 @@ export default function CaseStudiesPageEdit() {
             value={formData?.product}
             placeholder="Product"
           />
-          <label className="text-webDescrip font-semibold mt-4">Solution</label>
+          <div className="flex justify-between">
+            <label className="text-webDescrip font-semibold mt-4">
+              Solution
+            </label>
+            <small className="text-error mt-4">
+              Note: Type \n for next line
+            </small>
+          </div>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -539,9 +553,14 @@ export default function CaseStudiesPageEdit() {
               value={formData?.client?.[0]?.name || ""}
               placeholder="Client Name"
             />
-            <label className="text-webDescrip font-semibold mt-4">
-              Client Description
-            </label>
+            <div className="flex justify-between">
+              <label className="text-webDescrip font-semibold mt-4">
+                Client Description
+              </label>
+              <small className="text-error mt-4">
+                Note: Type \n for next line
+              </small>
+            </div>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
               name="clientDescription"
@@ -725,9 +744,14 @@ export default function CaseStudiesPageEdit() {
                 <FaPlus /> Add
               </button>
             </div>
-            <label className="text-webDescrip font-semibold ">
+            <div className="flex justify-between">
+            <label className="text-webDescrip font-semibold mt-4">
               Result Description
             </label>
+            <small className="text-error mt-4">
+              Note: Type \n for next line
+            </small>
+          </div>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
               name="results.description"
