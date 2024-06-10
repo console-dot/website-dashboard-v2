@@ -399,6 +399,7 @@ export default function CaseStudiesPageEdit() {
   const handleNewTagsChange = (e) => {
     setNewTags(e.target.value);
   };
+
   const handleAddTags = () => {
     if (newTags.trim() !== "") {
       setFormData((prevData) => ({
@@ -415,8 +416,6 @@ export default function CaseStudiesPageEdit() {
       tags: prevData.tags.filter((_, i) => i !== index),
     }));
   };
-
-  console.log("formData", formData);
 
   return (
     <div className="w-full mb-6">
@@ -460,6 +459,7 @@ export default function CaseStudiesPageEdit() {
             value={formData?.projectLink}
             placeholder="Project Link"
           />
+          
           <div>
             <label className="text-webDescrip font-semibold">Tags</label>
             <div className="flex justify-between items-center gap-2">
