@@ -3,6 +3,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { editFaq, getFaq } from "../../api";
 
 export const FaqPage = () => {
+  const [heroDescription, setHeroDescription] = useState("");
   const [formData, setFormData] = useState([]);
 
   useEffect(() => {
@@ -10,6 +11,7 @@ export const FaqPage = () => {
     getFaq()
       .then((res) => {
         setFormData(res?.data?.data);
+        setHeroDescription(res?.data?.heroDescription);
       })
       .catch((err) => console.log(err));
   }, []);
@@ -57,6 +59,17 @@ export const FaqPage = () => {
     }
   };
 
+  const handleHeroDescription = (e) => {
+    e.preventDefault();
+
+    editFaq({ heroDescription })
+      .then((res) => {
+        console.log("res", res);
+        setHeroDescription(res?.data?.heroDescription);
+      })
+      .catch((err) => console.log(err));
+  };
+
   const deleteQuestion = (index) => {
     const updatedQuestions = formData.filter((_, i) => i !== index);
     // Call Api
@@ -76,6 +89,8 @@ export const FaqPage = () => {
     setEditingIndex(index);
   };
 
+  console.log("first", formData);
+
   return (
     <div className="w-full">
       <section className="bg-custom-white w-full">
@@ -85,6 +100,27 @@ export const FaqPage = () => {
           </h1>
           <div className="grid pt-8 text-left w-full border-t border-gray-200 md:gap-16 dark:border-gray-700 md:grid-cols-1">
             <div className="flex flex-col gap-8 w-full">
+              <label className="text-webDescrip font-semibold">
+                Hero Description
+              </label>
+              <textarea
+                className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                type="text"
+                name="heroDescription"
+                id="heroDescription"
+                onChange={(e) => {
+                  setHeroDescription(e.target.value);
+                }}
+                value={heroDescription}
+                placeholder="Hero Description"
+              />
+              <button
+                className="bg-blue-500 text-white p-2 px-4 rounded-lg"
+                type="button"
+                onClick={handleHeroDescription}
+              >
+                Update Description
+              </button>
               {formData?.map((qa, index) => (
                 <div key={index} className="mb-6">
                   <label className="text-webDescrip font-semibol text-[20px] ">
