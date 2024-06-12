@@ -239,6 +239,16 @@ export default function BlockChainPageEdit() {
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center ">
             Block Chain Edit
           </h1>
+          <label className="text-webDescrip font-semibold">Hero Description</label>
+          <textarea
+            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+            type="text"
+            name="heroDescription"
+            id="heroDescription"
+            onChange={handleChange}
+            value={formData.heroDescription}
+            placeholder="Hero Description"
+          />
           <label className="text-webDescrip font-semibold">Description</label>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"

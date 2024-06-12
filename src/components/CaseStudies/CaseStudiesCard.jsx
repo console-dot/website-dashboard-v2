@@ -1,17 +1,21 @@
-import React from "react";
+import React, { useState } from "react";
 import { Button } from "../Button";
 import { useNavigate } from "react-router-dom";
 import { FaEye, FaPen, FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setCaseStudiesData } from "../../redux/caseStudiesSlice";
 import config from "../../api/config";
-import { removeCaseStudy } from "../../api";
+import { editHeroDescription, removeCaseStudy } from "../../api";
 import { toast } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Import CSS for toastify
+import { setHeroDescriptionData } from "../../redux";
 
-export const CaseStudiesCard = ({ data }) => {
+export const CaseStudiesCard = ({ data, herodata }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const [caseStudyHero, setCaseStudyHero] = useState(
+    herodata.caseStudyHero || ""
+  );
   const BASE_URL = config.BASE_URL;
 
   const handleEditClick = (itemData) => {
@@ -40,7 +44,17 @@ export const CaseStudiesCard = ({ data }) => {
     }, {});
   };
 
-  console.log("data", data);
+  const handleHeroDescription = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await editHeroDescription({ caseStudyHero }, herodata._id);
+      setCaseStudyHero(res?.caseStudyHero);
+      alert("Hero description updated successfully!");
+    } catch (err) {
+      alert("Failed to update hero description");
+    }
+  };
+
   return (
     <div>
       <div className="d-flex flex-wrap justify-content-center">
@@ -59,6 +73,36 @@ export const CaseStudiesCard = ({ data }) => {
                 >
                   <div className="w-full flex flex-col justify-between mt-[10px]">
                     <div className="w-full flex flex-col gap-2">
+                      {/* hero description */}
+                      <div
+                        className="flex flex-col "
+                        style={{ width: "70%" }}
+                      >
+                        <label className="" style={{ color: "grey" }}>
+                          Hero Description
+                        </label>
+                        <div className="flex flex-row gap-2">
+                          <textarea
+                            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                            type="text"
+                            name="heroDescription"
+                            id="heroDescription"
+                            onChange={(e) => {
+                              setCaseStudyHero(e.target.value);
+                            }}
+                            value={caseStudyHero}
+                            placeholder="Hero Description"
+                          />
+                          <button
+                            className="bg-blue-500 text-white py-1 px-6 rounded-lg"
+                            type="button"
+                            onClick={handleHeroDescription}
+                          >
+                            Update
+                          </button>
+                        </div>
+                        <div className="border-b border-solid border-custom-purple mt-2"></div>
+                      </div> 
                       {/* heading */}
                       <h1 className="text-heading text-xl font-bold">
                         {itemData.title}
@@ -332,9 +376,9 @@ export const CaseStudiesCard = ({ data }) => {
                         </div>
 
                         <div className="w-[50%] flex flex-col">
-                        <div className="flex flex-col border-b  border-custom-purple mb-2">
+                          <div className="flex flex-col border-b  border-custom-purple mb-2">
                             <span className="text-custom-grey font-semibold">
-                             Results Description:
+                              Results Description:
                             </span>
                             <span className="text-black text-sm">
                               {itemData?.results?.description}
@@ -345,7 +389,7 @@ export const CaseStudiesCard = ({ data }) => {
                               <div className="flex flex-col border-b  border-custom-purple mb-2">
                                 <div>
                                   <span className="text-custom-grey font-semibold">
-                                  Heading :{" "}{results.heading}
+                                    Heading : {results.heading}
                                   </span>
                                 </div>
                                 <div>
@@ -353,9 +397,7 @@ export const CaseStudiesCard = ({ data }) => {
                                     key={index}
                                     className="text-black text-sm"
                                   >
-                                    
-                                   Description :{" "}    {results.description}
-
+                                    Description : {results.description}
                                   </span>
                                 </div>
                               </div>
@@ -464,7 +506,6 @@ export const CaseStudiesCard = ({ data }) => {
                           </div>
                         </div>
                       </div>
-
                     </div>
                   </div>
                   {/* Buttons  */}

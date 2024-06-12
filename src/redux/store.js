@@ -14,6 +14,7 @@ import mobdevReducer from "./mobdevSlice";
 import webdevReducer from "./webdevSlice";
 import productresearchReducer from "./productresearchSlice";
 import caseStudiesReducer from "./caseStudiesSlice";
+import heroDescriptionReducer from "./heroDescSlice"; // Importing the heroDescSlice reducer
 
 export const store = configureStore({
   reducer: {
@@ -32,5 +33,6 @@ export const store = configureStore({
     webdev: webdevReducer,
     productresearch: productresearchReducer,
     caseStudies: caseStudiesReducer,
+    heroDescription: heroDescriptionReducer, // Adding the heroDescription reducer
   },
 });

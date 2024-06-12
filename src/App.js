@@ -30,6 +30,7 @@ import { OpenPositionsPage } from "./components/OpenPositions/OpenPositionsPage"
 import { CaseStudiesPage } from "./components/CaseStudies/CaseStudiesPage";
 import CaseStudiesPageEdit from "./components/CaseStudies/CaseStudiesPageEdit";
 import CaseStudiesPageAdd from "./components/CaseStudies/CaseStudiesPageAdd";
+import { ContactPage } from "./components";
 function App() {
   const loggedIn = useSelector(selectIsLoggedIn);
   return (
@@ -94,6 +95,7 @@ function App() {
                 element={<CaseStudiesPageEdit />}
               />
               <Route path="/openpositions" element={<OpenPositionsPage />} />
+              <Route path="/contact" element={<ContactPage />} />
               <Route path="/logout" element={<Logout />} />
             </Routes>
           </Navbar>

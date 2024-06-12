@@ -13,6 +13,10 @@ export const OffshoringCard = ({ data }) => {
           Offshoring Services Model
         </h1>
         <div className="border-b border-solid border-custom-purple mb-2">
+          <strong style={{ color: "grey" }}>Hero Description:</strong>
+          <p className="text-black text-sm">{data?.heroDescription}</p>
+        </div>
+        <div className="border-b border-solid border-custom-purple mb-2">
           <strong style={{ color: "grey" }}>Top Description:</strong>
           <p className="text-black text-sm">{data?.topDescription}</p>
         </div>

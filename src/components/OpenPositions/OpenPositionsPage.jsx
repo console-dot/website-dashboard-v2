@@ -13,6 +13,8 @@ import {
   editOpenPosition,
   deleteOpenPosition,
 } from "../../api/openposition";
+import { editHeroDescription, getHeroDescription } from "../../api";
+import { setHeroDescriptionData } from "../../redux";
 
 export const OpenPositionsPage = () => {
   const [isLoading, setIsLoading] = useState(false);
@@ -32,6 +34,7 @@ export const OpenPositionsPage = () => {
 
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [editingId, setEditingId] = useState(null);
+  const [herodata, setHeroData] = useState(null);
   const modalRef = useRef(null);
 
   useEffect(() => {
@@ -42,6 +45,16 @@ export const OpenPositionsPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  // Fetch hero description data
+  useEffect(() => {
+    getHeroDescription()
+      .then((res) => {
+        setHeroData(res?.data);
+        dispatch(setHeroDescriptionData(res?.data));
+      })
+      .catch((err) => console.log(err));
+  }, [dispatch]);
 
   const handleAddPosition = () => {
     setIsModalOpen(true);
@@ -126,6 +139,26 @@ export const OpenPositionsPage = () => {
     const { name, value } = e.target;
     setFormData({ ...formData, [name]: value });
   };
+
+  const [openPositionHero, setopenPositionHero] = useState(
+    herodata?.openPositionHero || ""
+  );
+
+  useEffect(() => {
+    setopenPositionHero(herodata?.openPositionHero || "");
+  }, [herodata]);
+
+  const handleHeroDescription = async (e) => {
+    e.preventDefault();
+    try {
+      const res = await editHeroDescription({ openPositionHero }, herodata._id);
+      setopenPositionHero(res?.openPositionHero);
+      alert("Hero description updated successfully!");
+    } catch (err) {
+      alert("Failed to update hero description");
+    }
+  };
+
 
   return (
     <>
@@ -286,10 +319,36 @@ export const OpenPositionsPage = () => {
       {/* Display Positions */}
       <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
         <div className="flex flex-col w-full">
+          {/* hero description */}
+          <div className="flex flex-col" style={{ width: "70%" }}>
+                    <label className="" style={{ color: "grey" }}>
+                      Hero Description
+                    </label>
+                    <div className="flex flex-row gap-2">
+                      <textarea
+                        className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
+                        type="text"
+                        name="openPositionHero"
+                        id="openPositionHero"
+                        onChange={(e) => setopenPositionHero(e.target.value)}
+                        value={openPositionHero}
+                        placeholder="Hero Description"
+                      />
+                      <button
+                        className="bg-blue-500 text-white py-1 px-6 rounded-lg"
+                        type="button"
+                        onClick={handleHeroDescription}
+                      >
+                        Update
+                      </button>
+                    </div>
+                    <div className="border-b border-solid border-custom-purple mt-2"></div>
+                  </div>
           {positions.map((item) => (
             <div key={item._id}>
               <OpenPositionsCard
                 data={item}
+                herodata={herodata}
                 onEdit={() => handleEdit(item._id)}
                 onDelete={() => handleDelete(item._id)}
               />
