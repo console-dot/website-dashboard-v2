@@ -5,6 +5,7 @@ import {
   FaGlasses,
   FaHome,
   FaMobile,
+  FaPhone,
   FaPlaneDeparture,
   FaRobot,
 
@@ -81,6 +82,11 @@ export default function Navbar({ children }) {
       path: "/openpositions",
       name: "Open-Positions",
       icon: <MdOutlineCardTravel size={25} />,
+    },
+    {
+      path: "/contact",
+      name: "contact",
+      icon: <FaPhone size={25} />,
     },
     {
       path: "/logout",
