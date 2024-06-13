@@ -4,7 +4,7 @@ import { logout } from "../redux";
 import { useDispatch } from "react-redux";
 import { setLogout } from "../utils";
 
-function Logout() {
+function Logout({ setLoggedIn }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -13,6 +13,8 @@ function Logout() {
     setLogout();
     // clear global
     dispatch(logout());
+    localStorage.removeItem("@dashboard-token");
+    setLoggedIn(false);
     // navigate
     navigate("/");
   }, []);

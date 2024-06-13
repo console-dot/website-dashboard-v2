@@ -5,7 +5,7 @@ import { login } from "../redux";
 import { setLogin } from "../api";
 import { toJson } from "../utils";
 
-export default function Login() {
+export default function Login({ setLoggedIn }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -17,13 +17,14 @@ export default function Login() {
         if (res.response) {
           return;
         }
-        
+
         localStorage.setItem("@dashboard-token", res?.data?.token);
         localStorage.setItem(
           "@dashboard-user",
           JSON.stringify(res?.data?.data?.user)
         );
         dispatch(login(res?.data?.data?.user));
+        setLoggedIn(true);
         navigate("/landingPage");
       })
       .catch((err) => console.log(err));
