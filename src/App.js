@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import { useSelector } from "react-redux";
 import { BrowserRouter, Route, Routes } from "react-router-dom";
 import Navbar from "./components/Navbar/Navbar";
@@ -32,7 +32,16 @@ import CaseStudiesPageEdit from "./components/CaseStudies/CaseStudiesPageEdit";
 import CaseStudiesPageAdd from "./components/CaseStudies/CaseStudiesPageAdd";
 import { ContactPage } from "./components";
 function App() {
-  const loggedIn = useSelector(selectIsLoggedIn);
+  const [loggedIn, setLoggedIn] = useState(false);
+  const checkLogin = useSelector(selectIsLoggedIn);
+
+  useEffect(() => {
+    if (localStorage.getItem("@dashboard-token") === null) {
+      setLoggedIn(false);
+    } else {
+      setLoggedIn(true);
+    }
+  }, [loggedIn]);
   return (
     <BrowserRouter>
       {loggedIn ? (
@@ -96,14 +105,20 @@ function App() {
               />
               <Route path="/openpositions" element={<OpenPositionsPage />} />
               <Route path="/contact" element={<ContactPage />} />
-              <Route path="/logout" element={<Logout />} />
+              <Route
+                path="/logout"
+                element={<Logout setLoggedIn={setLoggedIn} />}
+              />
             </Routes>
           </Navbar>
         </div>
       ) : (
         <div style={{ background: "#f8f9fc", height: "100vh" }}>
           <Routes>
-            <Route path="/" element={<Login loggedIn={loggedIn} />} />
+            <Route
+              path="/"
+              element={<Login setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
+            />
           </Routes>
         </div>
       )}

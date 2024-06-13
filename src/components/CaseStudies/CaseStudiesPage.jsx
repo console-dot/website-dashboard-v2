@@ -1,8 +1,12 @@
 import React, { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
-import { useDispatch } from "react-redux";
+import { useDispatch, useSelector } from "react-redux";
 import { getHeroDescription, getcaseStudiespage } from "../../api";
-import { setCaseStudiesData, setHeroDescriptionData } from "../../redux";
+import {
+  selectCaseStudiesDetails,
+  setCaseStudiesData,
+  setHeroDescriptionData,
+} from "../../redux";
 import { CaseStudiesCard } from "./CaseStudiesCard";
 import { FaPlus } from "react-icons/fa";
 
@@ -11,6 +15,7 @@ export const CaseStudiesPage = () => {
   const [data, setData] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const caseStudies = useSelector(selectCaseStudiesDetails);
 
   // Navigate to view case study
   const onView = (id) => {
@@ -25,7 +30,11 @@ export const CaseStudiesPage = () => {
         dispatch(setCaseStudiesData(res?.data));
       })
       .catch((err) => console.log(err));
-  }, [dispatch]);
+  }, []);
+
+  useEffect(() => {
+    setData(caseStudies);
+  }, [caseStudies]);
 
   // Fetch hero description data
   useEffect(() => {
@@ -36,7 +45,6 @@ export const CaseStudiesPage = () => {
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
- 
 
   return (
     <>
@@ -65,7 +73,11 @@ export const CaseStudiesPage = () => {
         <div className="flex">
           <div className="flex flex-col w-full">
             {data ? (
-              <CaseStudiesCard data={data} herodata={herodata} onView={onView} />
+              <CaseStudiesCard
+                data={data}
+                herodata={herodata}
+                onView={onView}
+              />
             ) : (
               <p>Loading case studies...</p>
             )}

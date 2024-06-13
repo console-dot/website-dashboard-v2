@@ -5,7 +5,12 @@ import { FaEye, FaPen, FaTrash } from "react-icons/fa";
 import { useDispatch } from "react-redux";
 import { setCaseStudiesData } from "../../redux/caseStudiesSlice";
 import config from "../../api/config";
-import { editHeroDescription, removeCaseStudy } from "../../api";
+import {
+  editHeroDescription,
+  getHeroDescription,
+  getcaseStudiespage,
+  removeCaseStudy,
+} from "../../api";
 import { toast } from "react-toastify"; // Import toast from react-toastify
 import "react-toastify/dist/ReactToastify.css"; // Import CSS for toastify
 import { setHeroDescriptionData } from "../../redux";
@@ -14,7 +19,7 @@ export const CaseStudiesCard = ({ data, herodata }) => {
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const [caseStudyHero, setCaseStudyHero] = useState(
-    herodata.caseStudyHero || ""
+    herodata?.caseStudyHero || ""
   );
   const BASE_URL = config.BASE_URL;
 
@@ -26,6 +31,11 @@ export const CaseStudiesCard = ({ data, herodata }) => {
   const handleDelete = async (id) => {
     try {
       await dispatch(removeCaseStudy(id));
+      getcaseStudiespage()
+        .then((res) => {
+          dispatch(setCaseStudiesData(res?.data));
+        })
+        .catch((err) => console.log(err));
       // Show success toast upon successful deletion
       toast.success("Case study deleted successfully!");
     } catch (error) {
@@ -74,10 +84,7 @@ export const CaseStudiesCard = ({ data, herodata }) => {
                   <div className="w-full flex flex-col justify-between mt-[10px]">
                     <div className="w-full flex flex-col gap-2">
                       {/* hero description */}
-                      <div
-                        className="flex flex-col "
-                        style={{ width: "70%" }}
-                      >
+                      <div className="flex flex-col " style={{ width: "70%" }}>
                         <label className="" style={{ color: "grey" }}>
                           Hero Description
                         </label>
@@ -102,7 +109,7 @@ export const CaseStudiesCard = ({ data, herodata }) => {
                           </button>
                         </div>
                         <div className="border-b border-solid border-custom-purple mt-2"></div>
-                      </div> 
+                      </div>
                       {/* heading */}
                       <h1 className="text-heading text-xl font-bold">
                         {itemData.title}
