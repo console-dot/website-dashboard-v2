@@ -83,33 +83,6 @@ export const CaseStudiesCard = ({ data, herodata }) => {
                 >
                   <div className="w-full flex flex-col justify-between mt-[10px]">
                     <div className="w-full flex flex-col gap-2">
-                      {/* hero description */}
-                      <div className="flex flex-col " style={{ width: "70%" }}>
-                        <label className="" style={{ color: "grey" }}>
-                          Hero Description
-                        </label>
-                        <div className="flex flex-row gap-2">
-                          <textarea
-                            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-                            type="text"
-                            name="heroDescription"
-                            id="heroDescription"
-                            onChange={(e) => {
-                              setCaseStudyHero(e.target.value);
-                            }}
-                            value={caseStudyHero}
-                            placeholder="Hero Description"
-                          />
-                          <button
-                            className="bg-blue-500 text-white py-1 px-6 rounded-lg"
-                            type="button"
-                            onClick={handleHeroDescription}
-                          >
-                            Update
-                          </button>
-                        </div>
-                        <div className="border-b border-solid border-custom-purple mt-2"></div>
-                      </div>
                       {/* heading */}
                       <h1 className="text-heading text-xl font-bold">
                         {itemData.title}
