@@ -765,6 +765,9 @@ export default function CaseStudiesPageEdit() {
               </label>
               <div className="flex flex-col">
                 <small className="text-error mt-4">
+                  Note: Click Add Button to add Points for Results
+                </small>
+                <small className="text-error mt-1">
                   Note: Type \n for next line
                 </small>
                 <small className="text-error mt-1">
