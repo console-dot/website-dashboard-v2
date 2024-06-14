@@ -74,7 +74,6 @@ export const OffshoringCard = ({ data }) => {
             }
           }}
         />
-        <Button text={"View"} icon={<FaEye />} />
       </div>
     </div>
   );

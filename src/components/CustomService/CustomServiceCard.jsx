@@ -33,7 +33,9 @@ export const CustomServiceCard = ({ data }) => {
                     style={{ width: "70%" }}
                   >
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Hero Description: </strong>
+                      <strong style={{ color: "grey" }}>
+                        Hero Description:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -156,7 +158,6 @@ export const CustomServiceCard = ({ data }) => {
                       navigate(`/CustomSoftwarePageEdit/edit/${itemData?._id}`);
                     }}
                   />
-                  <Button text={"View"} icon={<FaEye />} />
                 </div>
               </div>
             </div>

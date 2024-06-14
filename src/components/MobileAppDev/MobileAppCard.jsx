@@ -40,9 +40,14 @@ export const MobileAppCard = ({ data }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Mobile App Model
                   </h1>
-                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Hero Description: </strong>
+                      <strong style={{ color: "grey" }}>
+                        Hero Description:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -50,7 +55,10 @@ export const MobileAppCard = ({ data }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}> Description: </strong>
                     </div>
@@ -60,7 +68,10 @@ export const MobileAppCard = ({ data }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}>Proposition: </strong>
                     </div>
@@ -156,7 +167,6 @@ export const MobileAppCard = ({ data }) => {
                       navigate(`/MobileAppPageEdit/edit/${data?._id}`);
                     }}
                   />
-                  <Button text={"View"} icon={<FaEye />} />
                 </div>
               </div>
             </div>
