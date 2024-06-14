@@ -115,12 +115,13 @@ export default function CaseStudiesPageAdd() {
   // Handle Submit
   const handleSubmit = (e) => {
     e.preventDefault();
-    // setIsLoading(true);
+    setIsLoading(true);
     addCaseStudy(formData)
       .then((res) => {
         console.log("res", res);
       })
       .catch((err) => console.log(err));
+    setIsLoading(false);
 
     setTimeout(() => {
       setIsLoading(false);
@@ -150,6 +151,12 @@ export default function CaseStudiesPageAdd() {
             ...prevData,
             images: [...(prevData.images || []), res?.data],
           }));
+          setTimeout(() => {
+            setIsLoading(false);
+            toast.success("Project Snippets Added Successfully", {
+              autoClose: 500, // close after 1.5 seconds
+            });
+          }, 500);
         }
       })
       .catch((err) => console.log(err));
@@ -173,6 +180,12 @@ export default function CaseStudiesPageAdd() {
             ...prevData,
             projectImage: res?.data,
           }));
+          setTimeout(() => {
+            setIsLoading(false);
+            toast.success("Project Image Added Successfully", {
+              autoClose: 500, // close after 1.5 seconds
+            });
+          }, 500);
         }
       })
       .catch((err) => console.log(err));
@@ -246,6 +259,7 @@ export default function CaseStudiesPageAdd() {
 
   // handle Add Tech Stack submission
   const handleAddTechStack = () => {
+    setIsLoading(true);
     const newTechStackItem = {
       name: techData.techStack.name,
       type: techData.techStack.type,
@@ -266,6 +280,12 @@ export default function CaseStudiesPageAdd() {
                   ...prevFormData,
                   techStack: [...prevFormData.techStack, res?.data],
                 }));
+                setTimeout(() => {
+                  setIsLoading(false);
+                  toast.success("Tech Stack Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
@@ -480,9 +500,14 @@ export default function CaseStudiesPageAdd() {
             <label className="text-webDescrip font-semibold mt-4">
               Product
             </label>
-            <small className="text-error mt-4">
-              Note: Type \n for next line
-            </small>
+            <div className="flex flex-col">
+              <small className="text-error mt-4">
+                Note: Type \n for next line
+              </small>
+              <small className="text-error mt-1">
+                Note: For bullet Points use •
+              </small>
+            </div>
           </div>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -498,11 +523,16 @@ export default function CaseStudiesPageAdd() {
             <label className="text-webDescrip font-semibold mt-4">
               Solution
             </label>
-            <small className="text-error mt-4">
-              Note: Type \n for next line
-            </small>
+            <div className="flex flex-col">
+              <small className="text-error mt-4">
+                Note: Type \n for next line
+              </small>
+              <small className="text-error mt-1">
+                Note: For bullet Points use •
+              </small>
+            </div>
           </div>
-          
+
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
             type="text"
@@ -536,9 +566,14 @@ export default function CaseStudiesPageAdd() {
               <label className="text-webDescrip font-semibold mt-4">
                 Client Description
               </label>
-              <small className="text-error mt-4">
-                Note: Type \n for next line
-              </small>
+              <div className="flex flex-col">
+                <small className="text-error mt-4">
+                  Note: Type \n for next line
+                </small>
+                <small className="text-error mt-1">
+                  Note: For bullet Points use •
+                </small>
+              </div>
             </div>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -722,13 +757,21 @@ export default function CaseStudiesPageAdd() {
               </button>
             </div>
             <div className="flex justify-between">
-            <label className="text-webDescrip font-semibold mt-4">
-              Result Description
-            </label>
-            <small className="text-error mt-4">
-              Note: Type \n for next line
-            </small>
-          </div>
+              <label className="text-webDescrip font-semibold mt-4">
+                Result Description
+              </label>
+              <div className="flex flex-col">
+                <small className="text-error mt-4">
+                  Note: Click Add Button to add Points for Results
+                </small>
+                <small className="text-error mt-1">
+                  Note: Type \n for next line
+                </small>
+                <small className="text-error mt-1">
+                  Note: For bullet Points use •
+                </small>
+              </div>
+            </div>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
               name="results.description"

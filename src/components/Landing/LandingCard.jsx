@@ -326,7 +326,6 @@ export const LandingCard = ({ data, key, value }) => {
                       navigate(`/LandingPage/edit/${123}`);
                     }}
                   />
-                  <Button text={"View"} icon={<FaEye />} />
                 </div>
               </div>
             </div>

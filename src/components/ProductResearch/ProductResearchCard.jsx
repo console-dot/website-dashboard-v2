@@ -30,9 +30,14 @@ export const ProductResearchCard = ({ data }) => {
                   <h1 className="text-heading text-xl font-bold">
                     Product Research Model
                   </h1>
-                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
-                      <strong style={{ color: "grey" }}>Hero Description: </strong>
+                      <strong style={{ color: "grey" }}>
+                        Hero Description:{" "}
+                      </strong>
                     </div>
                     <div className="w-[50%]">
                       <span className="text-black text-sm">
@@ -40,7 +45,10 @@ export const ProductResearchCard = ({ data }) => {
                       </span>
                     </div>
                   </div>
-                  <div className="flex border-b border-solid border-custom-purple" style={{ width: "70%" }}>
+                  <div
+                    className="flex border-b border-solid border-custom-purple"
+                    style={{ width: "70%" }}
+                  >
                     <div className="w-[50%]">
                       <strong style={{ color: "grey" }}> Description: </strong>
                     </div>
@@ -144,7 +152,6 @@ export const ProductResearchCard = ({ data }) => {
                       navigate(`/ProductResearchPageEdit/edit/${data?._id}`);
                     }}
                   />
-                  <Button text={"View"} icon={<FaEye />} />
                 </div>
               </div>
             </div>

@@ -502,9 +502,14 @@ export default function CaseStudiesPageEdit() {
             <label className="text-webDescrip font-semibold mt-4">
               Product
             </label>
-            <small className="text-error mt-4">
-              Note: Type \n for next line
-            </small>
+            <div className="flex flex-col">
+              <small className="text-error mt-4">
+                Note: Type \n for next line
+              </small>
+              <small className="text-error mt-1">
+                Note: For bullet Points use •
+              </small>
+            </div>
           </div>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -519,9 +524,14 @@ export default function CaseStudiesPageEdit() {
             <label className="text-webDescrip font-semibold mt-4">
               Solution
             </label>
-            <small className="text-error mt-4">
-              Note: Type \n for next line
-            </small>
+            <div className="flex flex-col">
+              <small className="text-error mt-4">
+                Note: Type \n for next line
+              </small>
+              <small className="text-error mt-1">
+                Note: For bullet Points use •
+              </small>
+            </div>
           </div>
           <textarea
             className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -557,9 +567,14 @@ export default function CaseStudiesPageEdit() {
               <label className="text-webDescrip font-semibold mt-4">
                 Client Description
               </label>
-              <small className="text-error mt-4">
-                Note: Type \n for next line
-              </small>
+              <div className="flex flex-col">
+                <small className="text-error mt-4">
+                  Note: Type \n for next line
+                </small>
+                <small className="text-error mt-1">
+                  Note: For bullet Points use •
+                </small>
+              </div>
             </div>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
@@ -745,13 +760,21 @@ export default function CaseStudiesPageEdit() {
               </button>
             </div>
             <div className="flex justify-between">
-            <label className="text-webDescrip font-semibold mt-4">
-              Result Description
-            </label>
-            <small className="text-error mt-4">
-              Note: Type \n for next line
-            </small>
-          </div>
+              <label className="text-webDescrip font-semibold mt-4">
+                Result Description
+              </label>
+              <div className="flex flex-col">
+                <small className="text-error mt-4">
+                  Note: Click Add Button to add Points for Results
+                </small>
+                <small className="text-error mt-1">
+                  Note: Type \n for next line
+                </small>
+                <small className="text-error mt-1">
+                  Note: For bullet Points use •
+                </small>
+              </div>
+            </div>
             <textarea
               className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500 "
               name="results.description"
