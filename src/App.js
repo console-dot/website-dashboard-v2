@@ -31,6 +31,7 @@ import { CaseStudiesPage } from "./components/CaseStudies/CaseStudiesPage";
 import CaseStudiesPageEdit from "./components/CaseStudies/CaseStudiesPageEdit";
 import CaseStudiesPageAdd from "./components/CaseStudies/CaseStudiesPageAdd";
 import { ContactPage } from "./components";
+import ScrollToTop from "./pages/ScrollToTop";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const checkLogin = useSelector(selectIsLoggedIn);
@@ -44,6 +45,7 @@ function App() {
   }, [loggedIn]);
   return (
     <BrowserRouter>
+      <ScrollToTop />
       {loggedIn ? (
         <div style={{ backgroundColor: "white", padding: "0" }}>
           <Navbar>
