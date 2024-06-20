@@ -324,6 +324,13 @@ export default function LandingPageEdit() {
           }
         })
         .catch((err) => console.log(err));
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.warning("Please fill out all fields including image", {
+          autoClose: 500, // close after 1.5 seconds
+        });
+      }, 500);
     }
     // Close Modal
     closeModal();
