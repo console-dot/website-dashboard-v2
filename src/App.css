@@ -52,6 +52,46 @@
 }
 
 .link:hover {
-  background: #0E77891A;
+  background: #0e77891a;
   transition: all 0.5s;
+}
+
+/* Loader Animation Rainbow Case Studies */
+@keyframes loader {
+  15% {
+    transform: translateX(0);
+  }
+  45% {
+    transform: translateX(calc(250px - 20px));
+  }
+  65% {
+    transform: translateX(calc(250px - 20px));
+  }
+  95% {
+    transform: translateX(0);
+  }
+}
+
+@keyframes loading-text {
+  0% {
+    content: "Up-loading";
+  }
+  25% {
+    content: "Up-loading.";
+  }
+  50% {
+    content: "Up-loading..";
+  }
+  75% {
+    content: "Up-loading...";
+  }
+}
+
+.animate-loader {
+  animation: loader 3s ease-in-out infinite;
+}
+
+.animate-loading-text:after {
+  content: "Up-loading";
+  animation: loading-text 3s infinite;
 }

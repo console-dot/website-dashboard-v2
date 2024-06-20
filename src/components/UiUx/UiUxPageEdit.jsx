@@ -15,6 +15,7 @@ import { addFile } from "../../api/file";
 import { selectUIDetails, setUIData } from "../../redux/uiuxSlice";
 import { useDispatch, useSelector } from "react-redux";
 import WhyChooseUs from "./WhyChooseUs";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export default function UiUxPageEdit() {
   const [isLoading, setIsLoading] = useState(false);
@@ -33,6 +34,7 @@ export default function UiUxPageEdit() {
       image: null, // Assuming img is initially null
     },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const cardLabels = [
@@ -142,6 +144,12 @@ export default function UiUxPageEdit() {
         )
           .then((res) => {
             console.log("res", res);
+            setTimeout(() => {
+              setIsSubmitting(false);
+              toast.success("Tech Stack Updated Successfully", {
+                autoClose: 500, // close after 1.5 seconds
+              });
+            }, 500);
           })
           .catch((err) => console.log(err));
       } else {
@@ -158,6 +166,12 @@ export default function UiUxPageEdit() {
               )
                 .then((res) => {
                   console.log("res", res);
+                  setTimeout(() => {
+                    setIsSubmitting(false);
+                    toast.success("Tech Stack Updated Successfully", {
+                      autoClose: 500, // close after 1.5 seconds
+                    });
+                  }, 500);
                 })
                 .catch((err) => console.log(err));
             }
@@ -199,6 +213,7 @@ export default function UiUxPageEdit() {
     };
 
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           // console.log("res", res);
@@ -212,6 +227,12 @@ export default function UiUxPageEdit() {
                   ...prevFormData,
                   techStack: [...prevFormData.techStack, res?.data],
                 }));
+                setTimeout(() => {
+                  setIsSubmitting(false);
+                  toast.success("Tech Stack Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
@@ -521,6 +542,12 @@ export default function UiUxPageEdit() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <RainbowLoader />
         </div>
       )}
     </div>

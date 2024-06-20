@@ -9,6 +9,7 @@ import { addFile } from "../../api/file";
 import { selectmobdevDetails, setmobdevData } from "../../redux/mobdevSlice";
 import { useDispatch, useSelector } from "react-redux";
 import { editMobDevelopment } from "../../api/mobdevelopment";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export default function MobileAppPageEdit() {
   const [isLoading, setIsLoading] = useState(false);
@@ -27,6 +28,7 @@ export default function MobileAppPageEdit() {
       image: null,
     },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const openModal = () => setIsModalOpen(true);
@@ -133,6 +135,12 @@ export default function MobileAppPageEdit() {
         )
           .then((res) => {
             console.log("res", res);
+            setTimeout(() => {
+              setIsSubmitting(false);
+              toast.success("Tech Stack Updated Successfully", {
+                autoClose: 500, // close after 1.5 seconds
+              });
+            }, 500);
           })
           .catch((err) => console.log(err));
       } else {
@@ -149,6 +157,12 @@ export default function MobileAppPageEdit() {
               )
                 .then((res) => {
                   console.log("res", res);
+                  setTimeout(() => {
+                    setIsSubmitting(false);
+                    toast.success("Tech Stack Updated Successfully", {
+                      autoClose: 500, // close after 1.5 seconds
+                    });
+                  }, 500);
                 })
                 .catch((err) => console.log(err));
             }
@@ -184,6 +198,7 @@ export default function MobileAppPageEdit() {
     };
 
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           if (res?.status == 201) {
@@ -195,6 +210,12 @@ export default function MobileAppPageEdit() {
                   ...prevFormData,
                   techStack: [...prevFormData.techStack, res?.data],
                 }));
+                setTimeout(() => {
+                  setIsSubmitting(false);
+                  toast.success("Tech Stack Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
@@ -603,6 +624,12 @@ export default function MobileAppPageEdit() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <RainbowLoader />
         </div>
       )}
     </div>
