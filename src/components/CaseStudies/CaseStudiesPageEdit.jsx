@@ -18,6 +18,7 @@ import {
   removeTechStack,
 } from "../../api";
 import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export default function CaseStudiesPageEdit() {
   const BASE_URL = config.BASE_URL;
@@ -66,6 +67,7 @@ export default function CaseStudiesPageEdit() {
   const [editItem, setEditItem] = useState(null);
   const [selectedFile, setSelectedFile] = useState(null);
   const [newTags, setNewTags] = useState("");
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const seenHeadings = new Set();
@@ -256,6 +258,7 @@ export default function CaseStudiesPageEdit() {
           })
           .catch((err) => console.log(err));
       } else {
+        setIsSubmitting(true);
         addFile(updatedTechStack[editIndex]?.image)
           .then((res) => {
             if (res?.status == 201) {
@@ -271,6 +274,7 @@ export default function CaseStudiesPageEdit() {
                   console.log("res", res);
                 })
                 .catch((err) => console.log(err));
+              setIsSubmitting(false);
             }
           })
           .catch((err) => console.log(err));
@@ -289,6 +293,7 @@ export default function CaseStudiesPageEdit() {
     };
 
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           console.log("res", res);
@@ -309,6 +314,7 @@ export default function CaseStudiesPageEdit() {
                 });
                 setTimeout(() => {
                   setIsLoading(false);
+                  setIsSubmitting(false);
                   toast.success("Tech Stack Added Successfully", {
                     autoClose: 500, // close after 1.5 seconds
                   });
@@ -321,6 +327,7 @@ export default function CaseStudiesPageEdit() {
     } else {
       setTimeout(() => {
         setIsLoading(false);
+        setIsSubmitting(false);
         toast.warning("Please fill out all fields including image", {
           autoClose: 500, // close after 1.5 seconds
         });
@@ -1052,6 +1059,12 @@ export default function CaseStudiesPageEdit() {
         </div>
       )}
       {/* tech stack modal end*/}
+
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <RainbowLoader />
+        </div>
+      )}
     </div>
   );
 }

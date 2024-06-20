@@ -26,95 +26,7 @@ import {
   removeTestimonialMethod,
 } from "../../api";
 import { addFile } from "../../api/file";
-
-const data = {
-  heroDescription: "Leading provider of tech solutions.",
-  footerDescription: "Dedicated to innovation and excellence.",
-  email: "contact@techsolutions.com",
-  phone: "+1234567890",
-  address: "123 Tech Street, Silicon Valley, CA",
-  socialLinks: [
-    { name: "facebook", link: "https://twitter.com/techsolutions" },
-    { name: "youtube", link: "https://youtube.com/techsolutions" },
-  ],
-  workExperience: {
-    countries: "USA, Canada, Germany",
-    expEmployees: "200+",
-    scrumTeams: "15",
-    fullStackDev: "50+",
-  },
-  aboutDescription:
-    "TechSolutions specializes in providing high-quality IT services and innovative solutions to global clients.",
-  offshoreType: "Dedicated Development Center",
-  offshoreDescription:
-    "Offers flexible engagement models and full control over the process.",
-  offshoreAdvantages: ["Cost Effective", "Scalable Resources", "Expert Teams"],
-  offshoreComparison: [
-    {
-      type: "Hourly",
-      comparisons: [
-        "Cost-effective",
-        "Flexible resource allocation",
-        "Pay-as-you-go model",
-        "No long-term commitment",
-        "Good for short-term projects",
-        "Quick project start",
-      ],
-    },
-    {
-      type: "Fixed",
-      comparisons: [
-        "Predictable cost",
-        "Strict project timeline",
-        "Defined scope of work",
-        "Less client involvement",
-        "Reduced risk for the client",
-        "Good for well-defined projects",
-      ],
-    },
-    {
-      type: "Bot",
-      comparisons: [
-        "Automated processes",
-        "24/7 availability",
-        "Scalable solution",
-        "Improved efficiency",
-        "Cost-effective in the long run",
-        "Reduces human error",
-      ],
-    },
-  ],
-  testimonials: [
-    {
-      name: "test1",
-      description: "description",
-      designation: "designation",
-      img: "dummy.png",
-    },
-    {
-      name: "test1",
-      description: "description",
-      designation: "designation",
-      img: "dummy.png",
-    },
-  ],
-  expertises: [
-    {
-      expertiseName: "test",
-      expertiseDescription: "description",
-      expertiseImg: "dummy.png",
-    },
-    {
-      expertiseName: "test",
-      expertiseDescription: "description1",
-      expertiseImg: "dummy.png1",
-    },
-  ],
-  testimonialFullName: "Jane Doe",
-  testimonialDescription:
-    "The team at TechSolutions went above and beyond to meet our needs.",
-  testimonialDesignation: "CEO of Innovative Tech Co.",
-};
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export default function LandingPageEdit() {
   const landingPageData = useSelector(selectLandingPageDetails);
@@ -146,6 +58,8 @@ export default function LandingPageEdit() {
     description: "",
     image: null, // Assuming img is initially null
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
+
   //
   const navigate = useNavigate();
 
@@ -306,6 +220,7 @@ export default function LandingPageEdit() {
     };
     console.log("newItem", newItem);
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           // console.log("res", res);
@@ -319,6 +234,14 @@ export default function LandingPageEdit() {
                   ...prevFormData,
                   testimonial: [...prevFormData.testimonial, res?.data],
                 }));
+                setSelectedFile(null);
+                setTimeout(() => {
+                  setIsLoading(false);
+                  setIsSubmitting(false);
+                  toast.success("Tech Stack Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
@@ -377,6 +300,12 @@ export default function LandingPageEdit() {
         )
           .then((res) => {
             console.log("res", res);
+            setTimeout(() => {
+              setIsSubmitting(false);
+              toast.success("Testimonial Updated Successfully", {
+                autoClose: 500, // close after 1.5 seconds
+              });
+            }, 500);
           })
           .catch((err) => console.log(err));
       } else {
@@ -395,6 +324,12 @@ export default function LandingPageEdit() {
               )
                 .then((res) => {
                   console.log("res", res);
+                  setTimeout(() => {
+                    setIsSubmitting(false);
+                    toast.success("Testimonial Updated Successfully", {
+                      autoClose: 500, // close after 1.5 seconds
+                    });
+                  }, 500);
                 })
                 .catch((err) => console.log(err));
             }
@@ -456,6 +391,7 @@ export default function LandingPageEdit() {
       image: expertiseData?.image,
     };
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           // console.log("res", res);
@@ -469,12 +405,20 @@ export default function LandingPageEdit() {
                   ...prevFormData,
                   expertise: [...prevFormData.expertise, res?.data],
                 }));
+                setSelectedFile(null);
+                setTimeout(() => {
+                  setIsSubmitting(false);
+                  toast.success("Expertise Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
         })
         .catch((err) => console.log(err));
     } else {
+      setIsSubmitting(true);
       newItem.image = null;
       addExpertiseMethod(newItem)
         .then((res) => {
@@ -484,6 +428,12 @@ export default function LandingPageEdit() {
             ...prevFormData,
             expertise: [...prevFormData.expertise, res?.data],
           }));
+          setTimeout(() => {
+            setIsSubmitting(false);
+            toast.success("Expertise Added Successfully", {
+              autoClose: 500, // close after 1.5 seconds
+            });
+          }, 500);
         })
         .catch((err) => console.log(err));
     }
@@ -1004,6 +954,12 @@ export default function LandingPageEdit() {
           <ToastContainer />
         </div>
       </form>
+
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <RainbowLoader />
+        </div>
+      )}
     </div>
   );
 }

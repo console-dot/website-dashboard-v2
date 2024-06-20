@@ -18,6 +18,7 @@ import config from "../../api/config";
 import { RxCross1 } from "react-icons/rx";
 import { addFile } from "../../api/file";
 import { FaPen, FaPlus, FaTrash } from "react-icons/fa";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export default function CaseStudiesPageAdd() {
   const BASE_URL = config.BASE_URL;
@@ -67,6 +68,7 @@ export default function CaseStudiesPageAdd() {
   const [selectedFile, setSelectedFile] = useState(null);
   const [isModalOpen, setIsModalOpen] = useState(false);
   const [isEditModalOpen, setIsEditModalOpen] = useState(false);
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const seenHeadings = new Set();
 
@@ -233,6 +235,7 @@ export default function CaseStudiesPageAdd() {
           })
           .catch((err) => console.log(err));
       } else {
+        setIsSubmitting(true);
         addFile(updatedTechStack[editIndex]?.image)
           .then((res) => {
             if (res?.status == 201) {
@@ -251,6 +254,7 @@ export default function CaseStudiesPageAdd() {
             }
           })
           .catch((err) => console.log(err));
+        setIsSubmitting(false);
       }
     }
     // Close the edit modal
@@ -267,6 +271,7 @@ export default function CaseStudiesPageAdd() {
     };
 
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           console.log("res", res);
@@ -287,6 +292,7 @@ export default function CaseStudiesPageAdd() {
                 });
                 setTimeout(() => {
                   setIsLoading(false);
+                  setIsSubmitting(false);
                   toast.success("Tech Stack Added Successfully", {
                     autoClose: 500, // close after 1.5 seconds
                   });
@@ -1041,6 +1047,12 @@ export default function CaseStudiesPageAdd() {
         </div>
       )}
       {/* tech stack modal end*/}
+
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <RainbowLoader />
+        </div>
+      )}
     </div>
   );
 }

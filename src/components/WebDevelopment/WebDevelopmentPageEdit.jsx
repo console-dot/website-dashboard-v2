@@ -9,6 +9,7 @@ import WhyChooseUs from "./WhyChooseUs";
 import { editWebDevelopment } from "../../api/webdevelopment";
 import { addTechStack, editTechStack, removeTechStack } from "../../api";
 import { addFile } from "../../api/file";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export default function WebDevelopmentPageEdit() {
   //---------------------------------------------------------
@@ -28,6 +29,7 @@ export default function WebDevelopmentPageEdit() {
       image: null,
     },
   });
+  const [isSubmitting, setIsSubmitting] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
   const openModal = () => setIsModalOpen(true);
@@ -134,6 +136,12 @@ export default function WebDevelopmentPageEdit() {
         )
           .then((res) => {
             console.log("res", res);
+            setTimeout(() => {
+              setIsSubmitting(false);
+              toast.success("Tech Stack Updated Successfully", {
+                autoClose: 500, // close after 1.5 seconds
+              });
+            }, 500);
           })
           .catch((err) => console.log(err));
       } else {
@@ -150,6 +158,12 @@ export default function WebDevelopmentPageEdit() {
               )
                 .then((res) => {
                   console.log("res", res);
+                  setTimeout(() => {
+                    setIsSubmitting(false);
+                    toast.success("Tech Stack Updated Successfully", {
+                      autoClose: 500, // close after 1.5 seconds
+                    });
+                  }, 500);
                 })
                 .catch((err) => console.log(err));
             }
@@ -186,6 +200,7 @@ export default function WebDevelopmentPageEdit() {
     };
 
     if (selectedFile) {
+      setIsSubmitting(true);
       addFile(selectedFile)
         .then((res) => {
           // console.log("res", res);
@@ -199,6 +214,12 @@ export default function WebDevelopmentPageEdit() {
                   ...prevFormData,
                   techStack: [...prevFormData.techStack, res?.data],
                 }));
+                setTimeout(() => {
+                  setIsSubmitting(false);
+                  toast.success("Tech Stack Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
@@ -606,6 +627,12 @@ export default function WebDevelopmentPageEdit() {
               </button>
             </div>
           </div>
+        </div>
+      )}
+
+      {isSubmitting && (
+        <div className="fixed top-0 left-0 w-full h-full flex items-center justify-center bg-gray-700 bg-opacity-50">
+          <RainbowLoader />
         </div>
       )}
     </div>
