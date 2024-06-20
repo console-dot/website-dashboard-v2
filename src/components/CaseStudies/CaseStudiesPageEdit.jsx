@@ -171,6 +171,12 @@ export default function CaseStudiesPageEdit() {
             ...prevData,
             images: [...(prevData.images || []), res?.data],
           }));
+          setTimeout(() => {
+            setIsLoading(false);
+            toast.success("Project Snippets Added Successfully", {
+              autoClose: 500, // close after 1.5 seconds
+            });
+          }, 500);
         }
       })
       .catch((err) => console.log(err));
@@ -197,6 +203,12 @@ export default function CaseStudiesPageEdit() {
             ...prevData,
             projectImage: res?.data,
           }));
+          setTimeout(() => {
+            setIsLoading(false);
+            toast.success("Project Image Added Successfully", {
+              autoClose: 500, // close after 1.5 seconds
+            });
+          }, 500);
         }
       })
       .catch((err) => console.log(err));
@@ -217,7 +229,7 @@ export default function CaseStudiesPageEdit() {
       ...prevFormData,
       techStack: {
         ...prevFormData.techStack,
-        [name]: value,
+        [name]: value?.toLowerCase(),
       },
     }));
   };
@@ -290,11 +302,29 @@ export default function CaseStudiesPageEdit() {
                   ...prevFormData,
                   techStack: [...prevFormData.techStack, res?.data],
                 }));
+                setTechData({
+                  name: "",
+                  type: "",
+                  image: null, // Assuming img is initially null
+                });
+                setTimeout(() => {
+                  setIsLoading(false);
+                  toast.success("Tech Stack Added Successfully", {
+                    autoClose: 500, // close after 1.5 seconds
+                  });
+                }, 500);
               })
               .catch((err) => console.log(err));
           }
         })
         .catch((err) => console.log(err));
+    } else {
+      setTimeout(() => {
+        setIsLoading(false);
+        toast.warning("Please fill out all fields including image", {
+          autoClose: 500, // close after 1.5 seconds
+        });
+      }, 500);
     }
     // Close Modal
     closeModal();
@@ -935,7 +965,7 @@ export default function CaseStudiesPageEdit() {
                 <input
                   type="text"
                   name="type"
-                  value={techData.techStack.type}
+                  value={techData?.techStack?.type}
                   onChange={handleInputChange}
                   placeholder="Tech Type"
                   className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 dark:bg-gray-700 dark:border-gray-600 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
