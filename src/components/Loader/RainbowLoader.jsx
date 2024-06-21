@@ -21,7 +21,7 @@ export default function RainbowLoader() {
             }}
           ></div>
         ))}
-        <div className="absolute top-[200%] left-0 right-0 w-18 mx-auto text-center font-bold animate-loading-text"></div>
+        <div className="absolute top-[200%] left-0 right-0 w-18 mx-auto text-center font-bold animate-loading-text text-white"></div>
       </div>
     </div>
   );

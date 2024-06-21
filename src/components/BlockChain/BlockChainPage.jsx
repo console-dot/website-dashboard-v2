@@ -1,19 +1,14 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { BlockChainCard } from "./BlockChainCard";
 import { useDispatch } from "react-redux";
 import { setBlockChainData } from "../../redux/blockChainSlice";
 import { getBlockChain } from "../../api";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const BlockChainPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onView = (id) => {
-    navigate(`view/${id}`);
-  };
 
   useEffect(() => {
     // console.log("newData", newData);
@@ -24,6 +19,10 @@ export const BlockChainPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

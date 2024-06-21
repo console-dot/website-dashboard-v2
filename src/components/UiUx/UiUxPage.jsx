@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { UiUxCard } from "./UiUxCard";
 import { useDispatch } from "react-redux";
 import { getUI } from "../../api";
 import { setUIData } from "../../redux/uiuxSlice";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const UiUxPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onView = (id) => {
-    navigate(`view/${id}`);
-  };
 
   useEffect(() => {
     getUI()
@@ -22,6 +17,10 @@ export const UiUxPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

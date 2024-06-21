@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { OffshoringCard } from "./OffshoringCard";
 import { getOffShore } from "../../api/offShore";
 import { setOffShoreData } from "../../redux/offShoreSlice";
 import { useDispatch } from "react-redux";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const OffshoringPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  const onView = (id) => {
-    navigate(`view/${id}`);
-  };
-
   useEffect(() => {
-    // console.log("newData", newData);
     getOffShore()
       .then((res) => {
         setData(res?.data);
@@ -23,6 +17,11 @@ export const OffshoringPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
+
   return (
     <>
       <div

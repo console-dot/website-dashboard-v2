@@ -1,14 +1,13 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { WebDevelopmentCard } from "./WebDevelopmentCard";
 import { useDispatch } from "react-redux";
 import { getWebDevelopment } from "../../api/webdevelopment";
 import { setwebdevData } from "../../redux/webdevSlice";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const WebDevelopmentPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,6 +18,10 @@ export const WebDevelopmentPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>
