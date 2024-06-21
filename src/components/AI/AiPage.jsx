@@ -1,15 +1,13 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { AiCard } from "./AiCard";
 import { getArtificialIntelligence } from "../../api/ai";
 import { useDispatch } from "react-redux";
 import { setAiData } from "../../redux";
+import RainbowLoader from "../Loader/RainbowLoader";
 export const AiPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
 
   useEffect(() => {
     getArtificialIntelligence()
@@ -19,6 +17,10 @@ export const AiPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

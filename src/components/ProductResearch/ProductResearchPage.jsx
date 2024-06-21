@@ -1,15 +1,13 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ProductResearchCard } from "./ProductResearchCard";
-import { getcustomservicepage } from "../../api/customservice";
 import { getproductresearchpage } from "../../api/productresearch";
 import { setproductresearchData } from "../../redux/productresearchSlice";
 import { useDispatch } from "react-redux";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const ProductResearchPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -20,6 +18,10 @@ export const ProductResearchPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

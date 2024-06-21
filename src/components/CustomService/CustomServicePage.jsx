@@ -1,19 +1,14 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { CustomServiceCard } from "./CustomServiceCard";
 import { getcustomservicepage } from "../../api/customservice";
 import { useDispatch } from "react-redux";
 import { setCustomServiceData } from "../../redux/customServiceSlice";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const CustomServicePage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onView = (id) => {
-    navigate(`view/${id}`);
-  };
 
   useEffect(() => {
     getcustomservicepage()
@@ -23,6 +18,10 @@ export const CustomServicePage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

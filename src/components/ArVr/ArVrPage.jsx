@@ -1,18 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { ArVrCard } from "./ArVrCard";
 import { getAR } from "../../api";
 import { setARData } from "../../redux/arvrSlice";
 import { useDispatch } from "react-redux";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const ArVrPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
-
-  const onView = (id) => {
-    navigate(`view/${id}`);
-  };
 
   useEffect(() => {
     getAR()
@@ -22,6 +17,10 @@ export const ArVrPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

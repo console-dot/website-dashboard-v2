@@ -1,21 +1,15 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { LandingCard } from "./LandingCard";
 import { getLandingPage } from "../../api/landing";
 import { useDispatch } from "react-redux";
 import { setLandingPageData } from "../../redux/landingPageSlice";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const LandingPage = () => {
   const [data, setData] = useState([]);
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
-  // const onView = (id) => {
-  //   navigate(`view/${id}`);
-  // };
-
   useEffect(() => {
-    // console.log("newData", newData);
     getLandingPage()
       .then((res) => {
         setData(res?.data);
@@ -23,6 +17,10 @@ export const LandingPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (data?.length == 0) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

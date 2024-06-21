@@ -1,14 +1,13 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
 import { MobileAppCard } from "./MobileAppCard";
 import { useDispatch } from "react-redux";
 import { getMobDevelopment } from "../../api/mobdevelopment";
 import { setmobdevData } from "../../redux/mobdevSlice";
+import RainbowLoader from "../Loader/RainbowLoader";
 
 export const MobileAppPage = () => {
   const [data, setData] = useState();
-  const navigate = useNavigate();
   const dispatch = useDispatch();
 
   useEffect(() => {
@@ -19,6 +18,10 @@ export const MobileAppPage = () => {
       })
       .catch((err) => console.log(err));
   }, []);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>
