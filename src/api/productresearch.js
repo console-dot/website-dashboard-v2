@@ -16,8 +16,8 @@ export const getproductresearchpage = async () => {
       localStorage.setItem("@dashboard-token", response.data.token);
     }
     return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch product research page data");
+  } catch (err) {
+    return err?.response?.status;
   }
 };
 

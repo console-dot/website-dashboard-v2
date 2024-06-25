@@ -5,7 +5,7 @@ import { login } from "../redux";
 import { setLogin } from "../api";
 import { toJson } from "../utils";
 
-export default function Login({ setLoggedIn }) {
+export default function Login({ setIsValid,setLoggedIn }) {
   const dispatch = useDispatch();
   const navigate = useNavigate();
 
@@ -25,6 +25,7 @@ export default function Login({ setLoggedIn }) {
         );
         dispatch(login(res?.data?.data?.user));
         setLoggedIn(true);
+        setIsValid(true)
         navigate("/landingPage");
       })
       .catch((err) => console.log(err));

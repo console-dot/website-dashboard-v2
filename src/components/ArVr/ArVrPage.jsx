@@ -4,19 +4,36 @@ import { getAR } from "../../api";
 import { setARData } from "../../redux/arvrSlice";
 import { useDispatch } from "react-redux";
 import RainbowLoader from "../Loader/RainbowLoader";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export const ArVrPage = () => {
+export const ArVrPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     getAR()
       .then((res) => {
         setData(res?.data);
+        if (res == 403) {
+          setIsValid(false);
+        }
         dispatch(setARData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   if (!data) {
     return <RainbowLoader />;

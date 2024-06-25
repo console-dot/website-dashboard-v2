@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editHeroDescription,
@@ -13,13 +13,16 @@ import {
 } from "../../redux";
 import { CaseStudiesCard } from "./CaseStudiesCard";
 import { FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
+import RainbowLoader from "../Loader/RainbowLoader";
 
-export const CaseStudiesPage = () => {
+export const CaseStudiesPage = ({ setIsValid, isValid }) => {
   const [herodata, setHeroData] = useState(null);
   const [caseStudyHero, setCaseStudyHero] = useState("");
   const [data, setData] = useState(null);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const caseStudies = useSelector(selectCaseStudiesDetails);
 
   // Navigate to view case study
@@ -34,6 +37,7 @@ export const CaseStudiesPage = () => {
       setCaseStudyHero(res?.caseStudyHero);
       getHeroDescription()
         .then((res) => {
+
           setHeroData(res?.data);
           dispatch(setHeroDescriptionData(res?.data));
         })
@@ -48,11 +52,25 @@ export const CaseStudiesPage = () => {
   useEffect(() => {
     getcaseStudiespage()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setCaseStudiesData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   useEffect(() => {
     setData(caseStudies);
@@ -71,6 +89,10 @@ export const CaseStudiesPage = () => {
   useEffect(() => {
     setCaseStudyHero(herodata?.caseStudyHero);
   }, [herodata]);
+
+  if (!data) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>

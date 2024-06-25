@@ -15,8 +15,8 @@ export const getOpenPosition = async () => {
     if (res.data.token)
       localStorage.setItem("@dashboard-token", res.data.token);
     return res.data;
-  } catch (error) {
-    console.log(error);
+  } catch (err) {
+    return err?.response?.status;
   }
 };
 //api to edit that particular id in db

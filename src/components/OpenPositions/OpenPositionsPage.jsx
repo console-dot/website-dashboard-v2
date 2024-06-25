@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { OpenPositionsCard } from "./OpenPositionsCard";
 import { Button } from "../Button";
 import { FaPlus, FaTrash, FaPen } from "react-icons/fa";
@@ -15,11 +15,13 @@ import {
 } from "../../api/openposition";
 import { editHeroDescription, getHeroDescription } from "../../api";
 import { setHeroDescriptionData } from "../../redux";
+import RainbowLoader from "../Loader/RainbowLoader";
 
-export const OpenPositionsPage = () => {
+export const OpenPositionsPage = ({ setIsValid, isValid }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [positions, setPositions] = useState([]);
   const [formData, setFormData] = useState({
@@ -40,11 +42,25 @@ export const OpenPositionsPage = () => {
   useEffect(() => {
     getOpenPosition()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setPositions(res?.data);
         dispatch(setopData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   // Fetch hero description data
   useEffect(() => {
@@ -158,6 +174,9 @@ export const OpenPositionsPage = () => {
       alert("Failed to update hero description");
     }
   };
+  if (!herodata) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>
@@ -352,7 +371,7 @@ export const OpenPositionsPage = () => {
       {/* Display Positions */}
       <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
         <div className="flex flex-col w-full">
-          {positions.map((item) => (
+          {positions?.map((item) => (
             <div key={item._id}>
               <OpenPositionsCard
                 data={item}

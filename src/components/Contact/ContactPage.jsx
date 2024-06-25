@@ -1,24 +1,40 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { toast } from "react-toastify";
 import { useDispatch } from "react-redux";
 import { editHeroDescription, getHeroDescription } from "../../api";
 import { setHeroDescriptionData } from "../../redux";
+import RainbowLoader from "../Loader/RainbowLoader";
 
-export const ContactPage = () => {
+export const ContactPage = ({ setIsValid, isValid }) => {
   const dispatch = useDispatch();
   const [heroData, setHeroData] = useState(null);
   const [contactHero, setContactHero] = useState("");
+  const location = useLocation();
 
   // Fetch hero description data
   useEffect(() => {
     getHeroDescription()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setHeroData(res?.data);
         dispatch(setHeroDescriptionData(res?.data));
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   useEffect(() => {
     setContactHero(heroData?.contactHero || "");
@@ -34,6 +50,10 @@ export const ContactPage = () => {
       alert("Failed to update hero description");
     }
   };
+
+  if (!heroData) {
+    return <RainbowLoader />;
+  }
 
   return (
     <>
