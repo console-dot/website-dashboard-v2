@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { useDispatch, useSelector } from "react-redux";
 import {
   editHeroDescription,
@@ -13,13 +13,15 @@ import {
 } from "../../redux";
 import { CaseStudiesCard } from "./CaseStudiesCard";
 import { FaPlus } from "react-icons/fa";
+import { toast } from "react-toastify";
 
-export const CaseStudiesPage = () => {
+export const CaseStudiesPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState(null);
   const [heroData, setHeroData] = useState(null);
   const [caseStudyHero, setCaseStudyHero] = useState("");
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
   const caseStudies = useSelector(selectCaseStudiesDetails);
     // Navigate to view case study
     const onView = (id) => {
@@ -31,11 +33,25 @@ export const CaseStudiesPage = () => {
   useEffect(() => {
     getcaseStudiespage()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setCaseStudiesData(res?.data));
       })
       .catch((err) => console.log(err));
   }, [dispatch]);
+
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   useEffect(() => {
     setData(caseStudies);

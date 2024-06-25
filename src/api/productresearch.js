@@ -16,24 +16,20 @@ export const getproductresearchpage = async () => {
       localStorage.setItem("@dashboard-token", response.data.token);
     }
     return response.data;
-  } catch (error) {
-    throw new Error("Failed to fetch product research page data");
+  } catch (err) {
+    return err?.response?.status;
   }
 };
 
 export const editproductresearchpage = async (values, _id) => {
   try {
     const token = localStorage.getItem("@dashboard-token");
-    const response = await axios.put(
-      `${BASE_URL}/productRS/${_id}`,
-      values,
-      {
-        headers: {
-          "Content-Type": "application/json",
-          Authorization: "JWT " + token,
-        },
-      }
-    );
+    const response = await axios.put(`${BASE_URL}/productRS/${_id}`, values, {
+      headers: {
+        "Content-Type": "application/json",
+        Authorization: "JWT " + token,
+      },
+    });
     if (response.data.token) {
       localStorage.setItem("@dashboard-token", response.data.token);
     }

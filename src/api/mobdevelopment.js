@@ -17,15 +17,17 @@ export const getMobDevelopment = () => {
         localStorage.setItem("@dashboard-token", res?.data?.token);
       return res?.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err?.response?.status;
+    });
 };
 
 export const editMobDevelopment = (values, id) => {
-  const token = localStorage.getItem("@dashboard-token"); 
+  const token = localStorage.getItem("@dashboard-token");
   return axios
     .put(`${BASE_URL}/mob-dev/${id}`, values, {
       headers: {
-        "Content-Type": "application/json", 
+        "Content-Type": "application/json",
         Authorization: "JWT " + token,
       },
     })
@@ -36,4 +38,3 @@ export const editMobDevelopment = (values, id) => {
     })
     .catch((err) => console.log(err));
 };
-

@@ -1,5 +1,5 @@
 import React, { useEffect, useRef, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { OpenPositionsCard } from "./OpenPositionsCard";
 import { Button } from "../Button";
 import { FaPlus, FaTrash, FaPen } from "react-icons/fa";
@@ -16,10 +16,11 @@ import {
 import { editHeroDescription, getHeroDescription } from "../../api";
 import { setHeroDescriptionData } from "../../redux";
 
-export const OpenPositionsPage = () => {
+export const OpenPositionsPage = ({ setIsValid, isValid }) => {
   const [isLoading, setIsLoading] = useState(false);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const [positions, setPositions] = useState([]);
   const [formData, setFormData] = useState({
@@ -40,11 +41,25 @@ export const OpenPositionsPage = () => {
   useEffect(() => {
     getOpenPosition()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setPositions(res?.data);
         dispatch(setopData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   // Fetch hero description data
   useEffect(() => {

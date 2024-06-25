@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { ArVrCard } from "./ArVrCard";
 import { getAR } from "../../api";
 import { setARData } from "../../redux/arvrSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-export const ArVrPage = () => {
+export const ArVrPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const onView = (id) => {
     navigate(`view/${id}`);
@@ -17,11 +19,25 @@ export const ArVrPage = () => {
   useEffect(() => {
     getAR()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setARData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   return (
     <>

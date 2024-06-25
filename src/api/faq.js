@@ -17,7 +17,9 @@ export const getFaq = () => {
         localStorage.setItem("@dashboard-token", res?.data?.token);
       return res?.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err?.response?.status;
+    });
 };
 
 export const editFaq = (values) => {

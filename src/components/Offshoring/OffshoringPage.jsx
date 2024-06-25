@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { OffshoringCard } from "./OffshoringCard";
 import { getOffShore } from "../../api/offShore";
 import { setOffShoreData } from "../../redux/offShoreSlice";
 import { useDispatch } from "react-redux";
+import { toast } from "react-toastify";
 
-export const OffshoringPage = () => {
+export const OffshoringPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   const onView = (id) => {
     navigate(`view/${id}`);
@@ -18,11 +20,25 @@ export const OffshoringPage = () => {
     // console.log("newData", newData);
     getOffShore()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setOffShoreData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
   return (
     <>
       <div

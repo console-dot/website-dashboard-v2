@@ -1,24 +1,39 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { AiCard } from "./AiCard";
 import { getArtificialIntelligence } from "../../api/ai";
 import { useDispatch } from "react-redux";
 import { setAiData } from "../../redux";
-export const AiPage = () => {
+import { toast } from "react-toastify";
+export const AiPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
 
   useEffect(() => {
     getArtificialIntelligence()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setAiData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   return (
     <>

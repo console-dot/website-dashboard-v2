@@ -1,14 +1,16 @@
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { LandingCard } from "./LandingCard";
 import { getLandingPage } from "../../api/landing";
 import { useDispatch } from "react-redux";
 import { setLandingPageData } from "../../redux/landingPageSlice";
+import { toast } from "react-toastify";
 
-export const LandingPage = () => {
+export const LandingPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState([]);
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   // const onView = (id) => {
   //   navigate(`view/${id}`);
@@ -18,11 +20,25 @@ export const LandingPage = () => {
     // console.log("newData", newData);
     getLandingPage()
       .then((res) => {
+        console.log("res", res);
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setLandingPageData(res?.data));
       })
-      .catch((err) => console.log(err));
+      .catch((err) => console.log("error", err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
 
   return (
     <>

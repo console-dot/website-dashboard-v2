@@ -1,24 +1,38 @@
-// CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { WebDevelopmentCard } from "./WebDevelopmentCard";
 import { useDispatch } from "react-redux";
 import { getWebDevelopment } from "../../api/webdevelopment";
 import { setwebdevData } from "../../redux/webdevSlice";
+import { toast } from "react-toastify";
 
-export const WebDevelopmentPage = () => {
+export const WebDevelopmentPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     getWebDevelopment()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setwebdevData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
 
   return (
     <>

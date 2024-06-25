@@ -1,24 +1,40 @@
 // CustomService Model (description,  Proposition, whychooseDesc,  WhyChoose[ref], delivers {actionDesc, actionDesc})
 import React, { useEffect, useState } from "react";
-import { useNavigate } from "react-router-dom";
+import { useLocation, useNavigate } from "react-router-dom";
 import { MobileAppCard } from "./MobileAppCard";
 import { useDispatch } from "react-redux";
 import { getMobDevelopment } from "../../api/mobdevelopment";
 import { setmobdevData } from "../../redux/mobdevSlice";
+import { toast } from "react-toastify";
 
-export const MobileAppPage = () => {
+export const MobileAppPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const navigate = useNavigate();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     getMobDevelopment()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setmobdevData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid", isValid);
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   return (
     <>
