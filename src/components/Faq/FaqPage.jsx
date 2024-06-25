@@ -1,20 +1,38 @@
 import React, { useEffect, useState } from "react";
 import { FaQuestionCircle } from "react-icons/fa";
 import { editFaq, getFaq } from "../../api";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
+import RainbowLoader from "../Loader/RainbowLoader";
 
-export const FaqPage = () => {
+export const FaqPage = ({ setIsValid, isValid }) => {
   const [heroDescription, setHeroDescription] = useState("");
   const [formData, setFormData] = useState([]);
+  const location = useLocation();
 
   useEffect(() => {
     // console.log("newData", newData);
     getFaq()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setFormData(res?.data?.data);
         setHeroDescription(res?.data?.heroDescription);
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   const [editingIndex, setEditingIndex] = useState(null);
 
@@ -89,7 +107,9 @@ export const FaqPage = () => {
     setEditingIndex(index);
   };
 
-  console.log("first", formData);
+  if (!formData) {
+    return <RainbowLoader />;
+  }
 
   return (
     <div className="w-full">

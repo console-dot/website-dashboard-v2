@@ -5,19 +5,36 @@ import { useDispatch } from "react-redux";
 import { getWebDevelopment } from "../../api/webdevelopment";
 import { setwebdevData } from "../../redux/webdevSlice";
 import RainbowLoader from "../Loader/RainbowLoader";
+import { useLocation } from "react-router-dom";
+import { toast } from "react-toastify";
 
-export const WebDevelopmentPage = () => {
+export const WebDevelopmentPage = ({ setIsValid, isValid }) => {
   const [data, setData] = useState();
   const dispatch = useDispatch();
+  const location = useLocation();
 
   useEffect(() => {
     getWebDevelopment()
       .then((res) => {
+        if (res == 403) {
+          setIsValid(false);
+        }
         setData(res?.data);
         dispatch(setwebdevData(res?.data));
       })
       .catch((err) => console.log(err));
   }, []);
+
+  useEffect(() => {
+    console.log("isValid",isValid)
+    if (!isValid) {
+      toast.warning("You Session has been Expired. Please Login Again", {
+        autoClose: 1500,
+        onClose: () => {},
+      });
+    }
+  }, [location.pathname, isValid]);
+
 
   if (!data) {
     return <RainbowLoader />;

@@ -17,7 +17,9 @@ export const getWebDevelopment = () => {
         localStorage.setItem("@dashboard-token", res?.data?.token);
       return res?.data;
     })
-    .catch((err) => console.log(err));
+    .catch((err) => {
+      return err?.response?.status;
+    });
 };
 
 export const editWebDevelopment = (values, id) => {
