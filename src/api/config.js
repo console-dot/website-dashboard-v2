@@ -1,9 +1,9 @@
 import axios from "axios";
 
 const BASE_URL =
-  process.env.REACT_APP_NODE_ENV === "local"
-    ? "http://localhost:5000/api/v1"
-    : "";
+
+     "http://localhost:5000/api/v1"
+    
 
 const makeRequest = async (fn) => {
   return axios

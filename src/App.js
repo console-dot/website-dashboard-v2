@@ -33,6 +33,9 @@ import CaseStudiesPageAdd from "./components/CaseStudies/CaseStudiesPageAdd";
 import { ContactPage } from "./components";
 import ScrollToTop from "./pages/ScrollToTop";
 import { ToastContainer, toast } from "react-toastify";
+import { BlogsPage } from "./components/Blogs/BlogsPage";
+import BlogsPageAdd from "./components/Blogs/BlogsPageAdd";
+import BlogsPageEdit from "./components/Blogs/BlogsPageEdit";
 function App() {
   const [loggedIn, setLoggedIn] = useState(false);
   const checkLogin = useSelector(selectIsLoggedIn);
@@ -53,52 +56,110 @@ function App() {
           <Navbar>
             <Routes>
               {/* <Route path="/" element={<Dashboard />} /> */}
-              <Route path="/landingPage" element={<LandingPage setIsValid={setIsValid} isValid={isValid} />} />
+              <Route
+                path="/landingPage"
+                element={
+                  <LandingPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
               <Route
                 path="/LandingPage/edit/:id"
                 element={<LandingPageEdit />}
               />
-              <Route path="/offShoring" element={<OffshoringPage setIsValid={setIsValid} isValid={isValid}  />} />
+              <Route
+                path="/offShoring"
+                element={
+                  <OffshoringPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
               <Route
                 path="/OffshoringPage/edit/:id"
                 element={<OffshoringPageEdit />}
               />
-              <Route path="/customSoftware" element={<CustomServicePage setIsValid={setIsValid} isValid={isValid} />} />
+              <Route
+                path="/customSoftware"
+                element={
+                  <CustomServicePage
+                    setIsValid={setIsValid}
+                    isValid={isValid}
+                  />
+                }
+              />
               <Route
                 path="/CustomSoftwarePageEdit/edit/:id"
                 element={<CustomServicePageEdit />}
               />
               <Route
                 path="/productResearch"
-                element={<ProductResearchPage setIsValid={setIsValid} isValid={isValid}/>}
+                element={
+                  <ProductResearchPage
+                    setIsValid={setIsValid}
+                    isValid={isValid}
+                  />
+                }
               />
               <Route
                 path="/ProductResearchPageEdit/edit/:id"
                 element={<ProductResearchPageEdit />}
               />
-              <Route path="/webDevelopment" element={<WebDevelopmentPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/webDevelopment"
+                element={
+                  <WebDevelopmentPage
+                    setIsValid={setIsValid}
+                    isValid={isValid}
+                  />
+                }
+              />
               <Route
                 path="/WebDevelopmentPageEdit/edit/:id"
                 element={<WebDevelopmentPageEdit />}
               />
-              <Route path="/mobileApp" element={<MobileAppPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/mobileApp"
+                element={
+                  <MobileAppPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
               <Route
                 path="/MobileAppPageEdit/edit/:id"
                 element={<MobileAppPageEdit />}
               />
-              <Route path="/blockchain" element={<BlockChainPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/blockchain"
+                element={
+                  <BlockChainPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
               <Route
                 path="/BlockChainPageEdit/edit/:id"
                 element={<BlockChainPageEdit />}
               />
-              <Route path="/ai" element={<AiPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/ai"
+                element={<AiPage setIsValid={setIsValid} isValid={isValid} />}
+              />
               <Route path="/AiPageEdit/edit/:id" element={<AiPageEdit />} />
-              <Route path="/arvr" element={<ArVrPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/arvr"
+                element={<ArVrPage setIsValid={setIsValid} isValid={isValid} />}
+              />
               <Route path="/ArVrPageEdit/edit/:id" element={<ArVrPageEdit />} />
-              <Route path="/uiux" element={<UiUxPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/uiux"
+                element={<UiUxPage setIsValid={setIsValid} isValid={isValid} />}
+              />
               <Route path="/UiUxPageEdit/edit/:id" element={<UiUxPageEdit />} />
-              <Route path="/faq" element={<FaqPage setIsValid={setIsValid} isValid={isValid}/>} />
-              <Route path="/casestudies" element={<CaseStudiesPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                path="/faq"
+                element={<FaqPage setIsValid={setIsValid} isValid={isValid} />}
+              />
+              <Route
+                path="/casestudies"
+                element={
+                  <CaseStudiesPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
               <Route
                 path="/case-studies-new"
                 element={<CaseStudiesPageAdd />}
@@ -107,8 +168,38 @@ function App() {
                 path="/casestudiesEdit/edit/:id"
                 element={<CaseStudiesPageEdit />}
               />
-              <Route path="/openpositions" element={<OpenPositionsPage setIsValid={setIsValid} isValid={isValid}/>} />
-              <Route path="/contact" element={<ContactPage setIsValid={setIsValid} isValid={isValid}/>} />
+              <Route
+                key="blogs"
+                path="/blogs"
+                element={
+                  <BlogsPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
+              <Route
+                key="blogs-new"
+                path="/blogs-new"
+                element={<BlogsPageAdd />}
+              />
+              <Route
+                key="blogsEdit-edit-id"
+                path="/blogsEdit/edit/:id"
+                element={<BlogsPageEdit />}
+              />
+              <Route
+                path="/openpositions"
+                element={
+                  <OpenPositionsPage
+                    setIsValid={setIsValid}
+                    isValid={isValid}
+                  />
+                }
+              />
+              <Route
+                path="/contact"
+                element={
+                  <ContactPage setIsValid={setIsValid} isValid={isValid} />
+                }
+              />
               <Route
                 path="/logout"
                 element={<Logout setLoggedIn={setLoggedIn} />}
@@ -122,7 +213,13 @@ function App() {
           <Routes>
             <Route
               path="/"
-              element={<Login setIsValid={setIsValid} setLoggedIn={setLoggedIn} loggedIn={loggedIn} />}
+              element={
+                <Login
+                  setIsValid={setIsValid}
+                  setLoggedIn={setLoggedIn}
+                  loggedIn={loggedIn}
+                />
+              }
             />
           </Routes>
         </div>
