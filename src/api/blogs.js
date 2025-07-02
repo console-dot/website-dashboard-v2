@@ -1,12 +1,13 @@
-// Add these API functions to your existing API file
+import config from "./config";
 
-const API_BASE_URL = "http://localhost:5000/api/v1" // Replace with your actual API base URL
+
+const BASE_URL = config.BASE_URL;
 
 // Get all blogs
 export const getBlogs = async (params = {}) => {
   try {
     const queryString = new URLSearchParams(params).toString()
-    const response = await fetch(`${API_BASE_URL}/blogs?${queryString}`, {
+    const response = await fetch(`${BASE_URL}/blogs?${queryString}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -30,7 +31,7 @@ export const getBlogs = async (params = {}) => {
 // Get single blog
 export const getBlog = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
+    const response = await fetch(`${BASE_URL}/blogs/${id}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -48,7 +49,7 @@ export const getBlog = async (id) => {
 // Get blog by slug
 export const getBlogBySlug = async (slug) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs/slug/${slug}`, {
+    const response = await fetch(`${BASE_URL}/blogs/slug/${slug}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -66,7 +67,7 @@ export const getBlogBySlug = async (slug) => {
 // Create new blog
 export const addBlog = async (blogData) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs`, {
+    const response = await fetch(`${BASE_URL}/blogs`, {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
@@ -87,7 +88,7 @@ export const addBlog = async (blogData) => {
 // Update blog
 export const editBlog = async (blogData, id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
+    const response = await fetch(`${BASE_URL}/blogs/${id}`, {
       method: "PUT",
       headers: {
         "Content-Type": "application/json",
@@ -108,7 +109,7 @@ export const editBlog = async (blogData, id) => {
 // Delete blog
 export const removeBlog = async (id) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs/${id}`, {
+    const response = await fetch(`${BASE_URL}/blogs/${id}`, {
       method: "DELETE",
       headers: {
         "Content-Type": "application/json",
@@ -128,7 +129,7 @@ export const removeBlog = async (id) => {
 // Get popular blogs
 export const getPopularBlogs = async (limit = 5) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs/popular?limit=${limit}`, {
+    const response = await fetch(`${BASE_URL}/blogs/popular?limit=${limit}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -146,7 +147,7 @@ export const getPopularBlogs = async (limit = 5) => {
 // Get recent blogs
 export const getRecentBlogs = async (limit = 5) => {
   try {
-    const response = await fetch(`${API_BASE_URL}/blogs/recent?limit=${limit}`, {
+    const response = await fetch(`${BASE_URL}/blogs/recent?limit=${limit}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",
@@ -165,7 +166,7 @@ export const getRecentBlogs = async (limit = 5) => {
 export const searchBlogs = async (searchParams) => {
   try {
     const queryString = new URLSearchParams(searchParams).toString()
-    const response = await fetch(`${API_BASE_URL}/blogs/search?${queryString}`, {
+    const response = await fetch(`${BASE_URL}/blogs/search?${queryString}`, {
       method: "GET",
       headers: {
         "Content-Type": "application/json",

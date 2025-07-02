@@ -115,7 +115,7 @@ export const BlogsPage = ({ setIsValid, isValid }) => {
         }}
       >
         {/* hero description */}
-        <div className="flex flex-col" style={{ width: "100%" }}>
+        {/* <div className="flex flex-col" style={{ width: "100%" }}>
           <label className="" style={{ color: "grey" }}>
             Blog Hero Description
           </label>
@@ -139,7 +139,7 @@ export const BlogsPage = ({ setIsValid, isValid }) => {
               Update
             </button>
           </div>
-        </div>
+        </div> */}
       </div>
 
       <div className="w-[90%] m-auto px-4 py-4 bg-backgroundColor my-3 border border-dashed border-[#0E7789] rounded-md">
