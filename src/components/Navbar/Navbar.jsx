@@ -15,7 +15,7 @@ import { IoCodeWorkingSharp } from "react-icons/io5";
 import { CgWebsite } from "react-icons/cg";
 import { SiBlockchaindotcom } from "react-icons/si";
 import { NavLink } from "react-router-dom";
-import { MdCategory, MdLogout, MdOutlineCardTravel, MdOutlineLibraryBooks } from "react-icons/md";
+import { MdCategory, MdLogout, MdOutlineCardTravel, MdOutlineLibraryBooks, MdWebStories } from "react-icons/md";
 import { FaQuestion } from "react-icons/fa";
 export default function Navbar({ children }) {
   const [isOpen, setIsOpen] = useState(false);
@@ -77,6 +77,11 @@ export default function Navbar({ children }) {
       path: "/casestudies",
       name: "Case-Studies",
       icon: <MdOutlineLibraryBooks size={25} />,
+    },
+    {
+      path: "/blogs",
+      name: "Blogs",
+      icon: <MdWebStories size={25} />,
     },
     {
       path: "/openpositions",
