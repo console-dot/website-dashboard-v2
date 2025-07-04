@@ -1,3 +1,4 @@
+"use client"
 
 import { useState } from "react"
 import { ToastContainer, toast } from "react-toastify"
@@ -5,13 +6,14 @@ import { RiLoader3Line } from "react-icons/ri"
 import { useNavigate } from "react-router-dom"
 import { useSelector } from "react-redux"
 import { selectBlogsDetails } from "../../redux/blogsSlice"
-// import { addBlog } from "../../api"
 import config from "../../api/config"
 import { RxCross1 } from "react-icons/rx"
 import { addFile } from "../../api/file"
 import { FaPlus } from "react-icons/fa"
 import RainbowLoader from "../Loader/RainbowLoader"
 import { addBlog } from "../../api/blogs"
+import WysiwygEditor from "./WysiwygEditor"
+// import WysiwygEditor from "../wysiwyg-editor"
 
 export default function BlogsPageAdd() {
   const BASE_URL = config.BASE_URL
@@ -78,6 +80,14 @@ export default function BlogsPageAdd() {
     })
   }
 
+  // Handle WYSIWYG content change
+  const handleContentChange = (content) => {
+    setFormData({
+      ...formData,
+      content: content,
+    })
+  }
+
   // Handle featured image upload
   const handleFeaturedImage = (e) => {
     const newImage = e.target.files[0]
@@ -88,8 +98,8 @@ export default function BlogsPageAdd() {
         if (res?.status == 201) {
           setFormData((prevData) => ({
             ...prevData,
-            featuredImage: [...(prevData.featuredImage || []), res?.data],
-          }));
+            featuredImage: res?.data,
+          }))
           setTimeout(() => {
             setIsSubmitting(false)
             toast.success("Featured Image Added Successfully", {
@@ -158,7 +168,7 @@ export default function BlogsPageAdd() {
 
   return (
     <div className="w-full mb-6">
-      <form className="flex justify-center flex-col w-[50%] m-auto gap-2" method="post" onSubmit={handleSubmit}>
+      <form className="flex justify-center flex-col w-[80%] m-auto gap-2" method="post" onSubmit={handleSubmit}>
         <div>
           <h1 className="text-[28px] text-custom-purple mb-4 mt-2 font-bold text-center">Add New Blog Post</h1>
 
@@ -188,17 +198,15 @@ export default function BlogsPageAdd() {
             required
           />
 
-          {/* Content */}
+          {/* Content - WYSIWYG Editor */}
           <label className="text-webDescrip font-semibold mt-4">Content *</label>
-          <textarea
-            className="bg-white shadow-lg text-webDescrip px-3 text-[16px] border focus:ring-blue-500 focus:border-blue-500 block w-full p-2.5 h-40 dark:bg-gray-700 dark:border-gray-600 dark:placeholder-gray-400 dark:text-white dark:focus:ring-blue-500 dark:focus:border-blue-500"
-            name="content"
-            id="content"
-            onChange={handleChange}
-            value={formData?.content}
-            placeholder="Blog Content"
-            required
-          />
+          <div className="mt-2">
+            <WysiwygEditor
+              value={formData.content}
+              onChange={handleContentChange}
+              placeholder="Write your blog content here. You can format text, add images, links, and more..."
+            />
+          </div>
 
           {/* Excerpt */}
           <label className="text-webDescrip font-semibold mt-4">Excerpt</label>
